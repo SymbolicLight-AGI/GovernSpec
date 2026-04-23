@@ -1,0 +1,10 @@
+{
+  "verdict": "Proceed with mitigation planning.",
+  "risks": [
+    "Current evidence is incomplete for root-cause certainty."
+  ],
+  "recommendations": [
+    "Confirm the missing incident timeline with the owner.",
+    "Document the next review checkpoint in the incident tracker."
+  ]
+}

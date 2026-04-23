@@ -1,0 +1,96 @@
+version: "0.1"
+kind: "IntentSpec"
+
+metadata:
+  name: "report_json"
+  title: "Generate structured report"
+  description: "Produce a strict JSON report for downstream automation."
+  owner: "ops"
+
+task:
+  goal: "Generate a structured summary with verdict, risks, and recommendations."
+  audience:
+    - "Automation pipeline"
+  priority: "high"
+
+context:
+  domain: "Operations"
+  facts:
+    - "The downstream system expects strict JSON."
+  assumptions: []
+  glossary: {}
+
+inputs:
+  - name: "incident_notes"
+    type: "file"
+    path: "data/incident_notes.md"
+    required: false
+    privacy: "internal"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not fabricate missing evidence."
+
+evidence:
+  require_sources: false
+  mark_uncertainty: true
+  distinguish:
+    - "fact"
+    - "recommendation"
+
+output:
+  format: "json"
+  schema:
+    type: object
+    additionalProperties: false
+    required:
+      - verdict
+      - risks
+      - recommendations
+    properties:
+      verdict:
+        type: string
+      risks:
+        type: array
+        minItems: 1
+        items:
+          type: string
+      recommendations:
+        type: array
+        minItems: 2
+        items:
+          type: string
+
+quality:
+  tone: []
+  must_include: []
+  must_avoid: []
+
+human_gates: []
+
+tests:
+  - name: "JSON must match schema"
+    assert:
+      - type: "json_schema"
+  - name: "Verdict must exist"
+    assert:
+      - type: "json_path_exists"
+        path: "$.verdict"
+  - name: "Recommendations need at least 2 items"
+    assert:
+      - type: "json_array_min_items"
+        path: "$.recommendations"
+        value: 2

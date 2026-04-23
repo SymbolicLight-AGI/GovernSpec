@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "intentspec"
+version = "0.1.0"
+description = "Local-first task contract compiler for AI systems."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "IntentSpec Contributors" }
+]
+dependencies = [
+  "PyYAML>=6.0,<7.0",
+  "jsonschema>=4.23,<5.0",
+  "pydantic>=2.7,<3.0",
+  "typer>=0.12,<1.0",
+]
+[project.optional-dependencies]
+dev = [
+  "build>=1.2,<2.0",
+  "mypy>=1.10,<2.0",
+  "pytest>=8.0,<9.0",
+  "pytest-cov>=5.0,<6.0",
+  "ruff>=0.6,<1.0",
+  "twine>=6.0,<7.0",
+  "types-PyYAML>=6.0,<7.0",
+]
+
+[project.scripts]
+intent = "intentspec.cli:main"
+"intentspec-mcp" = "intentspec_mcp.server:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = [
+  "packages/intentspec-cli/src",
+  "packages/intentspec-core/src",
+  "packages/intentspec-mcp/src",
+]
+
+[tool.setuptools.package-data]
+"intentspec_core.resources.examples" = [
+  "*.yaml",
+  "*.md",
+  "*.json",
+  "**/*.yaml",
+  "**/*.md",
+  "**/*.json",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+pretty = true
+show_error_codes = true
+check_untyped_defs = true
+plugins = []
+files = ["packages", "tests", "benchmark/run_benchmark.py"]

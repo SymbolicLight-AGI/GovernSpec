@@ -1,0 +1,34 @@
+{
+  "type": "json_schema",
+  "json_schema": {
+    "name": "release_summary_json",
+    "description": "Produce a release summary payload for automation.",
+    "strict": true,
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "changes",
+        "approvals"
+      ],
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approvals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

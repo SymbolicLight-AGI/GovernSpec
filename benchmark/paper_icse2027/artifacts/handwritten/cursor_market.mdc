@@ -1,0 +1,34 @@
+---
+description: Handwritten market analysis rule
+alwaysApply: true
+---
+
+# Cursor Market Rules
+
+## Project Goal
+Summarize market size, competitive landscape, risks, and recommendations.
+
+## Working Constraints
+- Do not fabricate market data.
+- Mark unsupported claims as inference.
+
+## Allowed and Forbidden Operations
+- Web access: allowed
+- Network access: allowed
+- Filesystem read: allowed
+- Filesystem write: forbidden
+
+## Human Confirmation Rules
+- Need external network data -> ask_confirmation
+
+## Output Expectations
+- Format: markdown
+- Language: zh-CN
+- Max words: 1000
+- Section: 核心结论
+- Section: 市场规模
+- Section: 竞争格局
+- Section: 政策与风险
+
+## Verification
+- All sections must be present

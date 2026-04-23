@@ -1,0 +1,8 @@
+{
+  "verdict": 42,
+  "risks": "missing list",
+  "recommendations": [
+    "Confirm timeline.",
+    "Document checkpoint."
+  ]
+}

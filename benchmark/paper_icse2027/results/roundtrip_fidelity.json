@@ -1,0 +1,714 @@
+{
+  "compiled": [
+    {
+      "contract": "code_review",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "code_review",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "code_review",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "code_review",
+      "source_type": "openai-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "code_review",
+      "source_type": "gemini-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "customer_brief",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "customer_brief",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "customer_brief",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "customer_brief",
+      "source_type": "openai-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "customer_brief",
+      "source_type": "gemini-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "deployment_guard",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "deployment_guard",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "deployment_guard",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "deployment_guard",
+      "source_type": "openai-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "deployment_guard",
+      "source_type": "gemini-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "imported_customer_brief",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": \"\\\\b1[3-9]\\\\d{9}\\\\b\", \"type\": \"no_regex\", \"value\": null}], \"name\": \"Must not l...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"Must not leak pho...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "imported_customer_brief",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": \"\\\\b1[3-9]\\\\d{9}\\\\b\", \"type\": \"no_regex\", \"value\": null}], \"name\": \"Must not l...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"Must not leak pho...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "imported_customer_brief",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": \"\\\\b1[3-9]\\\\d{9}\\\\b\", \"type\": \"no_regex\", \"value\": null}], \"name\": \"Must not l...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"Must not leak pho...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "imported_customer_brief",
+      "source_type": "openai-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "imported_customer_brief",
+      "source_type": "gemini-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "incident_triage_json",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"actions\": {\"items\": {\"...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": \"$.severity\", \"pattern\": null, \"type\": \"json_path_exists\", \"value\": null}], \"name\": \"Severity m...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"Severity must exi...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "incident_triage_json",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"actions\": {\"items\": {\"...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": \"$.severity\", \"pattern\": null, \"type\": \"json_path_exists\", \"value\": null}], \"name\": \"Severity m...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"Severity must exi...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "incident_triage_json",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"actions\": {\"items\": {\"...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": \"$.severity\", \"pattern\": null, \"type\": \"json_path_exists\", \"value\": null}], \"name\": \"Severity m...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"Severity must exi...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "incident_triage_json",
+      "source_type": "openai-structured",
+      "ok": true,
+      "field_matches": {
+        "goal": false,
+        "permissions": true,
+        "constraints": false,
+        "human_gates": false,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.3333,
+      "diff_snippet": "goal: expected \"Generate a structured incident triage summary with severity, owners, and next actions.\"; got \"Produce an incident triage payload with severity and next actions.\" | constraints: expected [\"Do not expose private customer identifiers.\", \"Do not assign owners without evidence.\"]; got [\"Do not fabricate facts.\"] | human_gates: expected [{\"action\": \"ask_confirmation\", \"when\": \"Triage contains confidential incident details\"}]; got []",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "incident_triage_json",
+      "source_type": "gemini-structured",
+      "ok": true,
+      "field_matches": {
+        "goal": false,
+        "permissions": true,
+        "constraints": false,
+        "human_gates": false,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.3333,
+      "diff_snippet": "goal: expected \"Generate a structured incident triage summary with severity, owners, and next actions.\"; got \"Produce JSON output conforming to the imported_intent schema.\" | constraints: expected [\"Do not expose private customer identifiers.\", \"Do not assign owners without evidence.\"]; got [\"Do not fabricate facts.\"] | human_gates: expected [{\"action\": \"ask_confirmation\", \"when\": \"Triage contains confidential incident details\"}]; got []",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "market_analysis",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "market_analysis",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "market_analysis",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.8333,
+      "diff_snippet": "tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"All sections must...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "market_analysis",
+      "source_type": "openai-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "market_analysis",
+      "source_type": "gemini-structured",
+      "ok": false,
+      "field_matches": {},
+      "exact_match_ratio": 0.0,
+      "diff_snippet": "",
+      "error_type": "IntentSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema."
+    },
+    {
+      "contract": "release_summary_json",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"approvals\": {\"items\": ...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"JSON must match s...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "release_summary_json",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"approvals\": {\"items\": ...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"JSON must match s...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "release_summary_json",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"approvals\": {\"items\": ...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"JSON must match s...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "release_summary_json",
+      "source_type": "openai-structured",
+      "ok": true,
+      "field_matches": {
+        "goal": false,
+        "permissions": true,
+        "constraints": false,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.5,
+      "diff_snippet": "goal: expected \"Summarize a release candidate as strict JSON for downstream dashboards.\"; got \"Produce a release summary payload for automation.\" | constraints: expected [\"Do not invent approvals.\", \"Do not mark a release as ready without test evidence.\"]; got [\"Do not fabricate facts.\"] | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"Must match JSON schema\"...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "release_summary_json",
+      "source_type": "gemini-structured",
+      "ok": true,
+      "field_matches": {
+        "goal": false,
+        "permissions": true,
+        "constraints": false,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.5,
+      "diff_snippet": "goal: expected \"Summarize a release candidate as strict JSON for downstream dashboards.\"; got \"Produce JSON output conforming to the imported_intent schema.\" | constraints: expected [\"Do not invent approvals.\", \"Do not mark a release as ready without test evidence.\"]; got [\"Do not fabricate facts.\"] | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"Must match JSON schema\"...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "report_json",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"recommendations\": {\"it...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"JSON must match s...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "report_json",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"recommendations\": {\"it...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"JSON must match s...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "report_json",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal": true,
+        "permissions": true,
+        "constraints": true,
+        "human_gates": true,
+        "output": false,
+        "tests": false
+      },
+      "exact_match_ratio": 0.6667,
+      "diff_snippet": "output: expected {\"format\": \"json\", \"language\": null, \"schema\": {\"additionalProperties\": false, \"properties\": {\"recommendations\": {\"it...; got {\"format\": \"json\", \"language\": null, \"schema\": {\"properties\": {}, \"type\": \"object\"}} | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"required_sections\", \"value\": null}], \"name\": \"JSON must match s...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "report_json",
+      "source_type": "openai-structured",
+      "ok": true,
+      "field_matches": {
+        "goal": false,
+        "permissions": true,
+        "constraints": false,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.5,
+      "diff_snippet": "goal: expected \"Generate a structured summary with verdict, risks, and recommendations.\"; got \"Produce a strict JSON report for downstream automation.\" | constraints: expected [\"Do not fabricate missing evidence.\"]; got [\"Do not fabricate facts.\"] | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"Must match JSON schema\"...",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "report_json",
+      "source_type": "gemini-structured",
+      "ok": true,
+      "field_matches": {
+        "goal": false,
+        "permissions": true,
+        "constraints": false,
+        "human_gates": true,
+        "output": true,
+        "tests": false
+      },
+      "exact_match_ratio": 0.5,
+      "diff_snippet": "goal: expected \"Generate a structured summary with verdict, risks, and recommendations.\"; got \"Produce JSON output conforming to the imported_intent schema.\" | constraints: expected [\"Do not fabricate missing evidence.\"]; got [\"Do not fabricate facts.\"] | tests: expected [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"JSON must match schema\"...; got [{\"assert\": [{\"path\": null, \"pattern\": null, \"type\": \"json_schema\", \"value\": null}], \"name\": \"Must match JSON schema\"...",
+      "error_type": null,
+      "error_message": null
+    }
+  ],
+  "handwritten": [
+    {
+      "contract": "agents_code_review",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal_contains": true,
+        "constraints_contain": true,
+        "sections_contain": true,
+        "tests_contain": true
+      },
+      "exact_match_ratio": 1.0,
+      "diff_snippet": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "agents_customer_brief",
+      "source_type": "agents-md",
+      "ok": true,
+      "field_matches": {
+        "goal_contains": true,
+        "constraints_contain": true,
+        "sections_contain": true,
+        "tests_contain": true
+      },
+      "exact_match_ratio": 1.0,
+      "diff_snippet": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "claude_deployment",
+      "source_type": "claude-md",
+      "ok": true,
+      "field_matches": {
+        "goal_contains": true,
+        "constraints_contain": true,
+        "sections_contain": true,
+        "human_gates_contain": true
+      },
+      "exact_match_ratio": 1.0,
+      "diff_snippet": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "cursor_market",
+      "source_type": "cursor-rules",
+      "ok": true,
+      "field_matches": {
+        "goal_contains": true,
+        "constraints_contain": true,
+        "sections_contain": true,
+        "human_gates_contain": true
+      },
+      "exact_match_ratio": 1.0,
+      "diff_snippet": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "openai_release",
+      "source_type": "openai-structured",
+      "ok": true,
+      "field_matches": {
+        "goal_contains": true,
+        "tests_contain": true,
+        "json_required_contain": true
+      },
+      "exact_match_ratio": 1.0,
+      "diff_snippet": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "contract": "gemini_incident",
+      "source_type": "gemini-structured",
+      "ok": true,
+      "field_matches": {
+        "goal_contains": true,
+        "tests_contain": true,
+        "json_required_contain": true
+      },
+      "exact_match_ratio": 1.0,
+      "diff_snippet": "",
+      "error_type": null,
+      "error_message": null
+    }
+  ],
+  "summary": {
+    "compiled_total": 40,
+    "compiled_ok": 30,
+    "compiled_import_success_rate": 75.0,
+    "compiled_average_field_fidelity": 70.55,
+    "handwritten_total": 6,
+    "handwritten_ok": 6,
+    "handwritten_import_success_rate": 100.0,
+    "handwritten_average_gold_match": 100.0
+  }
+}

@@ -1,0 +1,73 @@
+version: "0.1"
+kind: "IntentSpec"
+
+metadata:
+  name: "release_summary_json"
+  title: "Release summary JSON"
+  description: "Produce a release summary payload for automation."
+  owner: "release-engineering"
+
+task:
+  goal: "Summarize a release candidate as strict JSON for downstream dashboards."
+  audience:
+    - "Release dashboard"
+  priority: "medium"
+
+context:
+  domain: "Release engineering"
+  facts:
+    - "The dashboard expects strict JSON."
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not invent approvals."
+  - "Do not mark a release as ready without test evidence."
+
+output:
+  format: "json"
+  schema:
+    type: object
+    additionalProperties: false
+    required:
+      - status
+      - changes
+      - approvals
+    properties:
+      status:
+        type: string
+        enum:
+          - ready
+          - blocked
+          - needs_review
+      changes:
+        type: array
+        minItems: 1
+        items:
+          type: string
+      approvals:
+        type: array
+        minItems: 1
+        items:
+          type: string
+
+tests:
+  - name: "JSON must match schema"
+    assert:
+      - type: "json_schema"
+  - name: "Status key must be visible"
+    assert:
+      - type: "contains"
+        value: "\"status\""

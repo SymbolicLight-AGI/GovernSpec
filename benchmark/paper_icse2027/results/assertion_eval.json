@@ -1,0 +1,349 @@
+{
+  "samples": [
+    {
+      "contract": "code_review",
+      "sample": "code_review.output.md",
+      "expected_ok": true,
+      "actual_ok": true,
+      "targeted_assertion": null,
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Must not claim code was modified [not_contains]: Forbidden text absent: \"I have changed the code\""
+      ],
+      "failed": [],
+      "included_in_isolated_summary": false,
+      "expectation_match": true
+    },
+    {
+      "contract": "customer_brief",
+      "sample": "customer_brief.output.md",
+      "expected_ok": true,
+      "actual_ok": true,
+      "targeted_assertion": null,
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Must not leak phone numbers [no_regex]: Regex did not match forbidden pattern: \"\\b1[3-9]\\d{9}\\b\"",
+        "Must not promise lowest price [not_contains]: Forbidden text absent: \"保证最低价\"",
+        "Output must stay within the word limit [max_words]: Estimated word count 152 is within limit 1200."
+      ],
+      "failed": [],
+      "included_in_isolated_summary": false,
+      "expectation_match": true
+    },
+    {
+      "contract": "imported_customer_brief",
+      "sample": "imported_customer_brief.output.md",
+      "expected_ok": true,
+      "actual_ok": true,
+      "targeted_assertion": null,
+      "passed": [
+        "Must not leak phone numbers [no_regex]: Regex did not match forbidden pattern: \"\\b1[3-9]\\d{9}\\b\"",
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Must not promise lowest price [not_contains]: Forbidden text absent: \"保证最低价\""
+      ],
+      "failed": [],
+      "included_in_isolated_summary": false,
+      "expectation_match": true
+    },
+    {
+      "contract": "market_analysis",
+      "sample": "market_analysis.output.md",
+      "expected_ok": true,
+      "actual_ok": true,
+      "targeted_assertion": null,
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Output must stay within the word limit [max_words]: Estimated word count 93 is within limit 1000."
+      ],
+      "failed": [],
+      "included_in_isolated_summary": false,
+      "expectation_match": true
+    },
+    {
+      "contract": "report_json",
+      "sample": "report_json.output.json",
+      "expected_ok": true,
+      "actual_ok": true,
+      "targeted_assertion": null,
+      "passed": [
+        "JSON must match schema [json_schema]: JSON output matches output.schema.",
+        "Verdict must exist [json_path_exists]: JSON path exists: $.verdict",
+        "Recommendations need at least 2 items [json_array_min_items]: JSON array at $.recommendations has 2 items, meets minimum 2."
+      ],
+      "failed": [],
+      "included_in_isolated_summary": false,
+      "expectation_match": true
+    },
+    {
+      "contract": "deployment_guard",
+      "sample": "deployment_guard.output.md",
+      "expected_ok": true,
+      "actual_ok": true,
+      "targeted_assertion": null,
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Must include rollback plan text [contains]: Found required text: \"Release owner approval\"",
+        "Approval heading must be explicit [regex]: Regex matched pattern: \"(?m)^## Approval Gates$\"",
+        "Output must stay within the word limit [max_words]: Estimated word count 51 is within limit 120.",
+        "Output must stay compact [max_chars]: Character count 371 is within limit 900."
+      ],
+      "failed": [],
+      "included_in_isolated_summary": false,
+      "expectation_match": true
+    },
+    {
+      "contract": "release_summary_json",
+      "sample": "release_summary_json.output.json",
+      "expected_ok": true,
+      "actual_ok": true,
+      "targeted_assertion": null,
+      "passed": [
+        "JSON must match schema [json_schema]: JSON output matches output.schema.",
+        "Status key must be visible [contains]: Found required text: \"\"status\"\""
+      ],
+      "failed": [],
+      "included_in_isolated_summary": false,
+      "expectation_match": true
+    },
+    {
+      "contract": "incident_triage_json",
+      "sample": "incident_triage_json.output.json",
+      "expected_ok": true,
+      "actual_ok": true,
+      "targeted_assertion": null,
+      "passed": [
+        "Severity must exist [json_path_exists]: JSON path exists: $.severity",
+        "At least two actions are required [json_array_min_items]: JSON array at $.actions has 2 items, meets minimum 2."
+      ],
+      "failed": [],
+      "included_in_isolated_summary": false,
+      "expectation_match": true
+    },
+    {
+      "contract": "code_review",
+      "sample": "code_review__required_sections.output.md",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "required_sections",
+      "passed": [
+        "Must not claim code was modified [not_contains]: Forbidden text absent: \"I have changed the code\""
+      ],
+      "failed": [
+        "All sections must be present [required_sections]: Missing sections: Must Fix"
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "code_review",
+      "sample": "code_review__not_contains.output.md",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "not_contains",
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present."
+      ],
+      "failed": [
+        "Must not claim code was modified [not_contains]: Found forbidden text: \"I have changed the code\""
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "customer_brief",
+      "sample": "customer_brief__no_regex.output.md",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "no_regex",
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Must not promise lowest price [not_contains]: Forbidden text absent: \"保证最低价\"",
+        "Output must stay within the word limit [max_words]: Estimated word count 64.5 is within limit 1200."
+      ],
+      "failed": [
+        "Must not leak phone numbers [no_regex]: Regex matched forbidden pattern: \"\\b1[3-9]\\d{9}\\b\""
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "deployment_guard",
+      "sample": "deployment_guard__contains.output.md",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "contains",
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Approval heading must be explicit [regex]: Regex matched pattern: \"(?m)^## Approval Gates$\"",
+        "Output must stay within the word limit [max_words]: Estimated word count 31 is within limit 120.",
+        "Output must stay compact [max_chars]: Character count 221 is within limit 900."
+      ],
+      "failed": [
+        "Must include rollback plan text [contains]: Missing required text: \"Release owner approval\""
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "deployment_guard",
+      "sample": "deployment_guard__regex.output.md",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "regex",
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Must include rollback plan text [contains]: Found required text: \"Release owner approval\"",
+        "Output must stay within the word limit [max_words]: Estimated word count 32 is within limit 120.",
+        "Output must stay compact [max_chars]: Character count 230 is within limit 900."
+      ],
+      "failed": [
+        "Approval heading must be explicit [regex]: Regex did not match pattern: \"(?m)^## Approval Gates$\""
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "deployment_guard",
+      "sample": "deployment_guard__max_words.output.md",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "max_words",
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Must include rollback plan text [contains]: Found required text: \"Release owner approval\"",
+        "Approval heading must be explicit [regex]: Regex matched pattern: \"(?m)^## Approval Gates$\"",
+        "Output must stay compact [max_chars]: Character count 544 is within limit 900."
+      ],
+      "failed": [
+        "Output must stay within the word limit [max_words]: Estimated word count 144 exceeds limit 120."
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "deployment_guard",
+      "sample": "deployment_guard__max_chars.output.md",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "max_chars",
+      "passed": [
+        "All sections must be present [required_sections]: All required sections are present.",
+        "Must include rollback plan text [contains]: Found required text: \"Release owner approval\"",
+        "Approval heading must be explicit [regex]: Regex matched pattern: \"(?m)^## Approval Gates$\"",
+        "Output must stay within the word limit [max_words]: Estimated word count 35 is within limit 120."
+      ],
+      "failed": [
+        "Output must stay compact [max_chars]: Character count 1166 exceeds limit 900."
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "report_json",
+      "sample": "report_json__json_schema.output.json",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "json_schema",
+      "passed": [
+        "Verdict must exist [json_path_exists]: JSON path exists: $.verdict",
+        "Recommendations need at least 2 items [json_array_min_items]: JSON array at $.recommendations has 2 items, meets minimum 2."
+      ],
+      "failed": [
+        "JSON must match schema [json_schema]: JSON schema validation failed: 42 is not of type 'string'"
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "incident_triage_json",
+      "sample": "incident_triage_json__json_path_exists.output.json",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "json_path_exists",
+      "passed": [
+        "At least two actions are required [json_array_min_items]: JSON array at $.actions has 2 items, meets minimum 2."
+      ],
+      "failed": [
+        "Severity must exist [json_path_exists]: JSON path not found: $.severity"
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    },
+    {
+      "contract": "incident_triage_json",
+      "sample": "incident_triage_json__json_array_min_items.output.json",
+      "expected_ok": false,
+      "actual_ok": false,
+      "targeted_assertion": "json_array_min_items",
+      "passed": [
+        "Severity must exist [json_path_exists]: JSON path exists: $.severity"
+      ],
+      "failed": [
+        "At least two actions are required [json_array_min_items]: JSON array at $.actions has 1 items, below minimum 2."
+      ],
+      "included_in_isolated_summary": true,
+      "expectation_match": true
+    }
+  ],
+  "summary": {
+    "total_samples": 18,
+    "valid_total": 8,
+    "valid_passed": 8,
+    "valid_pass_rate": 100.0,
+    "isolated_defect_total": 10,
+    "isolated_defects_caught": 10,
+    "targeted_defect_catch_rate": 100.0,
+    "per_assertion": {
+      "contains": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "json_array_min_items": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "json_path_exists": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "json_schema": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "max_chars": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "max_words": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "no_regex": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "not_contains": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "regex": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "required_sections": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      }
+    }
+  }
+}

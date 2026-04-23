@@ -1,0 +1,662 @@
+{
+  "$defs": {
+    "Assertion": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "minLength": 1,
+          "title": "Type",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "pattern": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pattern"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Assertion",
+      "type": "object"
+    },
+    "Context": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "default": "",
+          "title": "Domain",
+          "type": "string"
+        },
+        "facts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Facts",
+          "type": "array"
+        },
+        "assumptions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Assumptions",
+          "type": "array"
+        },
+        "glossary": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Glossary",
+          "type": "object"
+        }
+      },
+      "title": "Context",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "require_sources": {
+          "default": false,
+          "title": "Require Sources",
+          "type": "boolean"
+        },
+        "mark_uncertainty": {
+          "default": false,
+          "title": "Mark Uncertainty",
+          "type": "boolean"
+        },
+        "distinguish": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Distinguish",
+          "type": "array"
+        }
+      },
+      "title": "Evidence",
+      "type": "object"
+    },
+    "FilesystemPermission": {
+      "additionalProperties": false,
+      "properties": {
+        "read": {
+          "default": false,
+          "title": "Read",
+          "type": "boolean"
+        },
+        "write": {
+          "default": false,
+          "title": "Write",
+          "type": "boolean"
+        }
+      },
+      "title": "FilesystemPermission",
+      "type": "object"
+    },
+    "HumanGate": {
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "minLength": 1,
+          "title": "When",
+          "type": "string"
+        },
+        "action": {
+          "minLength": 1,
+          "title": "Action",
+          "type": "string"
+        }
+      },
+      "required": [
+        "when",
+        "action"
+      ],
+      "title": "HumanGate",
+      "type": "object"
+    },
+    "InputSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "type": {
+          "minLength": 1,
+          "title": "Type",
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "required": {
+          "default": false,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "privacy": {
+          "default": "internal",
+          "title": "Privacy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "path"
+      ],
+      "title": "InputSpec",
+      "type": "object"
+    },
+    "IntentPack": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": "0.1",
+          "title": "Version",
+          "type": "string"
+        },
+        "imports": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Imports",
+          "type": "array"
+        },
+        "kind": {
+          "const": "IntentPack",
+          "title": "Kind",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "permissions": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Permissions"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "constraints": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Constraints",
+          "type": "array"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Evidence"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "quality": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quality"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "human_gates": {
+          "items": {
+            "$ref": "#/$defs/HumanGate"
+          },
+          "title": "Human Gates",
+          "type": "array"
+        },
+        "tests": {
+          "items": {
+            "$ref": "#/$defs/TestCase"
+          },
+          "title": "Tests",
+          "type": "array"
+        }
+      },
+      "required": [
+        "version",
+        "kind",
+        "metadata"
+      ],
+      "title": "IntentPack",
+      "type": "object"
+    },
+    "IntentSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": "0.1",
+          "title": "Version",
+          "type": "string"
+        },
+        "imports": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Imports",
+          "type": "array"
+        },
+        "kind": {
+          "const": "IntentSpec",
+          "title": "Kind",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        },
+        "task": {
+          "$ref": "#/$defs/Task"
+        },
+        "context": {
+          "$ref": "#/$defs/Context"
+        },
+        "inputs": {
+          "items": {
+            "$ref": "#/$defs/InputSpec"
+          },
+          "title": "Inputs",
+          "type": "array"
+        },
+        "permissions": {
+          "$ref": "#/$defs/Permissions"
+        },
+        "constraints": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Constraints",
+          "type": "array"
+        },
+        "evidence": {
+          "$ref": "#/$defs/Evidence"
+        },
+        "output": {
+          "discriminator": {
+            "mapping": {
+              "json": "#/$defs/JsonOutput",
+              "markdown": "#/$defs/MarkdownOutput",
+              "text": "#/$defs/TextOutput"
+            },
+            "propertyName": "format"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/MarkdownOutput"
+            },
+            {
+              "$ref": "#/$defs/TextOutput"
+            },
+            {
+              "$ref": "#/$defs/JsonOutput"
+            }
+          ],
+          "title": "Output"
+        },
+        "quality": {
+          "$ref": "#/$defs/Quality"
+        },
+        "human_gates": {
+          "items": {
+            "$ref": "#/$defs/HumanGate"
+          },
+          "title": "Human Gates",
+          "type": "array"
+        },
+        "tests": {
+          "items": {
+            "$ref": "#/$defs/TestCase"
+          },
+          "title": "Tests",
+          "type": "array"
+        }
+      },
+      "required": [
+        "version",
+        "kind",
+        "metadata",
+        "task",
+        "output"
+      ],
+      "title": "IntentSpec",
+      "type": "object"
+    },
+    "JsonOutput": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "json",
+          "title": "Format",
+          "type": "string"
+        },
+        "schema": {
+          "additionalProperties": true,
+          "title": "Schema",
+          "type": "object"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language"
+        }
+      },
+      "required": [
+        "format",
+        "schema"
+      ],
+      "title": "JsonOutput",
+      "type": "object"
+    },
+    "MarkdownOutput": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "markdown",
+          "title": "Format",
+          "type": "string"
+        },
+        "language": {
+          "minLength": 1,
+          "title": "Language",
+          "type": "string"
+        },
+        "max_words": {
+          "exclusiveMinimum": 0,
+          "title": "Max Words",
+          "type": "integer"
+        },
+        "sections": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Sections",
+          "type": "array"
+        }
+      },
+      "required": [
+        "format",
+        "language",
+        "max_words",
+        "sections"
+      ],
+      "title": "MarkdownOutput",
+      "type": "object"
+    },
+    "Metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "owner": {
+          "default": "",
+          "title": "Owner",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Metadata",
+      "type": "object"
+    },
+    "Permissions": {
+      "additionalProperties": false,
+      "properties": {
+        "web": {
+          "default": false,
+          "title": "Web",
+          "type": "boolean"
+        },
+        "filesystem": {
+          "$ref": "#/$defs/FilesystemPermission"
+        },
+        "network": {
+          "default": false,
+          "title": "Network",
+          "type": "boolean"
+        },
+        "tools": {
+          "$ref": "#/$defs/ToolPermissions"
+        }
+      },
+      "title": "Permissions",
+      "type": "object"
+    },
+    "Quality": {
+      "additionalProperties": false,
+      "properties": {
+        "tone": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tone",
+          "type": "array"
+        },
+        "must_include": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Must Include",
+          "type": "array"
+        },
+        "must_avoid": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Must Avoid",
+          "type": "array"
+        }
+      },
+      "title": "Quality",
+      "type": "object"
+    },
+    "Task": {
+      "additionalProperties": false,
+      "properties": {
+        "goal": {
+          "minLength": 1,
+          "title": "Goal",
+          "type": "string"
+        },
+        "audience": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Audience",
+          "type": "array"
+        },
+        "priority": {
+          "default": "medium",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Priority",
+          "type": "string"
+        }
+      },
+      "required": [
+        "goal"
+      ],
+      "title": "Task",
+      "type": "object"
+    },
+    "TestCase": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "assert": {
+          "items": {
+            "$ref": "#/$defs/Assertion"
+          },
+          "minItems": 1,
+          "title": "Assert",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "assert"
+      ],
+      "title": "TestCase",
+      "type": "object"
+    },
+    "TextOutput": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "text",
+          "title": "Format",
+          "type": "string"
+        },
+        "language": {
+          "minLength": 1,
+          "title": "Language",
+          "type": "string"
+        },
+        "max_words": {
+          "exclusiveMinimum": 0,
+          "title": "Max Words",
+          "type": "integer"
+        },
+        "sections": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sections",
+          "type": "array"
+        }
+      },
+      "required": [
+        "format",
+        "language",
+        "max_words"
+      ],
+      "title": "TextOutput",
+      "type": "object"
+    },
+    "ToolPermissions": {
+      "additionalProperties": false,
+      "properties": {
+        "send_email": {
+          "default": false,
+          "title": "Send Email",
+          "type": "boolean"
+        },
+        "read_calendar": {
+          "default": false,
+          "title": "Read Calendar",
+          "type": "boolean"
+        },
+        "read_gmail": {
+          "default": false,
+          "title": "Read Gmail",
+          "type": "boolean"
+        },
+        "create_file": {
+          "default": false,
+          "title": "Create File",
+          "type": "boolean"
+        },
+        "delete_file": {
+          "default": false,
+          "title": "Delete File",
+          "type": "boolean"
+        },
+        "purchase": {
+          "default": false,
+          "title": "Purchase",
+          "type": "boolean"
+        }
+      },
+      "title": "ToolPermissions",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/IntentSpec"
+    },
+    {
+      "$ref": "#/$defs/IntentPack"
+    }
+  ],
+  "description": "Wrapper model for schema generation.",
+  "title": "IntentSpecDocument"
+}

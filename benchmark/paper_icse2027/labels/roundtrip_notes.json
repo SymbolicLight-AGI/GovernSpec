@@ -1,0 +1,4 @@
+{
+  "compiled_artifacts": "Compiled round-trip fidelity compares normalized core fields only.",
+  "handwritten_artifacts": "Handwritten artifact fidelity is evaluated against partial gold labels because handwritten source artifacts rarely encode every IntentSpec field."
+}

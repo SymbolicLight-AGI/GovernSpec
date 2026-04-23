@@ -1,0 +1,112 @@
+version: "0.1"
+kind: "IntentSpec"
+
+metadata:
+  name: "customer_brief"
+  title: "Generate customer brief"
+  description: "Prepare a pre-meeting customer brief for the account team."
+  owner: "sales-team"
+
+task:
+  goal: "Help the account team understand the customer, the stated pain points, and the recommended next steps."
+  audience:
+    - "Sales manager"
+    - "Customer success manager"
+  priority: "medium"
+
+context:
+  domain: "B2B SaaS"
+  facts:
+    - "The customer is evaluating an enterprise knowledge base product."
+    - "The customer raised concerns about data security."
+  assumptions:
+    - "If the source material is incomplete, uncertain claims must be marked as inference."
+  glossary:
+    POC: "Proof of concept"
+    CS: "Customer success"
+
+inputs:
+  - name: "crm_notes"
+    type: "file"
+    path: "data/crm_notes.md"
+    required: true
+    privacy: "internal"
+  - name: "email_thread"
+    type: "file"
+    path: "data/email_thread.md"
+    required: false
+    privacy: "confidential"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: true
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not fabricate customer statements."
+  - "Do not expose private or personal data."
+  - "Mark unsupported claims as inference."
+  - "Do not make pricing commitments."
+
+evidence:
+  require_sources: true
+  mark_uncertainty: true
+  distinguish:
+    - "fact"
+    - "inference"
+    - "recommendation"
+
+output:
+  format: "markdown"
+  language: "zh-CN"
+  max_words: 1200
+  sections:
+    - "一句话结论"
+    - "客户背景"
+    - "明确表达的痛点"
+    - "风险信号"
+    - "推荐话术"
+    - "待确认问题"
+    - "依据与不确定性"
+
+quality:
+  tone:
+    - "简洁"
+    - "专业"
+  must_include:
+    - "At least 3 pain points"
+    - "At least 3 follow-up questions"
+  must_avoid:
+    - "empty sales clichés"
+    - "unsupported certainty"
+
+human_gates:
+  - when: "Task requires external network access"
+    action: "ask_confirmation"
+  - when: "Task involves privacy-sensitive information"
+    action: "ask_confirmation"
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"
+  - name: "Must not leak phone numbers"
+    assert:
+      - type: "no_regex"
+        pattern: "\\b1[3-9]\\d{9}\\b"
+  - name: "Must not promise lowest price"
+    assert:
+      - type: "not_contains"
+        value: "保证最低价"
+  - name: "Output must stay within the word limit"
+    assert:
+      - type: "max_words"

@@ -1,0 +1,9 @@
+{
+  "severity": "SEV2",
+  "owners": [
+    "on-call-sre"
+  ],
+  "actions": [
+    "Confirm the impact window."
+  ]
+}

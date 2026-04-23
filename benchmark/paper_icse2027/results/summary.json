@@ -1,0 +1,79 @@
+{
+  "compile": {
+    "total": 48,
+    "ok": 38,
+    "failed": 10,
+    "compile_success_rate": 79.17
+  },
+  "roundtrip": {
+    "compiled_total": 40,
+    "compiled_ok": 30,
+    "compiled_import_success_rate": 75.0,
+    "compiled_average_field_fidelity": 70.55,
+    "handwritten_total": 6,
+    "handwritten_ok": 6,
+    "handwritten_import_success_rate": 100.0,
+    "handwritten_average_gold_match": 100.0
+  },
+  "assertions": {
+    "total_samples": 18,
+    "valid_total": 8,
+    "valid_passed": 8,
+    "valid_pass_rate": 100.0,
+    "isolated_defect_total": 10,
+    "isolated_defects_caught": 10,
+    "targeted_defect_catch_rate": 100.0,
+    "per_assertion": {
+      "contains": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "json_array_min_items": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "json_path_exists": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "json_schema": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "max_chars": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "max_words": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "no_regex": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "not_contains": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "regex": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      },
+      "required_sections": {
+        "total": 1,
+        "caught": 1,
+        "catch_rate": 100.0
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+version: "0.1"
+kind: "IntentSpec"
+
+metadata:
+  name: "customer_brief"
+  title: "Benchmark customer brief"
+  description: "Benchmark markdown contract compliance."
+  owner: "benchmark"
+
+task:
+  goal: "Generate a customer brief."
+  audience:
+    - "Sales"
+  priority: "medium"
+
+context:
+  domain: "B2B SaaS"
+  facts: []
+  assumptions: []
+  glossary: {}
+
+inputs: []
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not expose private or personal data."
+
+evidence:
+  require_sources: true
+  mark_uncertainty: true
+  distinguish:
+    - "fact"
+    - "inference"
+
+output:
+  format: "markdown"
+  language: "zh-CN"
+  max_words: 800
+  sections:
+    - "一句话结论"
+    - "客户背景"
+    - "风险信号"
+    - "依据与不确定性"
+
+quality:
+  tone: []
+  must_include: []
+  must_avoid: []
+
+human_gates: []
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"

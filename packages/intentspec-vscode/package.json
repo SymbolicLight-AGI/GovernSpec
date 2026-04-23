@@ -1,0 +1,68 @@
+{
+  "name": "intentspec-vscode",
+  "displayName": "IntentSpec",
+  "description": "VS Code integration for IntentSpec contracts.",
+  "version": "0.1.0",
+  "publisher": "symboliclight",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:intentspec.validateCurrentFile",
+    "onCommand:intentspec.inspectCurrentFile",
+    "onCommand:intentspec.compileCurrentFile",
+    "onCommand:intentspec.testOutput",
+    "onCommand:intentspec.showMcpSetupSnippet"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "intentspec.validateCurrentFile",
+        "title": "IntentSpec: Validate Current File"
+      },
+      {
+        "command": "intentspec.inspectCurrentFile",
+        "title": "IntentSpec: Inspect Current File"
+      },
+      {
+        "command": "intentspec.compileCurrentFile",
+        "title": "IntentSpec: Compile Current File"
+      },
+      {
+        "command": "intentspec.testOutput",
+        "title": "IntentSpec: Test Output"
+      },
+      {
+        "command": "intentspec.showMcpSetupSnippet",
+        "title": "IntentSpec: Show MCP Setup Snippet"
+      }
+    ],
+    "configuration": {
+      "title": "IntentSpec",
+      "properties": {
+        "intentspec.intentCommand": {
+          "type": "string",
+          "default": "intent",
+          "description": "Path or command name for the IntentSpec CLI."
+        },
+        "intentspec.mcpCommand": {
+          "type": "string",
+          "default": "intentspec-mcp",
+          "description": "Path or command name for the IntentSpec MCP server."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.99.0",
+    "typescript": "^5.8.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}

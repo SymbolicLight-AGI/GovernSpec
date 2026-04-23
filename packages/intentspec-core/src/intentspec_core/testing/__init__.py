@@ -1,0 +1,2 @@
+"""IntentSpec output testing."""
+
