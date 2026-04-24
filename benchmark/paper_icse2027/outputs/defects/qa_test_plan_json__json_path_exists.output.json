@@ -1,0 +1,5 @@
+{
+  "scope": "release candidate dashboard flows",
+  "cases": ["login smoke test", "export workflow"]
+}
+

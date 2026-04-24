@@ -1,78 +1,184 @@
 {
   "compile": {
-    "total": 48,
-    "ok": 38,
-    "failed": 10,
-    "compile_success_rate": 79.17
+    "contract_count": 20,
+    "target_count": 6,
+    "total": 120,
+    "ok": 94,
+    "failed": 26,
+    "compile_success_rate": 78.33
   },
   "roundtrip": {
-    "compiled_total": 40,
-    "compiled_ok": 30,
-    "compiled_import_success_rate": 75.0,
-    "compiled_average_field_fidelity": 70.55,
-    "handwritten_total": 6,
-    "handwritten_ok": 6,
+    "compiled_total": 100,
+    "compiled_ok": 74,
+    "compiled_import_success_rate": 74.0,
+    "compiled_average_field_fidelity": 71.85,
+    "handwritten_total": 20,
+    "handwritten_ok": 20,
     "handwritten_import_success_rate": 100.0,
     "handwritten_average_gold_match": 100.0
   },
   "assertions": {
-    "total_samples": 18,
-    "valid_total": 8,
-    "valid_passed": 8,
+    "total_samples": 52,
+    "valid_total": 20,
+    "valid_passed": 20,
     "valid_pass_rate": 100.0,
-    "isolated_defect_total": 10,
-    "isolated_defects_caught": 10,
+    "isolated_defect_total": 32,
+    "isolated_defects_caught": 32,
     "targeted_defect_catch_rate": 100.0,
     "per_assertion": {
       "contains": {
-        "total": 1,
-        "caught": 1,
+        "total": 6,
+        "caught": 6,
         "catch_rate": 100.0
       },
       "json_array_min_items": {
-        "total": 1,
-        "caught": 1,
+        "total": 2,
+        "caught": 2,
         "catch_rate": 100.0
       },
       "json_path_exists": {
-        "total": 1,
-        "caught": 1,
+        "total": 2,
+        "caught": 2,
         "catch_rate": 100.0
       },
       "json_schema": {
-        "total": 1,
-        "caught": 1,
+        "total": 2,
+        "caught": 2,
         "catch_rate": 100.0
       },
       "max_chars": {
-        "total": 1,
-        "caught": 1,
+        "total": 2,
+        "caught": 2,
         "catch_rate": 100.0
       },
       "max_words": {
-        "total": 1,
-        "caught": 1,
+        "total": 3,
+        "caught": 3,
         "catch_rate": 100.0
       },
       "no_regex": {
-        "total": 1,
-        "caught": 1,
+        "total": 4,
+        "caught": 4,
         "catch_rate": 100.0
       },
       "not_contains": {
-        "total": 1,
-        "caught": 1,
+        "total": 4,
+        "caught": 4,
         "catch_rate": 100.0
       },
       "regex": {
-        "total": 1,
-        "caught": 1,
+        "total": 3,
+        "caught": 3,
         "catch_rate": 100.0
       },
       "required_sections": {
-        "total": 1,
-        "caught": 1,
+        "total": 4,
+        "caught": 4,
         "catch_rate": 100.0
+      }
+    }
+  },
+  "annotation_agreement": {
+    "item_count": 29,
+    "fields": {
+      "expected_ok": {
+        "total": 29,
+        "agreements": 29,
+        "disagreements": 0,
+        "percent_agreement": 100.0,
+        "cohen_kappa": 1.0,
+        "krippendorff_alpha_nominal": 1.0,
+        "labels": [
+          "false",
+          "true"
+        ],
+        "disagreement_items": []
+      },
+      "targeted_assertion": {
+        "total": 29,
+        "agreements": 24,
+        "disagreements": 5,
+        "percent_agreement": 82.76,
+        "cohen_kappa": 0.7917,
+        "krippendorff_alpha_nominal": 0.7906,
+        "labels": [
+          "contains",
+          "json_array_min_items",
+          "json_path_exists",
+          "json_schema",
+          "max_chars",
+          "max_words",
+          "no_regex",
+          "none",
+          "not_contains",
+          "regex",
+          "required_sections"
+        ],
+        "disagreement_items": [
+          {
+            "sample": "data_retention_audit__contains.output.md",
+            "codex_pass_a": "contains",
+            "codex_pass_b": "required_sections"
+          },
+          {
+            "sample": "privacy_impact_assessment__no_regex.output.md",
+            "codex_pass_a": "no_regex",
+            "codex_pass_b": "not_contains"
+          },
+          {
+            "sample": "support_ticket_triage__max_chars.output.md",
+            "codex_pass_a": "max_chars",
+            "codex_pass_b": "max_words"
+          },
+          {
+            "sample": "qa_test_plan_json__json_path_exists.output.json",
+            "codex_pass_a": "json_path_exists",
+            "codex_pass_b": "json_schema"
+          },
+          {
+            "sample": "vendor_summary_json__contains.output.json",
+            "codex_pass_a": "contains",
+            "codex_pass_b": "json_schema"
+          }
+        ]
+      },
+      "failure_scope": {
+        "total": 29,
+        "agreements": 27,
+        "disagreements": 2,
+        "percent_agreement": 93.1,
+        "cohen_kappa": 0.8612,
+        "krippendorff_alpha_nominal": 0.8606,
+        "labels": [
+          "coupled",
+          "isolated",
+          "none"
+        ],
+        "disagreement_items": [
+          {
+            "sample": "qa_test_plan_json__json_path_exists.output.json",
+            "codex_pass_a": "isolated",
+            "codex_pass_b": "coupled"
+          },
+          {
+            "sample": "vendor_summary_json__contains.output.json",
+            "codex_pass_a": "isolated",
+            "codex_pass_b": "coupled"
+          }
+        ]
+      },
+      "output_format": {
+        "total": 29,
+        "agreements": 29,
+        "disagreements": 0,
+        "percent_agreement": 100.0,
+        "cohen_kappa": 1.0,
+        "krippendorff_alpha_nominal": 1.0,
+        "labels": [
+          "json",
+          "markdown"
+        ],
+        "disagreement_items": []
       }
     }
   }

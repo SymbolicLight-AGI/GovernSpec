@@ -1,0 +1,61 @@
+version: "0.1"
+kind: "IntentSpec"
+
+metadata:
+  name: "qa_test_plan_json"
+  title: "QA test plan JSON"
+  description: "Produce a strict QA test plan payload."
+  owner: "quality"
+
+task:
+  goal: "Generate a test plan payload with scope, cases, and test count."
+  audience:
+    - "QA automation"
+  priority: "medium"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not invent test results."
+
+output:
+  format: "json"
+  schema:
+    type: object
+    additionalProperties: false
+    required:
+      - scope
+      - test_count
+      - cases
+    properties:
+      scope:
+        type: string
+      test_count:
+        type: integer
+      cases:
+        type: array
+        minItems: 2
+        items:
+          type: string
+
+tests:
+  - name: "JSON must match schema"
+    assert:
+      - type: "json_schema"
+  - name: "Test count must exist"
+    assert:
+      - type: "json_path_exists"
+        path: "$.test_count"
+

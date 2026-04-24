@@ -1,0 +1,69 @@
+version: "0.1"
+kind: "IntentSpec"
+
+metadata:
+  name: "data_retention_audit"
+  title: "Data retention audit"
+  description: "Audit a retention policy draft for privacy and deletion obligations."
+  owner: "privacy"
+
+task:
+  goal: "Review a retention policy draft and identify approval, deletion, and evidence gaps."
+  audience:
+    - "Privacy counsel"
+    - "Data platform owner"
+  priority: "high"
+
+context:
+  domain: "Privacy governance"
+  facts:
+    - "The policy applies to customer support logs."
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not include personal data in the report."
+  - "Do not approve indefinite retention."
+  - "Flag missing deletion evidence."
+
+output:
+  format: "markdown"
+  language: "en"
+  max_words: 70
+  sections:
+    - "Retention Scope"
+    - "Deletion Evidence"
+    - "Approval Gap"
+    - "Decision"
+
+human_gates:
+  - when: "Retention period changes customer data handling"
+    action: "ask_confirmation"
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"
+  - name: "Approval text must be present"
+    assert:
+      - type: "contains"
+        value: "Retention owner approval"
+  - name: "No indefinite retention recommendation"
+    assert:
+      - type: "no_regex"
+        pattern: "(?i)retain indefinitely"
+  - name: "Output must stay concise"
+    assert:
+      - type: "max_words"

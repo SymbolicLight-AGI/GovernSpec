@@ -11,8 +11,8 @@ from paper_helpers import (
     BENCHMARK_ROOT,
     RESULTS_DIR,
     load_resolved_spec,
+    output_sample_labels,
     percent,
-    read_json,
     write_json,
 )
 
@@ -22,7 +22,7 @@ def run(
     benchmark_root: Path = BENCHMARK_ROOT,
     results_dir: Path = RESULTS_DIR,
 ) -> dict[str, Any]:
-    labels = read_json(benchmark_root / "labels" / "output_samples.json")
+    labels = output_sample_labels(benchmark_root)
     records: list[dict[str, Any]] = []
     for item in labels:
         spec = load_resolved_spec(

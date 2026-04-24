@@ -1,194 +1,334 @@
 # IntentSpec: Zero-Intrusion Contract Compilation and Offline Acceptance Testing for Heterogeneous AI Agents
 
+Ting Liu  
+SymbolicLight Research  
+Foshan, Guangdong, China  
+research@symboliclight.com
+
 ## Abstract
 
-AI agent teams increasingly depend on heterogeneous tools such as repository
-instruction files, IDE rules, structured-output payloads, and MCP plans. Governance
-requirements are often duplicated across these artifacts as free text, making them
-hard to review, propagate, and validate consistently. Existing runtime-centered
-approaches can provide stronger action-time control, but they require integration
-points that are unavailable or undesirable in many off-the-shelf agent toolchains.
+AI-assisted software teams increasingly rely on heterogeneous agent interfaces:
+repository instruction files, IDE rule files, structured-output schemas, and
+machine-readable planning artifacts. The governance intent behind these artifacts is
+often stable across tools, but the artifacts themselves are duplicated, edited, and
+reviewed in incompatible formats. This fragmentation makes it difficult to keep
+permissions, safety constraints, human confirmation rules, and output requirements
+consistent without modifying every downstream agent runtime.
 
-We present IntentSpec, a local-first tool for authoring a single governance contract
-and compiling it into native artifacts consumed by heterogeneous AI agent workflows.
-IntentSpec validates a YAML source contract, resolves reusable governance packs,
-normalizes the task into an intermediate representation, compiles target-specific
-artifacts, and validates generated outputs with deterministic offline assertions.
-The current prototype implements 10 compile targets, 5 import source types, and 10
-deterministic assertion types. In a local artifact-level benchmark, the compile
-matrix contains 48 contract-target pairs across 8 contracts and 6 representative
-targets; 38 compiled successfully (79.17%). Compiled round-trip import succeeded for
-30 of 40 attempted artifacts (75.0%), with 70.55% average core-field fidelity among
-successful compiled round trips. All 8 valid outputs passed offline checks, and the
-targeted defect suite caught 10 of 10 labeled defects. These results show the
-feasibility of a zero-intrusion governance layer for settings where modifying agent
-runtimes is not practical.
+We present IntentSpec, a local-first tool that turns a single task-governance
+contract into native artifacts for multiple AI-agent workflows. Developers author an
+`intent.yaml` contract describing the task goal, permissions, constraints,
+confirmation gates, output contract, and deterministic acceptance tests. IntentSpec
+validates the contract, resolves reusable governance packs, normalizes it into an
+intermediate intent representation, compiles target-specific artifacts, supports
+reverse import from existing artifacts, and checks generated outputs with offline
+assertions. The prototype currently implements 10 compile targets, 5 import source
+types, and 10 deterministic assertion types. In a repository-local benchmark with
+20 contracts, 52 output samples, and 20 handwritten artifacts, 94 of 120
+representative contract-target pairs compiled successfully (78.33%); compiled
+round-trip import succeeded for 74 of 100 attempted artifacts (74.0%); handwritten
+artifact import succeeded for 20 of 20 artifacts; all 20 valid outputs passed
+offline checks; and the targeted defect suite caught 32 of 32 labeled defects.
+These results demonstrate the
+feasibility of a zero-intrusion, artifact-level governance workflow for settings in
+which teams cannot or do not want to modify agent runtimes.
 
-## Introduction
+## 1. Introduction
 
-Modern AI-assisted software work rarely happens in a single agent runtime. A team may
-use Codex-style repository instructions, Claude Code project files, Cursor rules, and
-API-level structured output in the same repository. The governance requirements are
-often stable across these tools: do not expose private data, do not delete files,
-ask for confirmation before high-risk actions, produce a report with required
-sections, and keep the result within a size limit. The artifacts that carry these
-requirements, however, are not stable or uniform. They are markdown files, IDE rule
-documents, JSON schema payloads, and machine-readable plans.
+Modern software teams rarely use a single AI-assistance surface. A repository may
+contain durable project instructions, an IDE may consume project-scoped rule files,
+an API integration may require a JSON schema, and an MCP-based workflow may exchange
+machine-readable plans. These channels are useful because they meet developers where
+they already work. They also create a governance maintenance problem: the same
+requirements must be translated into several formats, each with different expressive
+power and review affordances.
 
-This fragmentation creates an ordinary but costly software engineering problem.
-Teams must duplicate the same governance policy across multiple artifacts, review
-changes in several formats, and hope that the resulting instructions remain
-consistent. Runtime-centered policy systems address a related problem by intercepting
-actions, monitoring tool calls, or evaluating policies during execution. Those
-approaches are valuable when the team controls the agent runtime. They are less
-usable when the toolchain exposes only native instruction artifacts or structured
-output configuration.
+Consider a team that wants an agent to review a release plan. The policy is simple:
+do not read private customer data, do not access the network, ask before destructive
+file operations, produce a bounded report with required sections, and fail the output
+if it contains unsupported claims. In practice, that policy may be copied into
+markdown instructions, Cursor rule files, structured-output payloads, and MCP plans.
+Each copy can drift. Some formats can express natural-language instructions but not a
+schema. Some can express a JSON schema but not human confirmation gates. A reviewer
+must understand every target format before judging whether the policy still matches
+the original intent.
 
-IntentSpec addresses the artifact-level side of this problem. Developers write a
-single `intent.yaml` contract that describes the task goal, permissions, constraints,
-human confirmation gates, output contract, and deterministic acceptance tests. The
-tool compiles this contract into native downstream artifacts, including `AGENTS.md`,
-`CLAUDE.md`, Cursor rules, OpenAI Structured Outputs payloads, Gemini structured
-output payloads, and MCP plans. It also supports reverse import from existing
-artifacts into draft contracts, making migration from handwritten instructions
-possible.
+IntentSpec addresses this artifact-level problem. It is not an agent runtime, a
+monitor, or a fail-closed policy enforcement layer. Instead, it provides a small
+compiler and validator for task-governance contracts. A developer writes one
+`intent.yaml` file. IntentSpec compiles that contract into the native artifact
+channels used by downstream tools and then provides deterministic offline checks for
+the final output.
 
-The core research question for this demonstration is: can a single contract be
-compiled into native governance artifacts across heterogeneous AI agent toolchains,
-without modifying their runtimes, while still supporting deterministic post-hoc
-validation of generated outputs?
+This demonstration answers the following question: can a single local contract be
+compiled into heterogeneous AI-agent artifacts, imported back into a structured
+representation, and used to validate outputs without calling an external LLM service
+or modifying an agent runtime?
 
-This paper contributes:
+The paper makes four concrete contributions:
 
-1. A local-first tool workflow for authoring a single governance contract and
-   compiling it into multiple agent-native artifacts.
-2. An intermediate representation that separates the authoring schema from
-   target-specific artifact generation.
-3. A reverse-import workflow for reconstructing structured contracts from compiled
-   or handwritten artifacts.
-4. A deterministic offline acceptance test runner that checks generated outputs
-   without calling an LLM.
+1. A local-first contract workflow for making task goals, permissions, constraints,
+   human gates, output requirements, and acceptance tests reviewable in one source.
+2. A target compiler that lowers the same contract into multiple agent-native
+   artifacts, including instruction markdown, IDE rules, structured-output schemas,
+   and MCP-style plans.
+3. A reverse-import workflow for migrating generated or handwritten artifacts back
+   into draft contracts, exposing fidelity loss rather than hiding it.
+4. A reproducible artifact-level benchmark and offline assertion suite that evaluate
+   compilation coverage, round-trip fidelity, and deterministic defect detection.
 
-## Tool Overview
+## 2. Background and Positioning
 
-IntentSpec is intentionally small. It is not an agent runtime, and it does not call
-LLM APIs. Its job is to make governance intent explicit, portable, and testable.
+IntentSpec is motivated by a growing set of tool-specific artifact channels. Claude
+Code documents project memory through `CLAUDE.md` files [1]. Cursor project rules
+are stored as `.mdc` files with metadata and markdown content [2]. OpenAI Structured
+Outputs accept JSON Schema-based response formats for schema-constrained model
+outputs [3]. The Model Context Protocol defines a machine-readable protocol for
+connecting model applications with tools and context sources [4].
 
-The workflow has six steps:
+This tool context sits within a broader software-engineering literature on LLM
+coding assistance, agentic tool use, and prompt engineering. Code-generation
+benchmarks and real-repository tasks show that LLMs can assist software work but
+also require external validation [5-7]. Studies of coding assistants report
+productivity benefits as well as security and over-trust risks [8,9].
+Prompt-pattern and agent research further suggests that reusable instructions and
+tool context are central to reliable human-agent workflows [10,11].
+
+These systems are not interchangeable. They expose different integration points,
+different artifact formats, and different guarantees. IntentSpec therefore does not
+attempt to define a new universal agent runtime. Its narrower contribution is a
+compilation layer above existing artifact channels. The source contract captures the
+governance intent once; target backends translate what each downstream channel can
+represent; and capability notes make target limitations explicit.
+
+This positioning also shapes the validation claim. Native instruction files and IDE
+rules are advisory artifacts, not runtime monitors. IntentSpec therefore avoids
+claiming that it can prevent unsafe actions at execution time. It demonstrates that a
+team can author, propagate, migrate, and test governance intent locally, with
+deterministic artifacts that are suitable for review and continuous integration.
+
+## 3. Tool Design
+
+IntentSpec has five internal stages:
 
 ```text
 intent.yaml
-  -> validate
-  -> resolve imports
-  -> normalize to IIR
-  -> compile to target artifact
-  -> run agent in the target toolchain
-  -> test the output offline
+  -> parse and validate
+  -> resolve imported governance packs
+  -> normalize to the intermediate intent representation
+  -> compile to target-specific artifacts
+  -> test generated outputs offline
 ```
 
-The source contract is a YAML document. It contains metadata, a task goal,
-permissions, constraints, evidence rules, output expectations, human gates, and
-tests. Reusable policy fragments can be stored as `IntentPack` files and imported
-into contracts. Import resolution applies conservative merge behavior such as
-deny-wins permissions and preserving imported acceptance assertions.
+The source contract is a YAML document containing metadata, task context, inputs,
+permissions, constraints, evidence expectations, output requirements, human
+confirmation gates, and tests. Reusable policy fragments are represented as
+`IntentPack` files. Import resolution applies conservative merge behavior, including
+deny-wins permissions and preservation of imported acceptance assertions.
 
-After parsing and import resolution, IntentSpec builds an intermediate intent
-representation (IIR). The IIR stores normalized goal text, resolved permissions,
-merged constraints, output contracts, human gates, test contracts, risk signals, and
-target capability notes. The compiler lowers this IIR into each target family. For
-instruction targets, it emits markdown documents. For structured-output targets, it
-emits JSON schema payloads. For MCP planning, it emits a machine-readable plan with
-risk level and constraint-loss notes.
+The intermediate intent representation (IIR) separates authoring concerns from
+target formatting. It stores the normalized task goal, resolved permissions, merged
+constraints, output contract, human gates, test contracts, risk signals, and target
+capability notes. Backends then lower the IIR into concrete target families. For
+instruction-style targets, IntentSpec emits markdown. For Cursor rules, it emits a
+rule bundle. For structured-output targets, it emits JSON schema payloads. For MCP
+planning, it emits a machine-readable plan with risk and constraint-loss fields.
 
-The acceptance runner evaluates final outputs using deterministic checks. The current
-prototype supports required sections, containment and forbidden containment, regular
+The offline acceptance runner evaluates final artifacts after an agent has produced
+an output. It supports required sections, required and forbidden substrings, regular
 expression checks, word and character limits, JSON schema validation, JSON path
-existence, and JSON array size checks. These assertions do not judge semantic truth.
-They are designed to catch reproducible compliance failures such as missing sections,
-forbidden text, malformed JSON, and output contract violations.
+existence, and JSON array size constraints. These checks deliberately focus on
+deterministic compliance properties. They do not verify semantic truth, factual
+correctness, or whether a model internally followed the instructions.
 
-## Key Design Choices
+## 4. Demonstration Scenario
 
-First, IntentSpec uses existing artifact channels instead of requiring runtime
-modification. This is the main reason the tool can support heterogeneous workflows.
-If a platform already reads `AGENTS.md`, `CLAUDE.md`, `.mdc` rules, or structured
-output JSON, IntentSpec compiles into that channel.
+The demonstration uses the repository-local benchmark in
+`benchmark/paper_icse2027/`. It contains 20 contracts, 52 output samples, 20
+handwritten artifacts, explicit labels, experiment scripts, and generated results.
+The benchmark is designed to run without external model APIs or network-dependent
+agent services.
 
-Second, the IIR keeps authoring concerns separate from target-specific formatting.
-The YAML schema is designed for humans to write and review. The target artifacts are
-designed for specific tools to consume. The IIR is the boundary between those two
-worlds, which keeps target backends small and makes reverse import easier to reason
-about.
-
-Third, IntentSpec treats target limitations as part of the user experience. Some
-targets can express natural-language constraints but cannot enforce JSON schema.
-Other targets can enforce JSON structure but cannot represent human confirmation
-rules. The `mcp-plan` target exposes this mismatch through `constraint_loss`; the
-paper benchmark treats this as an example of compile-time loss reporting rather than
-a universal loss API across all targets.
-
-Fourth, offline acceptance testing complements zero-intrusion compilation. Native
-instruction artifacts are advisory channels, so IntentSpec does not claim fail-closed
-runtime enforcement. Instead, it gives teams a reproducible way to detect whether an
-agent output violates the contract after generation.
-
-## Demonstration Scenario and Initial Validation
-
-The demonstration uses a repository-local benchmark under
-`benchmark/paper_icse2027/`. It includes 8 contracts, 18 output samples, 6
-handwritten artifacts, and scripts for compilation, round-trip import, assertion
-evaluation, and table rendering. The benchmark does not call external agent services.
-This keeps the demonstration reproducible on a developer machine and avoids mixing
-tool behavior with model behavior.
-
-The multi-target compilation experiment evaluates 8 contracts against 6
+The live demonstration has four segments. First, the presenter authors or edits a
+small `intent.yaml` contract with a task goal, permissions, human gates, output
+requirements, and tests. Second, IntentSpec compiles the same contract into
 representative targets: `agents-md`, `claude-md`, `cursor-rules`,
-`openai-structured`, `gemini-structured`, and `mcp-plan`. The compile matrix contains
-48 contract-target pairs; 38 compiled successfully (79.17%). All instruction-style
-and MCP-plan targets compiled for all contracts. Structured-output targets compiled
-for the JSON-output contracts and failed for markdown-output contracts, which is an
-expected target limitation rather than a runtime error.
+`openai-structured`, `gemini-structured`, and `mcp-plan`. Third, the presenter
+reverse-imports generated and handwritten artifacts into draft contracts and shows
+where fidelity is preserved or lost. Fourth, the presenter runs the offline
+acceptance runner against valid and defective outputs, showing deterministic failure
+messages for missing sections, forbidden text, malformed JSON, and schema mismatch.
 
-The round-trip experiment compiles contracts into the 5 importable source types and
-imports them back into draft contracts. Compiled round-trip import succeeded for 30
-of 40 attempted artifacts (75.0%). Successful compiled round trips had an average
-core-field fidelity of 70.55%. The benchmark also imports 6 handwritten artifacts and
-matches them against partial gold labels; all 6 imported successfully. These results
-illustrate that IntentSpec can support both precise migration from generated
-artifacts and heuristic recovery from human-written artifacts, while making fidelity
-loss visible.
-
-The assertion experiment evaluates 8 valid outputs and 10 targeted defect outputs.
-All 8 valid outputs passed offline acceptance tests (100.0%). The targeted defect
-suite caught 10 of 10 labeled defects (100.0%), with one sample for each supported
-assertion type. The defects cover missing markdown sections, forbidden text, required
-text absence, regex mismatch, regex-forbidden content, word-limit violations,
-character-limit violations, JSON schema mismatch, missing JSON paths, and undersized
-JSON arrays.
-
-These results are intentionally scoped. They do not show that IntentSpec can prevent
-an agent from taking an unsafe action at runtime. They show that a single source
-contract can be compiled across heterogeneous artifact formats, imported back into a
-structured representation, and used to evaluate outputs without external services.
-
-## Availability
-
-The benchmark can be reproduced locally from the repository root:
+All experiments are reproducible with a single command from the repository root:
 
 ```bash
 python benchmark/paper_icse2027/scripts/run_all.py
 ```
 
-The command writes JSON results and paper-friendly Markdown tables to
-`benchmark/paper_icse2027/results/`. The generated files include:
+The command generates `compile_matrix.json`, `roundtrip_fidelity.json`,
+`assertion_eval.json`, `annotation_agreement.json`, `summary.json`, `tables.md`,
+and `numbers.md` under
+`benchmark/paper_icse2027/results/`.
 
-- `compile_matrix.json`
-- `roundtrip_fidelity.json`
-- `assertion_eval.json`
-- `summary.json`
-- `tables.md`
-- `numbers.md`
+## 5. Initial Validation
 
-The demo video should show the same workflow in four short segments: author a
-contract, compile to multiple targets, reverse-import an artifact, and run offline
-acceptance tests against valid and defective outputs.
+The validation is intentionally artifact-level. It evaluates whether the current
+implementation can compile representative contracts, recover structured drafts from
+artifacts, and detect labeled output defects. It does not evaluate live agent
+behavior.
+
+### 5.1 Multi-Target Compilation
+
+The compile matrix evaluates 20 contracts against 6 representative targets, producing
+120 contract-target pairs. Table 1 reports target-level coverage. Instruction-style
+targets and `mcp-plan` compiled for all contracts. Structured-output targets
+compiled for JSON-output contracts and failed for markdown-output contracts. These
+failures are expected target limitations because schema-constrained output targets
+require JSON output contracts.
+
+**Table 1. Target coverage in the compile matrix.**
+
+| Target | Succeeded | Total |
+| --- | ---: | ---: |
+| `agents-md` | 20 | 20 |
+| `claude-md` | 20 | 20 |
+| `cursor-rules` | 20 | 20 |
+| `openai-structured` | 7 | 20 |
+| `gemini-structured` | 7 | 20 |
+| `mcp-plan` | 20 | 20 |
+
+Overall, 94 of 120 contract-target pairs compiled successfully (78.33%).
+
+### 5.2 Reverse Import Fidelity
+
+The round-trip experiment compiles contracts into the 5 importable source types and
+imports them back into draft contracts. The comparison focuses on core fields:
+`goal`, `permissions`, `constraints`, `human_gates`, `output`, and `tests`.
+Non-core metadata and source-path fields are ignored. JSON schemas are normalized
+with stable key ordering before comparison.
+
+**Table 2. Round-trip import and core-field fidelity.**
+
+| Source type | Imported | Average field fidelity |
+| --- | ---: | ---: |
+| `agents-md` | 20 | 77.5% |
+| `claude-md` | 20 | 77.5% |
+| `cursor-rules` | 20 | 77.5% |
+| `gemini-structured` | 7 | 47.62% |
+| `openai-structured` | 7 | 47.62% |
+
+Compiled round-trip import succeeded for 74 of 100 attempted artifacts (74.0%).
+Successful compiled round trips had an average core-field fidelity of 71.85%. The
+benchmark also imports 20 handwritten artifacts and matches them against partial gold
+labels; all 20 imported successfully. These results show that generated instruction
+artifacts preserve more recoverable governance information than structured-output
+payloads, while structured-output payloads remain useful for output schema recovery.
+
+### 5.3 Offline Assertion Effectiveness
+
+The assertion experiment evaluates 20 valid outputs and 32 targeted defect outputs.
+The defect suite contains at least two samples for each supported assertion type.
+
+**Table 3. Targeted defect detection by assertion type.**
+
+| Assertion | Targeted samples | Caught | Catch rate |
+| --- | ---: | ---: | ---: |
+| `contains` | 6 | 6 | 100.0% |
+| `json_array_min_items` | 2 | 2 | 100.0% |
+| `json_path_exists` | 2 | 2 | 100.0% |
+| `json_schema` | 2 | 2 | 100.0% |
+| `max_chars` | 2 | 2 | 100.0% |
+| `max_words` | 3 | 3 | 100.0% |
+| `no_regex` | 4 | 4 | 100.0% |
+| `not_contains` | 4 | 4 | 100.0% |
+| `regex` | 3 | 3 | 100.0% |
+| `required_sections` | 4 | 4 | 100.0% |
+
+All 20 valid outputs passed offline acceptance tests (100.0%), and the targeted
+defect suite caught 32 of 32 labeled defects (100.0%). The observed failures cover
+missing markdown sections, forbidden content, absent required content, regex
+mismatch, forbidden regex matches, length violations, JSON schema mismatch, missing
+JSON paths, and undersized JSON arrays.
+
+### 5.4 Assisted Annotation Agreement
+
+The expanded benchmark also records a pilot consistency check over 29 output
+samples. Two Codex-assisted annotation passes labeled `expected_ok`,
+`targeted_assertion`, `failure_scope`, and `output_format` according to
+`labels/annotation_protocol.md`. These labels should be reported as an assisted
+consistency check, not as independent human-human agreement.
+
+**Table 4. Assisted annotation agreement.**
+
+| Field | Items | Agreement | Cohen kappa |
+| --- | ---: | ---: | ---: |
+| `expected_ok` | 29 | 100.0% | 1.0 |
+| `targeted_assertion` | 29 | 82.76% | 0.7917 |
+| `failure_scope` | 29 | 93.1% | 0.8612 |
+| `output_format` | 29 | 100.0% | 1.0 |
+
+## 6. Threats to Validity and Limitations
+
+The benchmark is small and curated. It is appropriate for demonstrating feasibility,
+but it is not evidence of broad empirical generality across all agent tools,
+repositories, or policy styles. The contracts intentionally cover markdown and JSON
+outputs, English and Chinese text, imports, human gates, filesystem and network
+risks, and all supported assertion types, but the suite remains a seed benchmark.
+
+The validation isolates artifact behavior from model behavior. This design makes the
+experiments deterministic and reproducible, but it also means the results do not
+measure whether a live agent follows a compiled instruction file in practice.
+IntentSpec should therefore be viewed as an authoring, propagation, migration, and
+post-hoc validation layer rather than as runtime security enforcement.
+
+Reverse import is heuristic for natural-language artifacts. It can recover goals,
+constraints, permissions, and output hints from generated or handwritten artifacts,
+but it cannot guarantee semantic equivalence with the original author intent. The
+tool exposes this limitation through field-level fidelity rather than hiding it
+behind a binary success metric.
+
+## 7. Availability
+
+IntentSpec is implemented as a Python 3.11+ local CLI and library. The benchmark and
+generated results are included under `benchmark/paper_icse2027/`. The prototype does
+not call real LLM APIs, does not require API keys, and does not require network
+access for the reported experiments. The local reproduction command is:
+
+```bash
+python benchmark/paper_icse2027/scripts/run_all.py
+```
+
+## References
+
+[1] Anthropic. "How Claude remembers your project." Claude Code Docs. Accessed Apr.
+24, 2026. https://code.claude.com/docs/en/memory
+
+[2] Cursor. "Rules." Cursor Documentation. Accessed Apr. 24, 2026.
+https://docs.cursor.com/context/rules
+
+[3] OpenAI. "Structured model outputs." OpenAI API Documentation. Accessed Apr. 24,
+2026. https://developers.openai.com/api/docs/guides/structured-outputs
+
+[4] Model Context Protocol. "Specification." Model Context Protocol Documentation.
+Accessed Apr. 24, 2026. https://modelcontextprotocol.io/specification/draft
+
+[5] Chen et al. "Evaluating Large Language Models Trained on Code." arXiv, 2021.
+https://arxiv.org/abs/2107.03374
+
+[6] Jimenez et al. "SWE-bench: Can Language Models Resolve Real-World GitHub
+Issues?" ICLR, 2024. https://openreview.net/forum?id=VTF8yNQM66
+
+[7] Fan et al. "Large Language Models for Software Engineering: Survey and Open
+Problems." arXiv, 2023. https://arxiv.org/abs/2310.03533
+
+[8] Peng et al. "The Impact of AI on Developer Productivity: Evidence from GitHub
+Copilot." arXiv, 2023. https://arxiv.org/abs/2302.06590
+
+[9] Perry et al. "Do Users Write More Insecure Code with AI Assistants?" CCS, 2023.
+https://doi.org/10.1145/3576915.3623157
+
+[10] White et al. "A Prompt Pattern Catalog to Enhance Prompt Engineering with
+ChatGPT." arXiv, 2023. https://arxiv.org/abs/2302.11382
+
+[11] Yao et al. "ReAct: Synergizing Reasoning and Acting in Language Models." ICLR,
+2023. https://openreview.net/forum?id=WE_vluYUL-X

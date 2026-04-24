@@ -1,0 +1,20 @@
+{
+  "type": "json_schema",
+  "json_schema": {
+    "name": "incident_postmortem_json",
+    "description": "Produce a structured postmortem summary.",
+    "strict": true,
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["incident_id", "impact", "contributing_factors", "actions"],
+      "properties": {
+        "incident_id": {"type": "string"},
+        "impact": {"type": "string"},
+        "contributing_factors": {"type": "array", "items": {"type": "string"}},
+        "actions": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
+

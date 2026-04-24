@@ -18,9 +18,9 @@ from paper_helpers import (
     contract_name,
     contract_paths,
     evaluate_handwritten_expectations,
+    handwritten_artifact_labels,
     load_resolved_spec,
     percent,
-    read_json,
     spec_from_payload,
     write_json,
 )
@@ -103,7 +103,7 @@ def _run_compiled_roundtrip(benchmark_root: Path) -> list[dict[str, Any]]:
 
 
 def _run_handwritten_roundtrip(benchmark_root: Path) -> list[dict[str, Any]]:
-    labels = read_json(benchmark_root / "labels" / "handwritten_artifacts.json")
+    labels = handwritten_artifact_labels(benchmark_root)
     records: list[dict[str, Any]] = []
     for item in labels:
         artifact_path = benchmark_root / item["artifact"]

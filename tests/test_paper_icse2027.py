@@ -32,11 +32,10 @@ HELPERS = _load_helpers()
 
 def test_paper_dataset_is_consistent() -> None:
     contracts = sorted((BENCHMARK / "contracts").glob("*.intent.yaml"))
-    output_labels = json.loads(
-        (BENCHMARK / "labels" / "output_samples.json").read_text(encoding="utf-8")
-    )
-    handwritten_labels = json.loads(
-        (BENCHMARK / "labels" / "handwritten_artifacts.json").read_text(encoding="utf-8")
+    output_labels = HELPERS.output_sample_labels(BENCHMARK)
+    handwritten_labels = HELPERS.handwritten_artifact_labels(BENCHMARK)
+    annotation_rounds = json.loads(
+        (BENCHMARK / "labels" / "annotation_rounds.json").read_text(encoding="utf-8")
     )
     assertion_types = {
         label["targeted_assertion"]
@@ -44,9 +43,10 @@ def test_paper_dataset_is_consistent() -> None:
         if label["targeted_assertion"] is not None
     }
 
-    assert len(contracts) == 8
-    assert len(output_labels) == 18
-    assert len(handwritten_labels) == 6
+    assert len(contracts) == 20
+    assert len(output_labels) == 52
+    assert len(handwritten_labels) == 20
+    assert len(annotation_rounds["items"]) >= 24
     assert assertion_types == {
         "contains",
         "json_array_min_items",
@@ -67,6 +67,9 @@ def test_paper_dataset_is_consistent() -> None:
     assert valid_contracts == contract_names
     for label in output_labels:
         assert (BENCHMARK / label["output_path"]).is_file()
+    for label in handwritten_labels:
+        assert (BENCHMARK / label["artifact"]).is_file()
+    assert (BENCHMARK / "labels" / annotation_rounds["protocol"]).is_file()
 
 
 def test_compile_matrix_runner_smoke(tmp_path: Path) -> None:
@@ -126,6 +129,26 @@ def test_assertion_eval_runner_smoke(tmp_path: Path) -> None:
     assert {"samples", "summary"} <= set(payload)
 
 
+def test_annotation_agreement_runner_smoke(tmp_path: Path) -> None:
+    out_dir = tmp_path / "results"
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPTS / "run_annotation_agreement.py"),
+            "--results-dir",
+            str(out_dir),
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr or result.stdout
+    payload = json.loads((out_dir / "annotation_agreement.json").read_text(encoding="utf-8"))
+    assert {"annotators", "fields", "item_count", "protocol", "unit"} <= set(payload)
+    assert (out_dir / "annotation_agreement.md").is_file()
+
+
 def test_run_all_generates_paper_outputs(tmp_path: Path) -> None:
     out_dir = tmp_path / "results"
     result = subprocess.run(
@@ -145,6 +168,8 @@ def test_run_all_generates_paper_outputs(tmp_path: Path) -> None:
         "compile_matrix.json",
         "roundtrip_fidelity.json",
         "assertion_eval.json",
+        "annotation_agreement.json",
+        "annotation_agreement.md",
         "summary.json",
         "tables.md",
         "numbers.md",

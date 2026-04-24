@@ -1,0 +1,68 @@
+version: "0.1"
+kind: "IntentSpec"
+
+metadata:
+  name: "compliance_checklist_json"
+  title: "Compliance checklist JSON"
+  description: "Produce a strict compliance checklist payload."
+  owner: "compliance"
+
+task:
+  goal: "Generate a structured compliance checklist with status, controls, and blockers."
+  audience:
+    - "Compliance dashboard"
+  priority: "high"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not mark controls passed without evidence."
+
+output:
+  format: "json"
+  schema:
+    type: object
+    additionalProperties: false
+    required:
+      - status
+      - controls
+      - blockers
+    properties:
+      status:
+        type: string
+        enum:
+          - pass
+          - fail
+          - needs_review
+      controls:
+        type: array
+        minItems: 2
+        items:
+          type: string
+      blockers:
+        type: array
+        items:
+          type: string
+
+tests:
+  - name: "JSON must match schema"
+    assert:
+      - type: "json_schema"
+  - name: "At least two controls are required"
+    assert:
+      - type: "json_array_min_items"
+        path: "$.controls"
+        value: 2
+

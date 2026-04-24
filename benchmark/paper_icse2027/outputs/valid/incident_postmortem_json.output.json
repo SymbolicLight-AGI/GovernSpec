@@ -1,0 +1,7 @@
+{
+  "incident_id": "INC-2026-0424",
+  "impact": "dashboard latency increased for internal users",
+  "contributing_factors": ["cache invalidation delay"],
+  "actions": ["add cache alert", "document rollback trigger"]
+}
+

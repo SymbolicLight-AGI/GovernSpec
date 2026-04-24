@@ -1,0 +1,369 @@
+\documentclass[10pt,conference]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{cite}
+
+\title{IntentSpec: Zero-Intrusion Contract Compilation and Offline Acceptance Testing for Heterogeneous AI Agents}
+
+\author{\IEEEauthorblockN{Ting Liu}
+\IEEEauthorblockA{SymbolicLight Research\\
+Foshan, Guangdong, China\\
+research@symboliclight.com}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+AI-assisted software teams increasingly rely on heterogeneous agent interfaces:
+repository instruction files, IDE rule files, structured-output schemas, and
+machine-readable planning artifacts. The governance intent behind these artifacts is
+often stable across tools, but the artifacts themselves are duplicated, edited, and
+reviewed in incompatible formats. This fragmentation makes it difficult to keep
+permissions, safety constraints, human confirmation rules, and output requirements
+consistent without modifying every downstream agent runtime.
+
+We present IntentSpec, a local-first tool that turns a single task-governance
+contract into native artifacts for multiple AI-agent workflows. Developers author an
+\texttt{intent.yaml} contract describing the task goal, permissions, constraints,
+confirmation gates, output contract, and deterministic acceptance tests. IntentSpec
+validates the contract, resolves reusable governance packs, normalizes it into an
+intermediate intent representation, compiles target-specific artifacts, supports
+reverse import from existing artifacts, and checks generated outputs with offline
+assertions. The prototype currently implements 10 compile targets, 5 import source
+types, and 10 deterministic assertion types. In a repository-local benchmark with
+20 contracts, 52 output samples, and 20 handwritten artifacts, 94 of 120
+representative contract-target pairs compiled successfully (78.33\%); compiled
+round-trip import succeeded for 74 of 100 attempted artifacts (74.0\%);
+handwritten artifact import succeeded for 20 of 20 artifacts; all 20 valid outputs
+passed offline checks; and the targeted defect suite caught 32 of 32 labeled
+defects. These results demonstrate the
+feasibility of a zero-intrusion, artifact-level governance workflow for settings in
+which teams cannot or do not want to modify agent runtimes.
+\end{abstract}
+
+\section{Introduction}
+
+Modern software teams rarely use a single AI-assistance surface. A repository may
+contain durable project instructions, an IDE may consume project-scoped rule files,
+an API integration may require a JSON schema, and an MCP-based workflow may exchange
+machine-readable plans. These channels are useful because they meet developers where
+they already work. They also create a governance maintenance problem: the same
+requirements must be translated into several formats, each with different expressive
+power and review affordances.
+
+Consider a team that wants an agent to review a release plan. The policy is simple:
+do not read private customer data, do not access the network, ask before destructive
+file operations, produce a bounded report with required sections, and fail the output
+if it contains unsupported claims. In practice, that policy may be copied into
+markdown instructions, Cursor rule files, structured-output payloads, and MCP plans.
+Each copy can drift. Some formats can express natural-language instructions but not a
+schema. Some can express a JSON schema but not human confirmation gates. A reviewer
+must understand every target format before judging whether the policy still matches
+the original intent.
+
+IntentSpec addresses this artifact-level problem. It is not an agent runtime, a
+monitor, or a fail-closed policy enforcement layer. Instead, it provides a small
+compiler and validator for task-governance contracts. A developer writes one
+\texttt{intent.yaml} file. IntentSpec compiles that contract into the native artifact
+channels used by downstream tools and then provides deterministic offline checks for
+the final output.
+
+This demonstration asks whether a single local contract can be compiled into
+heterogeneous AI-agent artifacts, imported back into a structured representation, and
+used to validate outputs without calling an external LLM service or modifying an
+agent runtime.
+
+The paper makes four concrete contributions:
+\begin{itemize}
+  \item A local-first contract workflow for making task goals, permissions,
+  constraints, human gates, output requirements, and acceptance tests reviewable in
+  one source.
+  \item A target compiler that lowers the same contract into multiple agent-native
+  artifacts, including instruction markdown, IDE rules, structured-output schemas,
+  and MCP-style plans.
+  \item A reverse-import workflow for migrating generated or handwritten artifacts
+  back into draft contracts, exposing fidelity loss rather than hiding it.
+  \item A reproducible artifact-level benchmark and offline assertion suite that
+  evaluate compilation coverage, round-trip fidelity, and deterministic defect
+  detection.
+\end{itemize}
+
+\section{Background and Positioning}
+
+IntentSpec is motivated by a growing set of tool-specific artifact channels. Claude
+Code documents project memory through \texttt{CLAUDE.md} files~\cite{anthropic_memory}.
+Cursor project rules are stored as \texttt{.mdc} files with metadata and markdown
+content~\cite{cursor_rules}. OpenAI Structured Outputs accept JSON Schema-based
+response formats for schema-constrained model outputs~\cite{openai_structured}.
+The Model Context Protocol defines a machine-readable protocol for connecting model
+applications with tools and context sources~\cite{mcp_spec}.
+
+This tool context sits within a broader software-engineering literature on LLM
+coding assistance, agentic tool use, and prompt engineering. Code-generation
+benchmarks and real-repository tasks show that LLMs can assist software work but
+also require external validation~\cite{chen_codex,jimenez_swebench,fan_llm_se}.
+Studies of coding assistants report productivity benefits as well as security and
+over-trust risks~\cite{peng_copilot,perry_insecure}. Prompt-pattern and agent
+research further suggests that reusable instructions and tool context are central
+to reliable human-agent workflows~\cite{white_prompt_patterns,yao_react}.
+
+These systems are not interchangeable. They expose different integration points,
+different artifact formats, and different guarantees. IntentSpec therefore does not
+attempt to define a new universal agent runtime. Its narrower contribution is a
+compilation layer above existing artifact channels. The source contract captures the
+governance intent once; target backends translate what each downstream channel can
+represent; and capability notes make target limitations explicit.
+
+This positioning also shapes the validation claim. Native instruction files and IDE
+rules are advisory artifacts, not runtime monitors. IntentSpec therefore avoids
+claiming that it can prevent unsafe actions at execution time. It demonstrates that a
+team can author, propagate, migrate, and test governance intent locally, with
+deterministic artifacts that are suitable for review and continuous integration.
+
+\section{Tool Design}
+
+IntentSpec has five internal stages:
+\begin{verbatim}
+intent.yaml
+  -> parse and validate
+  -> resolve imported governance packs
+  -> normalize to IIR
+  -> compile to target-specific artifacts
+  -> test generated outputs offline
+\end{verbatim}
+
+The source contract is a YAML document containing metadata, task context, inputs,
+permissions, constraints, evidence expectations, output requirements, human
+confirmation gates, and tests. Reusable policy fragments are represented as
+\texttt{IntentPack} files. Import resolution applies conservative merge behavior,
+including deny-wins permissions and preservation of imported acceptance assertions.
+
+The intermediate intent representation (IIR) separates authoring concerns from
+target formatting. It stores the normalized task goal, resolved permissions, merged
+constraints, output contract, human gates, test contracts, risk signals, and target
+capability notes. Backends then lower the IIR into concrete target families. For
+instruction-style targets, IntentSpec emits markdown. For Cursor rules, it emits a
+rule bundle. For structured-output targets, it emits JSON schema payloads. For MCP
+planning, it emits a machine-readable plan with risk and constraint-loss fields.
+
+The offline acceptance runner evaluates final artifacts after an agent has produced
+an output. It supports required sections, required and forbidden substrings, regular
+expression checks, word and character limits, JSON schema validation, JSON path
+existence, and JSON array size constraints. These checks deliberately focus on
+deterministic compliance properties. They do not verify semantic truth, factual
+correctness, or whether a model internally followed the instructions.
+
+\section{Demonstration Scenario}
+
+The demonstration uses the repository-local benchmark in
+\texttt{benchmark/paper\_icse2027/}. It contains 20 contracts, 52 output samples, 20
+handwritten artifacts, explicit labels, experiment scripts, and generated results.
+The benchmark is designed to run without external model APIs or network-dependent
+agent services.
+
+The live demonstration has four segments. First, the presenter authors or edits a
+small \texttt{intent.yaml} contract with a task goal, permissions, human gates,
+output requirements, and tests. Second, IntentSpec compiles the same contract into
+representative targets: \texttt{agents-md}, \texttt{claude-md},
+\texttt{cursor-rules}, \texttt{openai-structured}, \texttt{gemini-structured}, and
+\texttt{mcp-plan}. Third, the presenter reverse-imports generated and handwritten
+artifacts into draft contracts and shows where fidelity is preserved or lost.
+Fourth, the presenter runs the offline acceptance runner against valid and defective
+outputs, showing deterministic failure messages for missing sections, forbidden
+text, malformed JSON, and schema mismatch.
+
+All experiments are reproducible with a single command from the repository root:
+\begin{center}
+\footnotesize\texttt{python} \path{benchmark/paper_icse2027/scripts/run_all.py}
+\end{center}
+The command generates JSON result files and paper-friendly Markdown summaries for
+the compile matrix, round-trip fidelity, assertion evaluation, annotation
+agreement, aggregate numbers, and rendered tables.
+
+\section{Initial Validation}
+
+The validation is intentionally artifact-level. It evaluates whether the current
+implementation can compile representative contracts, recover structured drafts from
+artifacts, and detect labeled output defects. It does not evaluate live agent
+behavior.
+
+\subsection{Multi-Target Compilation}
+
+The compile matrix evaluates 20 contracts against 6 representative targets, producing
+120 contract-target pairs. Table~\ref{tab:compile} reports target-level coverage.
+Instruction-style targets and \texttt{mcp-plan} compiled for all contracts.
+Structured-output targets compiled for JSON-output contracts and failed for
+markdown-output contracts. These failures are expected target limitations because
+schema-constrained output targets require JSON output contracts. Overall, 94 of 120
+contract-target pairs compiled successfully (78.33\%).
+
+\begin{table}[t]
+\caption{Target coverage in the compile matrix.}
+\label{tab:compile}
+\centering
+\begin{tabular}{lrr}
+\toprule
+Target & Succeeded & Total \\
+\midrule
+\texttt{agents-md} & 20 & 20 \\
+\texttt{claude-md} & 20 & 20 \\
+\texttt{cursor-rules} & 20 & 20 \\
+\texttt{openai-structured} & 7 & 20 \\
+\texttt{gemini-structured} & 7 & 20 \\
+\texttt{mcp-plan} & 20 & 20 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reverse Import Fidelity}
+
+The round-trip experiment compiles contracts into the 5 importable source types and
+imports them back into draft contracts. The comparison focuses on core fields:
+\texttt{goal}, \texttt{permissions}, \texttt{constraints}, \texttt{human\_gates},
+\texttt{output}, and \texttt{tests}. Non-core metadata and source-path fields are
+ignored. JSON schemas are normalized with stable key ordering before comparison.
+
+\begin{table}[t]
+\caption{Round-trip import and core-field fidelity.}
+\label{tab:roundtrip}
+\centering
+\begin{tabular}{lrr}
+\toprule
+Source type & Imported & Fidelity \\
+\midrule
+\texttt{agents-md} & 20 & 77.5\% \\
+\texttt{claude-md} & 20 & 77.5\% \\
+\texttt{cursor-rules} & 20 & 77.5\% \\
+\texttt{gemini-structured} & 7 & 47.62\% \\
+\texttt{openai-structured} & 7 & 47.62\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Compiled round-trip import succeeded for 74 of 100 attempted artifacts (74.0\%).
+Successful compiled round trips had an average core-field fidelity of 71.85\%. The
+benchmark also imports 20 handwritten artifacts and matches them against partial gold
+labels; all 20 imported successfully. These results show that generated instruction
+artifacts preserve more recoverable governance information than structured-output
+payloads, while structured-output payloads remain useful for output schema recovery.
+
+\subsection{Offline Assertion Effectiveness}
+
+The assertion experiment evaluates 20 valid outputs and 32 targeted defect outputs.
+The defect suite contains at least two samples for each supported assertion type.
+All 20 valid outputs passed offline acceptance tests (100.0\%), and the targeted
+defect suite caught 32 of 32 labeled defects (100.0\%).
+
+\begin{table}[t]
+\caption{Targeted defect detection by assertion type.}
+\label{tab:assertions}
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Assertion & Samples & Caught & Rate \\
+\midrule
+\texttt{contains} & 6 & 6 & 100.0\% \\
+\texttt{json\_array\_min\_items} & 2 & 2 & 100.0\% \\
+\texttt{json\_path\_exists} & 2 & 2 & 100.0\% \\
+\texttt{json\_schema} & 2 & 2 & 100.0\% \\
+\texttt{max\_chars} & 2 & 2 & 100.0\% \\
+\texttt{max\_words} & 3 & 3 & 100.0\% \\
+\texttt{no\_regex} & 4 & 4 & 100.0\% \\
+\texttt{not\_contains} & 4 & 4 & 100.0\% \\
+\texttt{regex} & 3 & 3 & 100.0\% \\
+\texttt{required\_sections} & 4 & 4 & 100.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The observed failures cover missing markdown sections, forbidden content, absent
+required content, regex mismatch, forbidden regex matches, length violations, JSON
+schema mismatch, missing JSON paths, and undersized JSON arrays.
+
+\section{Threats to Validity and Limitations}
+
+The benchmark is small and curated. It is appropriate for demonstrating feasibility,
+but it is not evidence of broad empirical generality across all agent tools,
+repositories, or policy styles. The contracts intentionally cover markdown and JSON
+outputs, English and Chinese text, imports, human gates, filesystem and network
+risks, and all supported assertion types, but the suite remains a seed benchmark.
+
+The validation isolates artifact behavior from model behavior. This design makes the
+experiments deterministic and reproducible, but it also means the results do not
+measure whether a live agent follows a compiled instruction file in practice.
+IntentSpec should therefore be viewed as an authoring, propagation, migration, and
+post-hoc validation layer rather than as runtime security enforcement.
+
+Reverse import is heuristic for natural-language artifacts. It can recover goals,
+constraints, permissions, and output hints from generated or handwritten artifacts,
+but it cannot guarantee semantic equivalence with the original author intent. The
+tool exposes this limitation through field-level fidelity rather than hiding it
+behind a binary success metric.
+
+\section{Availability}
+
+IntentSpec is implemented as a Python 3.11+ local CLI and library. The benchmark and
+generated results are included under \texttt{benchmark/paper\_icse2027/}. The
+prototype does not call real LLM APIs, does not require API keys, and does not
+require network access for the reported experiments. The local reproduction command
+is \texttt{python} \path{benchmark/paper_icse2027/scripts/run_all.py}.
+
+\begin{thebibliography}{1}
+
+\bibitem{anthropic_memory}
+Anthropic, ``How Claude remembers your project,'' Claude Code Docs, accessed Apr.
+24, 2026. [Online]. Available:
+\url{https://code.claude.com/docs/en/memory}
+
+\bibitem{cursor_rules}
+Cursor, ``Rules,'' Cursor Documentation, accessed Apr. 24, 2026. [Online].
+Available: \url{https://docs.cursor.com/context/rules}
+
+\bibitem{openai_structured}
+OpenAI, ``Structured model outputs,'' OpenAI API Documentation, accessed Apr. 24,
+2026. [Online]. Available:
+\url{https://developers.openai.com/api/docs/guides/structured-outputs}
+
+\bibitem{mcp_spec}
+Model Context Protocol, ``Specification,'' Model Context Protocol Documentation,
+accessed Apr. 24, 2026. [Online]. Available:
+\url{https://modelcontextprotocol.io/specification/draft}
+
+\bibitem{chen_codex}
+M. Chen \emph{et al.}, ``Evaluating large language models trained on code,''
+arXiv:2107.03374, 2021.
+
+\bibitem{jimenez_swebench}
+C. E. Jimenez, J. Yang, A. Wettig, S. Yao, K. Pei, O. Press, and K. R.
+Narasimhan, ``SWE-bench: Can language models resolve real-world GitHub issues?''
+in \emph{Proc. ICLR}, 2024.
+
+\bibitem{fan_llm_se}
+A. Fan, B. Gokkaya, M. Harman, M. Lyubarskiy, S. Sengupta, S. Yoo, and J. M.
+Zhang, ``Large language models for software engineering: Survey and open
+problems,'' arXiv:2310.03533, 2023.
+
+\bibitem{peng_copilot}
+S. Peng, E. Kalliamvakou, P. Cihon, and M. Demirer, ``The impact of AI on
+developer productivity: Evidence from GitHub Copilot,'' arXiv:2302.06590, 2023.
+
+\bibitem{perry_insecure}
+N. Perry, M. Srivastava, D. Kumar, and D. Boneh, ``Do users write more insecure
+code with AI assistants?'' in \emph{Proc. ACM CCS}, pp. 2785--2799, 2023.
+
+\bibitem{white_prompt_patterns}
+J. White, Q. Fu, S. Hays, M. Sandborn, C. Olea, H. Gilbert, A. Elnashar,
+J. Spencer-Smith, and D. C. Schmidt, ``A prompt pattern catalog to enhance prompt
+engineering with ChatGPT,'' arXiv:2302.11382, 2023.
+
+\bibitem{yao_react}
+S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. R. Narasimhan, and Y. Cao,
+``ReAct: Synergizing reasoning and acting in language models,'' in
+\emph{Proc. ICLR}, 2023.
+
+\end{thebibliography}
+
+\end{document}

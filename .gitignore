@@ -12,3 +12,5 @@ build/
 dist/
 .coverage
 htmlcov/
+output/
+IntentSpec_0.1/

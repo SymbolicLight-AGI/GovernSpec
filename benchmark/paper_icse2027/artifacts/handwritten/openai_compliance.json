@@ -1,0 +1,19 @@
+{
+  "type": "json_schema",
+  "json_schema": {
+    "name": "compliance_checklist_json",
+    "description": "Produce a strict compliance checklist payload.",
+    "strict": true,
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "controls", "blockers"],
+      "properties": {
+        "status": {"type": "string"},
+        "controls": {"type": "array", "items": {"type": "string"}},
+        "blockers": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
+

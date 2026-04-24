@@ -1,0 +1,274 @@
+[
+  {
+    "contract": "api_security_review",
+    "sample": "api_security_review.output.md",
+    "output_path": "outputs/valid/api_security_review.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "data_retention_audit",
+    "sample": "data_retention_audit.output.md",
+    "output_path": "outputs/valid/data_retention_audit.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "procurement_risk_check",
+    "sample": "procurement_risk_check.output.md",
+    "output_path": "outputs/valid/procurement_risk_check.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "privacy_impact_assessment",
+    "sample": "privacy_impact_assessment.output.md",
+    "output_path": "outputs/valid/privacy_impact_assessment.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "support_ticket_triage",
+    "sample": "support_ticket_triage.output.md",
+    "output_path": "outputs/valid/support_ticket_triage.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "changelog_draft",
+    "sample": "changelog_draft.output.md",
+    "output_path": "outputs/valid/changelog_draft.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "architecture_decision_review",
+    "sample": "architecture_decision_review.output.md",
+    "output_path": "outputs/valid/architecture_decision_review.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "dependency_update_review",
+    "sample": "dependency_update_review.output.md",
+    "output_path": "outputs/valid/dependency_update_review.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "compliance_checklist_json",
+    "sample": "compliance_checklist_json.output.json",
+    "output_path": "outputs/valid/compliance_checklist_json.output.json",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "qa_test_plan_json",
+    "sample": "qa_test_plan_json.output.json",
+    "output_path": "outputs/valid/qa_test_plan_json.output.json",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "incident_postmortem_json",
+    "sample": "incident_postmortem_json.output.json",
+    "output_path": "outputs/valid/incident_postmortem_json.output.json",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "vendor_summary_json",
+    "sample": "vendor_summary_json.output.json",
+    "output_path": "outputs/valid/vendor_summary_json.output.json",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "api_security_review",
+    "sample": "api_security_review__required_sections.output.md",
+    "output_path": "outputs/defects/api_security_review__required_sections.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "required_sections",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "api_security_review",
+    "sample": "api_security_review__not_contains.output.md",
+    "output_path": "outputs/defects/api_security_review__not_contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "not_contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "data_retention_audit",
+    "sample": "data_retention_audit__contains.output.md",
+    "output_path": "outputs/defects/data_retention_audit__contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "data_retention_audit",
+    "sample": "data_retention_audit__no_regex.output.md",
+    "output_path": "outputs/defects/data_retention_audit__no_regex.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "no_regex",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "data_retention_audit",
+    "sample": "data_retention_audit__max_words.output.md",
+    "output_path": "outputs/defects/data_retention_audit__max_words.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "max_words",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "procurement_risk_check",
+    "sample": "procurement_risk_check__regex.output.md",
+    "output_path": "outputs/defects/procurement_risk_check__regex.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "regex",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "procurement_risk_check",
+    "sample": "procurement_risk_check__contains.output.md",
+    "output_path": "outputs/defects/procurement_risk_check__contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "procurement_risk_check",
+    "sample": "procurement_risk_check__not_contains.output.md",
+    "output_path": "outputs/defects/procurement_risk_check__not_contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "not_contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "privacy_impact_assessment",
+    "sample": "privacy_impact_assessment__required_sections.output.md",
+    "output_path": "outputs/defects/privacy_impact_assessment__required_sections.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "required_sections",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "privacy_impact_assessment",
+    "sample": "privacy_impact_assessment__no_regex.output.md",
+    "output_path": "outputs/defects/privacy_impact_assessment__no_regex.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "no_regex",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "support_ticket_triage",
+    "sample": "support_ticket_triage__contains.output.md",
+    "output_path": "outputs/defects/support_ticket_triage__contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "support_ticket_triage",
+    "sample": "support_ticket_triage__max_chars.output.md",
+    "output_path": "outputs/defects/support_ticket_triage__max_chars.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "max_chars",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "changelog_draft",
+    "sample": "changelog_draft__not_contains.output.md",
+    "output_path": "outputs/defects/changelog_draft__not_contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "not_contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "changelog_draft",
+    "sample": "changelog_draft__max_words.output.md",
+    "output_path": "outputs/defects/changelog_draft__max_words.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "max_words",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "architecture_decision_review",
+    "sample": "architecture_decision_review__regex.output.md",
+    "output_path": "outputs/defects/architecture_decision_review__regex.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "regex",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "architecture_decision_review",
+    "sample": "architecture_decision_review__required_sections.output.md",
+    "output_path": "outputs/defects/architecture_decision_review__required_sections.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "required_sections",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "dependency_update_review",
+    "sample": "dependency_update_review__contains.output.md",
+    "output_path": "outputs/defects/dependency_update_review__contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "dependency_update_review",
+    "sample": "dependency_update_review__no_regex.output.md",
+    "output_path": "outputs/defects/dependency_update_review__no_regex.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "no_regex",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "compliance_checklist_json",
+    "sample": "compliance_checklist_json__json_schema.output.json",
+    "output_path": "outputs/defects/compliance_checklist_json__json_schema.output.json",
+    "expected_ok": false,
+    "targeted_assertion": "json_schema",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "qa_test_plan_json",
+    "sample": "qa_test_plan_json__json_path_exists.output.json",
+    "output_path": "outputs/defects/qa_test_plan_json__json_path_exists.output.json",
+    "expected_ok": false,
+    "targeted_assertion": "json_path_exists",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "incident_postmortem_json",
+    "sample": "incident_postmortem_json__json_array_min_items.output.json",
+    "output_path": "outputs/defects/incident_postmortem_json__json_array_min_items.output.json",
+    "expected_ok": false,
+    "targeted_assertion": "json_array_min_items",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "vendor_summary_json",
+    "sample": "vendor_summary_json__contains.output.json",
+    "output_path": "outputs/defects/vendor_summary_json__contains.output.json",
+    "expected_ok": false,
+    "targeted_assertion": "contains",
+    "included_in_isolated_summary": true
+  }
+]

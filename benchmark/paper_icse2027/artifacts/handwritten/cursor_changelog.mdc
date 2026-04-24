@@ -1,0 +1,30 @@
+---
+description: Handwritten changelog rule
+alwaysApply: true
+---
+
+# Cursor Changelog Rules
+
+## Project Goal
+Create a concise changelog draft from verified release notes.
+
+## Working Constraints
+- Do not invent breaking changes.
+- Do not claim migration is required without evidence.
+
+## Allowed and Forbidden Operations
+- Web access: forbidden
+- Network access: forbidden
+- Filesystem read: allowed
+- Filesystem write: forbidden
+
+## Output Expectations
+- Format: markdown
+- Language: en
+- Section: Highlights
+- Section: Fixes
+- Section: Upgrade Notes
+
+## Verification
+- All sections must be present
+

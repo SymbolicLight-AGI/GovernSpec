@@ -68,6 +68,8 @@ def run(
         "targets": REPRESENTATIVE_TARGETS,
         "results": records,
         "summary": {
+            "contract_count": len(contract_paths(benchmark_root)),
+            "target_count": len(REPRESENTATIVE_TARGETS),
             "total": len(records),
             "ok": ok_count,
             "failed": len(records) - ok_count,

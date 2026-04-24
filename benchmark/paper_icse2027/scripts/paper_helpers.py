@@ -16,6 +16,16 @@ CONTRACTS_DIR = BENCHMARK_ROOT / "contracts"
 LABELS_DIR = BENCHMARK_ROOT / "labels"
 RESULTS_DIR = BENCHMARK_ROOT / "results"
 
+OUTPUT_LABEL_FILES = [
+    "output_samples.json",
+    "output_samples_extended.json",
+]
+
+HANDWRITTEN_LABEL_FILES = [
+    "handwritten_artifacts.json",
+    "handwritten_artifacts_extended.json",
+]
+
 REPRESENTATIVE_TARGETS = [
     "agents-md",
     "claude-md",
@@ -45,6 +55,23 @@ CORE_FIELDS = [
 
 def read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def read_json_arrays(label_dir: Path, filenames: list[str]) -> list[dict[str, Any]]:
+    items: list[dict[str, Any]] = []
+    for filename in filenames:
+        path = label_dir / filename
+        if path.is_file():
+            items.extend(read_json(path))
+    return items
+
+
+def output_sample_labels(benchmark_root: Path = BENCHMARK_ROOT) -> list[dict[str, Any]]:
+    return read_json_arrays(benchmark_root / "labels", OUTPUT_LABEL_FILES)
+
+
+def handwritten_artifact_labels(benchmark_root: Path = BENCHMARK_ROOT) -> list[dict[str, Any]]:
+    return read_json_arrays(benchmark_root / "labels", HANDWRITTEN_LABEL_FILES)
 
 
 def write_json(path: Path, payload: Any) -> None:

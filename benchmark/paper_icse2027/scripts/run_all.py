@@ -7,6 +7,7 @@ from pathlib import Path
 
 from paper_helpers import BENCHMARK_ROOT, RESULTS_DIR
 from render_tables import run as render_tables
+from run_annotation_agreement import run as run_annotation_agreement
 from run_assertion_eval import run as run_assertion_eval
 from run_compile_matrix import run as run_compile_matrix
 from run_roundtrip import run as run_roundtrip
@@ -21,6 +22,7 @@ def run_all(
     run_compile_matrix(benchmark_root=benchmark_root, results_dir=results_dir)
     run_roundtrip(benchmark_root=benchmark_root, results_dir=results_dir)
     run_assertion_eval(benchmark_root=benchmark_root, results_dir=results_dir)
+    run_annotation_agreement(benchmark_root=benchmark_root, results_dir=results_dir)
     render_tables(results_dir=results_dir)
 
 

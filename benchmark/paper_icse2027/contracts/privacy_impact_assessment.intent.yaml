@@ -1,0 +1,62 @@
+version: "0.1"
+kind: "IntentSpec"
+
+metadata:
+  name: "privacy_impact_assessment"
+  title: "Privacy impact assessment"
+  description: "Draft a privacy impact assessment without exposing personal identifiers."
+  owner: "privacy"
+
+task:
+  goal: "Assess privacy impact for a proposed analytics workflow."
+  audience:
+    - "Privacy reviewer"
+    - "Product manager"
+  priority: "high"
+
+context:
+  domain: "Privacy review"
+  assumptions:
+    - "Treat user identifiers as confidential."
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not include sample personal identifiers."
+  - "Do not state that consent exists unless evidence is provided."
+
+output:
+  format: "markdown"
+  language: "en"
+  max_words: 160
+  sections:
+    - "Data Subjects"
+    - "Data Categories"
+    - "Risk Assessment"
+    - "Mitigations"
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"
+  - name: "No social security number pattern"
+    assert:
+      - type: "no_regex"
+        pattern: "\\b\\d{3}-\\d{2}-\\d{4}\\b"
+  - name: "Mitigation language must be present"
+    assert:
+      - type: "contains"
+        value: "Minimize retained identifiers"
+

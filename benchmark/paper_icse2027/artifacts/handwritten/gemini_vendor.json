@@ -1,0 +1,17 @@
+{
+  "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+      "description": "Produce a vendor summary payload without approving purchase.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vendor", "risk_level", "reviews"],
+      "properties": {
+        "vendor": {"type": "string"},
+        "risk_level": {"type": "string"},
+        "reviews": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
+
