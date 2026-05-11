@@ -4,6 +4,7 @@ __pycache__/
 .ruff_cache/
 .venv/
 node_modules/
+.tmp_*/
 *.pyc
 *.pyo
 *.pyd
@@ -13,4 +14,7 @@ dist/
 .coverage
 htmlcov/
 output/
+GovernSpec_0.1/
 IntentSpec_0.1/
+.private/
+private/

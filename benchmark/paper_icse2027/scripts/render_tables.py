@@ -13,7 +13,7 @@ def run(*, results_dir: Path = RESULTS_DIR) -> dict[str, Any]:
     compile_data = read_json(results_dir / "compile_matrix.json")
     roundtrip_data = read_json(results_dir / "roundtrip_fidelity.json")
     assertion_data = read_json(results_dir / "assertion_eval.json")
-    annotation_data = _read_optional_json(results_dir / "annotation_agreement.json")
+    annotation_data = read_json(results_dir / "annotation_agreement.json")
     summary = build_summary(compile_data, roundtrip_data, assertion_data, annotation_data)
     write_json(results_dir / "summary.json", summary)
     write_text(
@@ -28,26 +28,24 @@ def build_summary(
     compile_data: dict[str, Any],
     roundtrip_data: dict[str, Any],
     assertion_data: dict[str, Any],
-    annotation_data: dict[str, Any] | None = None,
+    annotation_data: dict[str, Any],
 ) -> dict[str, Any]:
-    summary = {
+    return {
         "compile": compile_data["summary"],
         "roundtrip": roundtrip_data["summary"],
         "assertions": assertion_data["summary"],
-    }
-    if annotation_data is not None:
-        summary["annotation_agreement"] = {
+        "annotation_agreement": {
             "item_count": annotation_data["item_count"],
             "fields": annotation_data["fields"],
-        }
-    return summary
+        },
+    }
 
 
 def render_tables(
     compile_data: dict[str, Any],
     roundtrip_data: dict[str, Any],
     assertion_data: dict[str, Any],
-    annotation_data: dict[str, Any] | None = None,
+    annotation_data: dict[str, Any],
 ) -> str:
     compile_rows = [
         [
@@ -87,26 +85,16 @@ def render_tables(
         ]
         for assertion_type, values in assertion_data["summary"]["per_assertion"].items()
     ]
-    annotation_section: list[str] = []
-    if annotation_data is not None:
-        annotation_rows = [
-            [
-                field,
-                str(values["total"]),
-                f"{values['percent_agreement']}%",
-                str(values["cohen_kappa"]),
-                str(values["krippendorff_alpha_nominal"]),
-            ]
-            for field, values in annotation_data["fields"].items()
+    annotation_rows = [
+        [
+            field,
+            str(values["total"]),
+            f"{values['percent_agreement']}%",
+            str(values["cohen_kappa"]),
+            str(values["krippendorff_alpha_nominal"]),
         ]
-        annotation_section = [
-            "",
-            "## Annotation agreement",
-            markdown_table(
-                ["Field", "Items", "Agreement", "Cohen kappa", "Krippendorff alpha"],
-                annotation_rows,
-            ),
-        ]
+        for field, values in annotation_data["fields"].items()
+    ]
     sections = [
         "# ICSE paper tables",
         "",
@@ -118,7 +106,12 @@ def render_tables(
         "",
         "## Assertion effectiveness",
         markdown_table(["Assertion", "Targeted samples", "Caught", "Catch rate"], assertion_rows),
-        *annotation_section,
+        "",
+        "## Assisted annotation agreement",
+        markdown_table(
+            ["Field", "Items", "Agreement", "Cohen kappa", "Krippendorff alpha"],
+            annotation_rows,
+        ),
         "",
     ]
     return "\n".join(sections)
@@ -128,7 +121,8 @@ def render_numbers(summary: dict[str, Any]) -> str:
     compile_summary = summary["compile"]
     roundtrip_summary = summary["roundtrip"]
     assertion_summary = summary["assertions"]
-    annotation_summary = summary.get("annotation_agreement")
+    annotation_summary = summary["annotation_agreement"]
+    targeted_agreement = annotation_summary["fields"]["targeted_assertion"]
     lines = [
         "# ICSE paper numbers",
         "",
@@ -164,25 +158,13 @@ def render_numbers(summary: dict[str, Any]) -> str:
             f"{assertion_summary['isolated_defect_total']} labeled defects "
             f"({assertion_summary['targeted_defect_catch_rate']}%)."
         ),
+        (
+            f"- Assisted annotation agreement covered {annotation_summary['item_count']} "
+            f"output samples; `targeted_assertion` agreement was "
+            f"{targeted_agreement['percent_agreement']}% "
+            f"(Cohen's kappa {targeted_agreement['cohen_kappa']})."
+        ),
     ]
-    if annotation_summary is not None:
-        expected_ok = annotation_summary["fields"]["expected_ok"]
-        targeted = annotation_summary["fields"]["targeted_assertion"]
-        lines.extend(
-            [
-                (
-                    f"- Assisted annotation agreement covered "
-                    f"{annotation_summary['item_count']} output samples; "
-                    f"`expected_ok` agreement was {expected_ok['percent_agreement']}% "
-                    f"(Cohen's kappa {expected_ok['cohen_kappa']})."
-                ),
-                (
-                    f"- `targeted_assertion` agreement was "
-                    f"{targeted['percent_agreement']}% "
-                    f"(Cohen's kappa {targeted['cohen_kappa']})."
-                ),
-            ]
-        )
     lines.append("")
     return "\n".join(lines)
 
@@ -192,12 +174,6 @@ def _mean_percent(values: Any) -> str:
     if not collected:
         return "0.0%"
     return f"{round(sum(collected) / len(collected) * 100, 2)}%"
-
-
-def _read_optional_json(path: Path) -> dict[str, Any] | None:
-    if not path.is_file():
-        return None
-    return read_json(path)
 
 
 def main() -> int:

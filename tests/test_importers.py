@@ -5,21 +5,21 @@ from pathlib import Path
 
 import pytest
 import yaml
-from intentspec.cli import app
-from intentspec_core.common.errors import IntentSpecParseError
-from intentspec_core.importers.cursor_rules import import_cursor_rules
-from intentspec_core.importers.gemini_structured import import_gemini_structured
-from intentspec_core.importers.instruction_markdown import import_instruction_markdown
-from intentspec_core.importers.openai_structured import import_openai_structured
-from intentspec_core.importers.reverse import (
+from governspec.cli import app
+from governspec_core.common.errors import GovernSpecParseError
+from governspec_core.importers.cursor_rules import import_cursor_rules
+from governspec_core.importers.gemini_structured import import_gemini_structured
+from governspec_core.importers.instruction_markdown import import_instruction_markdown
+from governspec_core.importers.openai_structured import import_openai_structured
+from governspec_core.importers.reverse import (
     SUPPORTED_IMPORT_TYPES,
     import_from_artifact,
     import_from_string,
 )
-from intentspec_core.imports.resolver import resolve_imports
-from intentspec_core.spec.parser import load_spec
-from intentspec_core.targets.compiler import compile_target
-from intentspec_core.validator import validate_spec
+from governspec_core.imports.resolver import resolve_imports
+from governspec_core.spec.parser import load_spec
+from governspec_core.targets.compiler import compile_target
+from governspec_core.validator import validate_spec
 from typer.testing import CliRunner
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,7 +51,7 @@ def test_openai_structured_import_extracts_schema() -> None:
     }
     result = import_openai_structured(payload)
     assert result["version"] == "0.1"
-    assert result["kind"] == "IntentSpec"
+    assert result["kind"] == "GovernSpec"
     assert result["metadata"]["name"] == "report_json"
     assert result["output"]["format"] == "json"
     assert result["output"]["schema"]["required"] == ["verdict", "risks"]
@@ -79,12 +79,12 @@ def test_openai_structured_import_generates_tests() -> None:
 
 
 def test_openai_structured_import_rejects_missing_json_schema_key() -> None:
-    with pytest.raises(IntentSpecParseError):
+    with pytest.raises(GovernSpecParseError):
         import_openai_structured({"type": "json_schema"})
 
 
 def test_openai_structured_import_rejects_empty_schema() -> None:
-    with pytest.raises(IntentSpecParseError):
+    with pytest.raises(GovernSpecParseError):
         import_openai_structured(
             {"type": "json_schema", "json_schema": {"name": "x", "schema": {}}}
         )
@@ -108,18 +108,18 @@ def test_gemini_structured_import_extracts_schema() -> None:
     }
     result = import_gemini_structured(payload)
     assert result["version"] == "0.1"
-    assert result["kind"] == "IntentSpec"
+    assert result["kind"] == "GovernSpec"
     assert result["output"]["format"] == "json"
     assert result["output"]["schema"]["required"] == ["verdict"]
 
 
 def test_gemini_structured_import_rejects_missing_config() -> None:
-    with pytest.raises(IntentSpecParseError):
+    with pytest.raises(GovernSpecParseError):
         import_gemini_structured({})
 
 
 def test_gemini_structured_import_rejects_empty_schema() -> None:
-    with pytest.raises(IntentSpecParseError):
+    with pytest.raises(GovernSpecParseError):
         import_gemini_structured({"generationConfig": {"responseJsonSchema": {}}})
 
 
@@ -130,11 +130,11 @@ def test_gemini_structured_import_rejects_empty_schema() -> None:
 
 SAMPLE_CURSOR_RULES = """\
 ---
-description: IntentSpec-generated project rules
+description: GovernSpec-generated project rules
 alwaysApply: true
 ---
 
-# IntentSpec Cursor Rules
+# GovernSpec Cursor Rules
 
 ## Project Goal
 Review the codebase and summarize defects, risks, and follow-up tests.
@@ -252,7 +252,7 @@ def test_cursor_rules_import_rejects_missing_goal() -> None:
 ## Working Constraints
 - Something
 """
-    with pytest.raises(IntentSpecParseError):
+    with pytest.raises(GovernSpecParseError):
         import_cursor_rules(text)
 
 
@@ -319,13 +319,13 @@ def test_import_from_string_works_for_all_types() -> None:
     assert result["metadata"]["name"] == "str_test"
 
     result2 = import_from_string(SAMPLE_CURSOR_RULES, "cursor-rules")
-    assert result2["kind"] == "IntentSpec"
+    assert result2["kind"] == "GovernSpec"
 
 
 def test_import_from_artifact_rejects_unsupported_type(tmp_path: Path) -> None:
     source = tmp_path / "unknown.txt"
     source.write_text("hello", encoding="utf-8")
-    with pytest.raises(IntentSpecParseError):
+    with pytest.raises(GovernSpecParseError):
         import_from_artifact(source)
 
 
@@ -339,7 +339,7 @@ def test_supported_import_types_includes_markdown() -> None:
 
 
 # ---------------------------------------------------------------------------
-# Instruction Markdown (AGENTS.md / CLAUDE.md) — IntentSpec-generated
+# Instruction Markdown (AGENTS.md / CLAUDE.md) — GovernSpec-generated
 # ---------------------------------------------------------------------------
 
 
@@ -607,7 +607,7 @@ Summarize the quarterly sales data.
 """
     result = import_instruction_markdown(text)
     assert "quarterly sales" in result["task"]["goal"].lower()
-    assert result["kind"] == "IntentSpec"
+    assert result["kind"] == "GovernSpec"
     assert result["version"] == "0.1"
 
 
@@ -635,7 +635,7 @@ def test_handwritten_md_rejects_empty_goal() -> None:
 ## Rules
 - Be precise.
 """
-    with pytest.raises(IntentSpecParseError):
+    with pytest.raises(GovernSpecParseError):
         import_instruction_markdown(text)
 
 
@@ -662,18 +662,18 @@ def test_import_from_artifact_md_extension_auto_detect(tmp_path: Path) -> None:
     source = tmp_path / "instructions.md"
     source.write_text(HANDWRITTEN_AGENTS_MD, encoding="utf-8")
     result = import_from_artifact(source)
-    assert result["kind"] == "IntentSpec"
+    assert result["kind"] == "GovernSpec"
 
 
 def test_import_from_string_agents_md() -> None:
     result = import_from_string(SAMPLE_AGENTS_MD, "agents-md")
-    assert result["kind"] == "IntentSpec"
+    assert result["kind"] == "GovernSpec"
     assert "customer brief" in result["task"]["goal"].lower()
 
 
 def test_import_from_string_claude_md() -> None:
     result = import_from_string(SAMPLE_CLAUDE_MD, "claude-md")
-    assert result["kind"] == "IntentSpec"
+    assert result["kind"] == "GovernSpec"
     assert "Review the codebase" in result["task"]["goal"]
 
 
@@ -683,8 +683,8 @@ def test_import_from_string_claude_md() -> None:
 
 
 def test_roundtrip_openai_structured(tmp_path: Path) -> None:
-    """Compile an intent to OpenAI structured, import it back, validate the result."""
-    spec = load_spec(EXAMPLES / "report_json.intent.yaml")
+    """Compile a GovernSpec contract to OpenAI structured, import it back, validate it."""
+    spec = load_spec(EXAMPLES / "report_json.govern.yaml")
     compiled = compile_target(spec, "openai-structured")
     assert compiled.content is not None
 
@@ -692,7 +692,7 @@ def test_roundtrip_openai_structured(tmp_path: Path) -> None:
     source.write_text(compiled.content, encoding="utf-8")
     imported = import_from_artifact(source)
 
-    draft_path = tmp_path / "recovered.intent.yaml"
+    draft_path = tmp_path / "recovered.govern.yaml"
     draft_path.write_text(
         yaml.safe_dump(imported, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -703,8 +703,8 @@ def test_roundtrip_openai_structured(tmp_path: Path) -> None:
 
 
 def test_roundtrip_gemini_structured(tmp_path: Path) -> None:
-    """Compile an intent to Gemini structured, import it back, validate the result."""
-    spec = load_spec(EXAMPLES / "report_json.intent.yaml")
+    """Compile a GovernSpec contract to Gemini structured, import it back, validate it."""
+    spec = load_spec(EXAMPLES / "report_json.govern.yaml")
     compiled = compile_target(spec, "gemini-structured")
     assert compiled.content is not None
 
@@ -712,7 +712,7 @@ def test_roundtrip_gemini_structured(tmp_path: Path) -> None:
     source.write_text(compiled.content, encoding="utf-8")
     imported = import_from_artifact(source)
 
-    draft_path = tmp_path / "recovered.intent.yaml"
+    draft_path = tmp_path / "recovered.govern.yaml"
     draft_path.write_text(
         yaml.safe_dump(imported, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -723,14 +723,14 @@ def test_roundtrip_gemini_structured(tmp_path: Path) -> None:
 
 
 def test_roundtrip_cursor_rules(tmp_path: Path) -> None:
-    """Compile an intent to cursor-rules, import it back, validate the result."""
-    spec = load_spec(EXAMPLES / "code_review.intent.yaml")
+    """Compile a GovernSpec contract to cursor-rules, import it back, validate it."""
+    spec = load_spec(EXAMPLES / "code_review.govern.yaml")
     compiled = compile_target(spec, "cursor-rules")
-    mdc_content = compiled.files[".cursor/rules/intentspec.mdc"]
+    mdc_content = compiled.files[".cursor/rules/governspec.mdc"]
 
     imported = import_cursor_rules(mdc_content)
 
-    draft_path = tmp_path / "recovered.intent.yaml"
+    draft_path = tmp_path / "recovered.govern.yaml"
     draft_path.write_text(
         yaml.safe_dump(imported, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -742,13 +742,13 @@ def test_roundtrip_cursor_rules(tmp_path: Path) -> None:
 
 def test_roundtrip_agents_md(tmp_path: Path) -> None:
     """Compile to agents-md, import back, validate."""
-    spec = load_spec(EXAMPLES / "code_review.intent.yaml")
+    spec = load_spec(EXAMPLES / "code_review.govern.yaml")
     compiled = compile_target(spec, "agents-md")
     assert compiled.content is not None
 
     imported = import_instruction_markdown(compiled.content)
 
-    draft_path = tmp_path / "recovered.intent.yaml"
+    draft_path = tmp_path / "recovered.govern.yaml"
     draft_path.write_text(
         yaml.safe_dump(imported, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -760,13 +760,13 @@ def test_roundtrip_agents_md(tmp_path: Path) -> None:
 
 def test_roundtrip_claude_md(tmp_path: Path) -> None:
     """Compile to claude-md, import back, validate."""
-    spec = load_spec(EXAMPLES / "code_review.intent.yaml")
+    spec = load_spec(EXAMPLES / "code_review.govern.yaml")
     compiled = compile_target(spec, "claude-md")
     assert compiled.content is not None
 
     imported = import_instruction_markdown(compiled.content)
 
-    draft_path = tmp_path / "recovered.intent.yaml"
+    draft_path = tmp_path / "recovered.govern.yaml"
     draft_path.write_text(
         yaml.safe_dump(imported, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -779,7 +779,7 @@ def test_roundtrip_claude_md(tmp_path: Path) -> None:
 def test_roundtrip_agents_md_with_human_gates(tmp_path: Path) -> None:
     """Compile imported_customer_brief to agents-md and back — preserves gates."""
     spec = resolve_imports(
-        load_spec(EXAMPLES / "imported_customer_brief.intent.yaml")
+        load_spec(EXAMPLES / "imported_customer_brief.govern.yaml")
     )
     compiled = compile_target(spec, "agents-md")
     assert compiled.content is not None
@@ -789,7 +789,7 @@ def test_roundtrip_agents_md_with_human_gates(tmp_path: Path) -> None:
     assert len(imported["human_gates"]) >= 1
     assert imported["human_gates"][0]["action"] == "ask_confirmation"
 
-    draft_path = tmp_path / "recovered.intent.yaml"
+    draft_path = tmp_path / "recovered.govern.yaml"
     draft_path.write_text(
         yaml.safe_dump(imported, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -800,15 +800,15 @@ def test_roundtrip_agents_md_with_human_gates(tmp_path: Path) -> None:
 
 
 def test_roundtrip_agents_md_json_output(tmp_path: Path) -> None:
-    """Compile a JSON-output intent to agents-md and back."""
-    spec = load_spec(EXAMPLES / "report_json.intent.yaml")
+    """Compile a JSON-output GovernSpec contract to agents-md and back."""
+    spec = load_spec(EXAMPLES / "report_json.govern.yaml")
     compiled = compile_target(spec, "agents-md")
     assert compiled.content is not None
 
     imported = import_instruction_markdown(compiled.content)
     assert imported["output"]["format"] == "json"
 
-    draft_path = tmp_path / "recovered.intent.yaml"
+    draft_path = tmp_path / "recovered.govern.yaml"
     draft_path.write_text(
         yaml.safe_dump(imported, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -819,17 +819,17 @@ def test_roundtrip_agents_md_json_output(tmp_path: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
-# CLI: intent import
+# CLI: governspec import
 # ---------------------------------------------------------------------------
 
 
 def test_import_cli_openai_structured(tmp_path: Path) -> None:
     source = tmp_path / "openai.json"
-    spec = load_spec(EXAMPLES / "report_json.intent.yaml")
+    spec = load_spec(EXAMPLES / "report_json.govern.yaml")
     compiled = compile_target(spec, "openai-structured")
     source.write_text(compiled.content or "", encoding="utf-8")
 
-    out = tmp_path / "imported.intent.yaml"
+    out = tmp_path / "imported.govern.yaml"
     result = runner.invoke(
         app,
         ["import", str(source), "--type", "openai-structured", "--out", str(out)],
@@ -837,7 +837,7 @@ def test_import_cli_openai_structured(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert out.exists()
     data = yaml.safe_load(out.read_text(encoding="utf-8"))
-    assert data["kind"] == "IntentSpec"
+    assert data["kind"] == "GovernSpec"
     assert data["output"]["format"] == "json"
 
 
@@ -887,11 +887,11 @@ def test_import_cli_refuses_overwrite(tmp_path: Path) -> None:
 
 def test_import_cli_agents_md(tmp_path: Path) -> None:
     source = tmp_path / "AGENTS.md"
-    spec = load_spec(EXAMPLES / "code_review.intent.yaml")
+    spec = load_spec(EXAMPLES / "code_review.govern.yaml")
     compiled = compile_target(spec, "agents-md")
     source.write_text(compiled.content or "", encoding="utf-8")
 
-    out = tmp_path / "imported.intent.yaml"
+    out = tmp_path / "imported.govern.yaml"
     result = runner.invoke(
         app,
         ["import", str(source), "--type", "agents-md", "--out", str(out)],
@@ -899,7 +899,7 @@ def test_import_cli_agents_md(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert out.exists()
     data = yaml.safe_load(out.read_text(encoding="utf-8"))
-    assert data["kind"] == "IntentSpec"
+    assert data["kind"] == "GovernSpec"
     assert "Review the codebase" in data["task"]["goal"]
 
 
@@ -910,14 +910,14 @@ def test_import_cli_claude_md_auto_detect(tmp_path: Path) -> None:
     result = runner.invoke(app, ["import", str(source)])
     assert result.exit_code == 0
     data = yaml.safe_load(result.stdout)
-    assert data["kind"] == "IntentSpec"
+    assert data["kind"] == "GovernSpec"
 
 
 def test_import_cli_handwritten_md(tmp_path: Path) -> None:
     source = tmp_path / "instructions.md"
     source.write_text(HANDWRITTEN_AGENTS_MD, encoding="utf-8")
 
-    out = tmp_path / "imported.intent.yaml"
+    out = tmp_path / "imported.govern.yaml"
     result = runner.invoke(
         app,
         ["import", str(source), "--out", str(out)],

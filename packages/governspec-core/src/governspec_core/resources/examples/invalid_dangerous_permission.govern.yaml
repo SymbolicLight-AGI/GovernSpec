@@ -1,0 +1,45 @@
+version: "0.1"
+kind: "GovernSpec"
+
+metadata:
+  name: "invalid_dangerous_permission"
+  title: "Invalid high-risk example"
+  description: "High-risk permissions without a matching human gate."
+  owner: "tests"
+
+task:
+  goal: "Send an email summary automatically."
+  audience:
+    - "Operator"
+  priority: "high"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: true
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not fabricate content."
+
+output:
+  format: "markdown"
+  language: "en"
+  max_words: 200
+  sections:
+    - "Summary"
+
+human_gates: []
+
+tests:
+  - name: "Must include all sections"
+    assert:
+      - type: "required_sections"

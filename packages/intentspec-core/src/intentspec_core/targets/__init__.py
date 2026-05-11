@@ -1,2 +1,0 @@
-"""IntentSpec compilation targets."""
-

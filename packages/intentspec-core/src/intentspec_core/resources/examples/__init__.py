@@ -1,1 +1,0 @@
-"""Packaged IntentSpec examples."""

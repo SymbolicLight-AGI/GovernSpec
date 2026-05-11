@@ -8,11 +8,11 @@ import sys
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
-from intentspec_core.common.errors import IntentSpecError
-from intentspec_core.imports.resolver import resolve_imports
-from intentspec_core.spec.parser import load_spec
-from intentspec_core.targets.compiler import compile_target
-from intentspec_core.testing.tester import test_output
+from governspec_core.common.errors import GovernSpecError
+from governspec_core.imports.resolver import resolve_imports
+from governspec_core.spec.parser import load_spec
+from governspec_core.targets.compiler import compile_target
+from governspec_core.testing.tester import test_output
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TASKS_DIR = ROOT / "benchmark" / "tasks"
@@ -29,7 +29,7 @@ class BenchmarkResult:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run offline IntentSpec benchmarks.")
+    parser = argparse.ArgumentParser(description="Run offline GovernSpec benchmarks.")
     parser.add_argument("--tasks-dir", type=Path, default=DEFAULT_TASKS_DIR)
     parser.add_argument("--outputs-dir", type=Path, default=DEFAULT_OUTPUTS_DIR)
     parser.add_argument("--format", choices=("text", "json"), default="text")
@@ -72,13 +72,13 @@ def main() -> int:
 
 def run_benchmark(tasks_dir: Path, outputs_dir: Path) -> list[BenchmarkResult]:
     results: list[BenchmarkResult] = []
-    for task_file in sorted(tasks_dir.glob("*.intent.yaml")):
-        output_stem = task_file.name.replace(".intent.yaml", ".output")
+    for task_file in sorted(tasks_dir.glob("*.govern.yaml")):
+        output_stem = task_file.name.replace(".govern.yaml", ".output")
         output_file = _resolve_output_file(outputs_dir, output_stem)
         if not output_file.exists():
             results.append(
                 BenchmarkResult(
-                    name=task_file.name.removesuffix(".intent.yaml"),
+                    name=task_file.name.removesuffix(".govern.yaml"),
                     ok=False,
                     failed=[f"Missing output file for task: {task_file.name}"],
                     warnings=[],
@@ -93,17 +93,17 @@ def run_benchmark(tasks_dir: Path, outputs_dir: Path) -> list[BenchmarkResult]:
             constraint_loss = list(mcp_plan.get("constraint_loss", []))
             results.append(
                 BenchmarkResult(
-                    name=task_file.name.removesuffix(".intent.yaml"),
+                    name=task_file.name.removesuffix(".govern.yaml"),
                     ok=report.ok,
                     failed=report.failed,
                     warnings=report.warnings,
                     constraint_loss=constraint_loss,
                 )
             )
-        except IntentSpecError as exc:
+        except GovernSpecError as exc:
             results.append(
                 BenchmarkResult(
-                    name=task_file.name.removesuffix(".intent.yaml"),
+                    name=task_file.name.removesuffix(".govern.yaml"),
                     ok=False,
                     failed=[str(exc)],
                     warnings=[],

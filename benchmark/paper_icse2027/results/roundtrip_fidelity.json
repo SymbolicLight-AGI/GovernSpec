@@ -58,7 +58,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -68,7 +68,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -129,7 +129,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -139,7 +139,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -200,7 +200,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -210,7 +210,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -271,7 +271,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -281,7 +281,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -427,7 +427,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -437,7 +437,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -498,7 +498,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -508,7 +508,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -569,7 +569,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -579,7 +579,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -640,7 +640,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -650,7 +650,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -711,7 +711,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -721,7 +721,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -952,7 +952,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -962,7 +962,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -1023,7 +1023,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -1033,7 +1033,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -1094,7 +1094,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -1104,7 +1104,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {
@@ -1420,7 +1420,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema."
     },
     {
@@ -1430,7 +1430,7 @@
       "field_matches": {},
       "exact_match_ratio": 0.0,
       "diff_snippet": "",
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema."
     },
     {

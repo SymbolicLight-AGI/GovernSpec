@@ -1,4 +1,4 @@
-# IntentSpec 投稿大纲（双版本）
+# GovernSpec 投稿大纲（双版本）
 
 更新时间：2026-04-24  
 状态：已根据公开官方页面和仓库现状校正关键事实，可作为后续写作母版。
@@ -9,7 +9,7 @@
 
 ### 0.1 仓库现状，写作时必须保持一致
 
-- `IntentSpec` 当前是一个 `local-first`、`zero-intrusion` 的契约编译器。
+- `GovernSpec` 当前是一个 `local-first`、`zero-intrusion` 的契约编译器。
 - 当前仓库中有 `10` 个 compile targets：
   - `agents-md`
   - `antigravity-rules`
@@ -50,7 +50,7 @@
 
 ### 0.3 写作时建议统一使用的主张句
 
-> IntentSpec provides a local-first, zero-intrusion governance layer that compiles a single contract into agent-native artifacts and pairs them with deterministic offline acceptance tests.
+> GovernSpec provides a local-first, zero-intrusion governance layer that compiles a single contract into agent-native artifacts and pairs them with deterministic offline acceptance tests.
 
 上面这句话比 `enforce behavioral constraints` 更稳，更符合系统实际边界。
 
@@ -98,9 +98,9 @@
 
 更稳的标题候选：
 
-1. `IntentSpec: Zero-Intrusion Contract Compilation for Governing Heterogeneous AI Agents`
+1. `GovernSpec: Zero-Intrusion Contract Compilation for Governing Heterogeneous AI Agents`
 2. `Runtime-Free Contract Compilation for Agent Governance across Heterogeneous AI Toolchains`
-3. `IntentSpec: Single-Source Contract Compilation and Offline Acceptance Testing for AI Agent Governance`
+3. `GovernSpec: Single-Source Contract Compilation and Offline Acceptance Testing for AI Agent Governance`
 
 ### 1.2 不建议再用的表述
 
@@ -120,7 +120,7 @@
 
 ### 1.3 评估设计的总原则
 
-- 不要把 `IntentSpec` 和 runtime firewall 系统做成“谁更安全”的对打。
+- 不要把 `GovernSpec` 和 runtime firewall 系统做成“谁更安全”的对打。
 - 可以比较**接入方式、部署摩擦、可移植性、表达能力损失**，但要明确 threat model 不同。
 - 最公平的主 baseline 其实是：
   - `hand-authored per-platform artifacts`
@@ -158,21 +158,21 @@
 
 首选：
 
-`IntentSpec: Zero-Intrusion Contract Compilation and Offline Acceptance Testing for Heterogeneous AI Agents`
+`GovernSpec: Zero-Intrusion Contract Compilation and Offline Acceptance Testing for Heterogeneous AI Agents`
 
 备选：
 
-`IntentSpec: A Local-First Tool for Compiling Agent Governance Contracts into Native Artifacts`
+`GovernSpec: A Local-First Tool for Compiling Agent Governance Contracts into Native Artifacts`
 
 ### 2.3 一句话摘要定位
 
-> We present IntentSpec, a local-first tool that lets developers author a single governance contract, compile it into native artifacts used by heterogeneous AI agent platforms, and validate generated outputs with deterministic offline checks, without modifying agent runtimes.
+> We present GovernSpec, a local-first tool that lets developers author a single governance contract, compile it into native artifacts used by heterogeneous AI agent platforms, and validate generated outputs with deterministic offline checks, without modifying agent runtimes.
 
 ### 2.4 适合 ICSE demo 的核心贡献
 
 建议只写 3 点：
 
-1. 一个可运行的 `single-source contract` 工具链，支持从 `intent.yaml` 到多个 agent-native artifacts 的编译。
+1. 一个可运行的 `single-source contract` 工具链，支持从 `govern.yaml` 到多个 agent-native artifacts 的编译。
 2. 一个与编译流程配套的 `reverse import` 和 `offline acceptance testing` 工作流。
 3. 一组展示工具可用性与表达边界的轻量级实证结果。
 
@@ -195,7 +195,7 @@
 只讲端到端工作流，不要把细节铺太满：
 
 ```text
-intent.yaml
+govern.yaml
   -> validate
   -> resolve imports
   -> normalize to IIR
@@ -229,14 +229,14 @@ intent.yaml
 - 编译到：
   - `AGENTS.md`
   - `CLAUDE.md`
-  - `.cursor/rules/intentspec.mdc`
+  - `.cursor/rules/governspec.mdc`
   - `openai-structured`
   - `mcp-plan`
 - 展示：
   - 编译结果
   - 一个 compile-time loss report 示例
   - 从某个 artifact 反向导回契约
-  - 对产出执行 `intent test`
+  - 对产出执行 `governspec test`
 
 初步验证只做三件事：
 
@@ -292,12 +292,12 @@ intent.yaml
 
 ### 2.9 ICSE demo 版可直接落文的摘要骨架
 
-第一句：问题背景，异构 agent 平台导致治理规则碎片化。  
-第二句：已有工作多依赖 runtime interception 或 framework-specific integration。  
-第三句：本文提出 `IntentSpec`。  
-第四句：系统能力，`single-source contract -> native artifacts -> offline acceptance tests`。  
-第五句：实现规模，`10 compile targets`、`5 import source types`、`10 deterministic assertions`。  
-第六句：演示内容，跨目标编译、loss report、reverse import、offline validation。  
+第一句：问题背景，异构 agent 平台导致治理规则碎片化。
+第二句：已有工作多依赖 runtime interception 或 framework-specific integration。
+第三句：本文提出 `GovernSpec`。
+第四句：系统能力，`single-source contract -> native artifacts -> offline acceptance tests`。
+第五句：实现规模，`10 compile targets`、`5 import source types`、`10 deterministic assertions`。
+第六句：演示内容，跨目标编译、loss report、reverse import、offline validation。
 第七句：结论，工具适合不能修改 runtime、但希望统一治理策略的团队。
 
 ### 2.10 ICSE demo 版投稿前检查清单
@@ -343,7 +343,7 @@ intent.yaml
 建议收敛到 4 点：
 
 1. 问题 formulation：提出 `zero-intrusion agent governance` 这一软件工程问题，并明确其与 runtime enforcement 的边界差异。
-2. 系统设计：设计 `IntentSpec` source schema、`IIR`、target-specific compilation 和 compile-time loss reporting。
+2. 系统设计：设计 `GovernSpec` source schema、`IIR`、target-specific compilation 和 compile-time loss reporting。
 3. 双向工作流：实现 `10 compile targets` 与 `5 import source types`，支持从 source contract 到 native artifact，再从 artifact 回到 structured contract。
 4. 确定性验收：提供 `10` 种不依赖模型的离线断言，用于对 agent 产出进行 post-hoc governance checks。
 
@@ -613,7 +613,7 @@ loss(C, t) = information present in source contract C
 - runtime monitors 是 enforcement channel
 - 两者可以叠加
 
-##### 5.2 When IntentSpec is the right tool
+##### 5.2 When GovernSpec is the right tool
 
 适合：
 
@@ -692,13 +692,13 @@ loss(C, t) = information present in source contract C
 
 ### 3.8 FSE 长文版摘要骨架
 
-第一句：异构 agent 生态让治理规则分散在多种 native artifacts 中。  
-第二句：现有研究多关注 runtime-time monitoring 或 policy enforcement，较少关注不修改 runtime 的统一 authoring 与 translation。  
-第三句：本文提出 `IntentSpec`，一种 `local-first`、`zero-intrusion` 的 contract compilation framework。  
-第四句：系统设计，`source schema + IIR + target-specific compilation + loss reporting + reverse import + deterministic offline assertions`。  
-第五句：实现规模，`10 compile targets`、`5 import source types`、`10 assertions`。  
-第六句：评估问题，expressibility、round-trip fidelity、assertion effectiveness、maintenance cost。  
-第七句：结论，IntentSpec 适合作为 heterogeneous agent toolchains 上层的 governance authoring layer，而不是 runtime enforcement 的替代品。
+第一句：异构 agent 生态让治理规则分散在多种 native artifacts 中。
+第二句：现有研究多关注 runtime-time monitoring 或 policy enforcement，较少关注不修改 runtime 的统一 authoring 与 translation。
+第三句：本文提出 `GovernSpec`，一种 `local-first`、`zero-intrusion` 的 contract compilation framework。
+第四句：系统设计，`source schema + IIR + target-specific compilation + loss reporting + reverse import + deterministic offline assertions`。
+第五句：实现规模，`10 compile targets`、`5 import source types`、`10 assertions`。
+第六句：评估问题，expressibility、round-trip fidelity、assertion effectiveness、maintenance cost。
+第七句：结论，GovernSpec 适合作为 heterogeneous agent toolchains 上层的 governance authoring layer，而不是 runtime enforcement 的替代品。
 
 ---
 
@@ -706,15 +706,15 @@ loss(C, t) = information present in source contract C
 
 ### 4.1 不要再写的句子
 
-- `IntentSpec enforces behavior without runtime modification.`
-- `IntentSpec is more secure than runtime interception approaches.`
+- `GovernSpec enforces behavior without runtime modification.`
+- `GovernSpec is more secure than runtime interception approaches.`
 - `This is the first work to formalize constraint loss.`
 - `10 native tools are already supported.`
 
 ### 4.2 建议替代句
 
-- `IntentSpec propagates governance intent through native agent artifacts.`
-- `IntentSpec complements runtime-centered governance by covering settings where runtime modification is unavailable or undesirable.`
+- `GovernSpec propagates governance intent through native agent artifacts.`
+- `GovernSpec complements runtime-centered governance by covering settings where runtime modification is unavailable or undesirable.`
 - `We operationalize compile-time information loss as a practical reporting mechanism.`
 - `The current prototype implements 10 compile targets and 5 import source types.`
 
@@ -758,4 +758,4 @@ loss(C, t) = information present in source contract C
 
 如果你只记住一句话，建议统一成下面这句：
 
-> IntentSpec is a local-first, zero-intrusion contract compiler for heterogeneous AI agent ecosystems, paired with deterministic offline acceptance testing and explicit compile-time loss reporting.
+> GovernSpec is a local-first, zero-intrusion contract compiler for heterogeneous AI agent ecosystems, paired with deterministic offline acceptance testing and explicit compile-time loss reporting.

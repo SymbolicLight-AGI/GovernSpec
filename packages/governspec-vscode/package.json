@@ -1,0 +1,68 @@
+{
+  "name": "governspec-vscode",
+  "displayName": "GovernSpec",
+  "description": "VS Code integration for GovernSpec contracts.",
+  "version": "0.1.0",
+  "publisher": "symboliclight",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:governspec.validateCurrentFile",
+    "onCommand:governspec.inspectCurrentFile",
+    "onCommand:governspec.compileCurrentFile",
+    "onCommand:governspec.testOutput",
+    "onCommand:governspec.showMcpSetupSnippet"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "governspec.validateCurrentFile",
+        "title": "GovernSpec: Validate Current File"
+      },
+      {
+        "command": "governspec.inspectCurrentFile",
+        "title": "GovernSpec: Inspect Current File"
+      },
+      {
+        "command": "governspec.compileCurrentFile",
+        "title": "GovernSpec: Compile Current File"
+      },
+      {
+        "command": "governspec.testOutput",
+        "title": "GovernSpec: Test Output"
+      },
+      {
+        "command": "governspec.showMcpSetupSnippet",
+        "title": "GovernSpec: Show MCP Setup Snippet"
+      }
+    ],
+    "configuration": {
+      "title": "GovernSpec",
+      "properties": {
+        "governspec.command": {
+          "type": "string",
+          "default": "governspec",
+          "description": "Path or command name for the GovernSpec CLI."
+        },
+        "governspec.mcpCommand": {
+          "type": "string",
+          "default": "governspec-mcp",
+          "description": "Path or command name for the GovernSpec MCP server."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.99.0",
+    "typescript": "^5.8.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}

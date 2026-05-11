@@ -6,9 +6,9 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-from intentspec_core.common.errors import IntentSpecError
-from intentspec_core.iir.builder import build_iir
-from intentspec_core.targets.compiler import compile_target
+from governspec_core.common.errors import GovernSpecError
+from governspec_core.iir.builder import build_iir
+from governspec_core.targets.compiler import compile_target
 from paper_helpers import (
     BENCHMARK_ROOT,
     REPRESENTATIVE_TARGETS,
@@ -46,7 +46,7 @@ def run(
                 artifact = compile_target(spec, target)
                 artifact_text(artifact, target)
                 record.update({"ok": True, "artifact_kind": artifact.kind})
-            except IntentSpecError as exc:
+            except GovernSpecError as exc:
                 record.update(
                     {
                         "error_type": exc.__class__.__name__,

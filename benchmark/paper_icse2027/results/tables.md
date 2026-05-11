@@ -33,7 +33,7 @@
 | regex | 3 | 3 | 100.0% |
 | required_sections | 4 | 4 | 100.0% |
 
-## Annotation agreement
+## Assisted annotation agreement
 | Field | Items | Agreement | Cohen kappa | Krippendorff alpha |
 | --- | --- | --- | --- | --- |
 | expected_ok | 29 | 100.0% | 1.0 | 1.0 |

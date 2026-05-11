@@ -1,7 +1,7 @@
 # ICSE 2027 paper benchmark
 
 This directory contains the local, reproducible artifact-level benchmark used by the
-IntentSpec paper drafts. It includes the original ICSE demo seed set plus an
+GovernSpec paper drafts. It includes the original ICSE demo seed set plus an
 expanded local dataset for stronger artifact-level evidence.
 
 Run all experiments from the repository root:
@@ -12,7 +12,7 @@ python benchmark/paper_icse2027/scripts/run_all.py
 
 The benchmark intentionally avoids external agent execution. It measures compilation,
 round-trip import fidelity, deterministic offline assertion behavior, and assisted
-annotation agreement using the current IntentSpec implementation.
+annotation agreement using the current GovernSpec implementation.
 
 Current dataset size:
 

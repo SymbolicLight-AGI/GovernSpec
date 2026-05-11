@@ -1,13 +1,13 @@
-# IntentSpec
+# GovernSpec
 
-IntentSpec 是一个**离线契约编译器**，用来统一管理 AI agent 的任务规则。
+GovernSpec 是本仓库实现的一个**离线契约编译器**，用来统一管理 AI agent 的任务规则。
 
-它让你维护一份 `intent.yaml`，然后编译成不同工具能直接读取的 artifact，例如
+它让你维护一份 `govern.yaml`，然后编译成不同工具能直接读取的 artifact，例如
 `AGENTS.md`、`CLAUDE.md`、Cursor Rules、OpenAI Structured Outputs、Gemini
 structured output payload 和 MCP plan。
 
 ```text
-intent.yaml
+govern.yaml
   -> validate
   -> resolve imports
   -> inspect normalized IIR
@@ -18,7 +18,7 @@ intent.yaml
 
 > Define once, validate and compile everywhere.
 
-IntentSpec 不调用真实 LLM，不需要 API key，不接管 agent runtime。它只做三件事：
+GovernSpec 不调用真实 LLM，不需要 API key，不接管 agent runtime。它只做三件事：
 
 - 把任务目标、权限、约束、人工确认门、输出格式和验收测试写成结构化 contract。
 - 把 contract 编译成各个 AI 工具需要的格式。
@@ -26,27 +26,33 @@ IntentSpec 不调用真实 LLM，不需要 API key，不接管 agent runtime。�
 
 如果你第一次接触这个项目，建议先读本文，再读 [docs/technical-guide.md](docs/technical-guide.md)。
 
+## 命名与第三方项目说明
+
+本项目不隶属于、也不代表 `intentspec.org`、`JanneL/validate-intentspec-action` 或任何同名第三方项目。公开引用时，建议使用 **GovernSpec** 或 **GovernSpec v0.1 YAML contract toolchain** 来指代本仓库，避免和只校验 Markdown front matter 的 GitHub Action 混淆。
+
+当前实现使用 `govern.yaml`、`GovernSpec` / `GovernPack`、Pydantic v2 schema、IIR、target compiler、reverse importer 和 offline assertion runner。它不是某个外部 GovernSpec 标准的官方实现，也不会声明自己是生态中的唯一或官方标准。
+
 ## 适合谁
 
 ### 使用多个 AI coding 工具的工程团队
 
-如果你同时使用 Cursor、Codex、Claude Code 或 API structured outputs，就会遇到同一套规则重复维护的问题。IntentSpec 可以把这些规则收敛到一份 `intent.yaml`，再编译到不同工具。
+如果你同时使用 Cursor、Codex、Claude Code 或 API structured outputs，就会遇到同一套规则重复维护的问题。GovernSpec 可以把这些规则收敛到一份 `govern.yaml`，再编译到不同工具。
 
 ### AI 应用开发者
 
-如果你的应用需要稳定输出 JSON、限制模型行为、要求人工确认或在 CI 中检查输出格式，IntentSpec 可以提供本地 schema、编译和测试流程。
+如果你的应用需要稳定输出 JSON、限制模型行为、要求人工确认或在 CI 中检查输出格式，GovernSpec 可以提供本地 schema、编译和测试流程。
 
 ### 安全、治理和合规负责人
 
-如果你关心 agent 能不能联网、能不能写文件、是否暴露隐私、是否需要人工确认，IntentSpec 把这些内容变成显式字段，而不是散落在 prompt 里。
+如果你关心 agent 能不能联网、能不能写文件、是否暴露隐私、是否需要人工确认，GovernSpec 把这些内容变成显式字段，而不是散落在 prompt 里。
 
 ### 研究者和工具作者
 
-IntentSpec 提供 schema、IIR、importer、compiler、benchmark 和 offline assertion runner，适合研究 agent artifact-level governance、round-trip fidelity 和 task contract portability。
+GovernSpec 提供 schema、IIR、importer、compiler、benchmark 和 offline assertion runner，适合研究 agent artifact-level governance、round-trip fidelity 和 task contract portability。
 
 ## 不适合谁
 
-IntentSpec 不是：
+GovernSpec 不是：
 
 - LLM runtime
 - agent orchestration framework
@@ -59,11 +65,11 @@ IntentSpec 不是：
 
 ## 你能得到什么
 
-使用 IntentSpec 后，团队可以得到：
+使用 GovernSpec 后，团队可以得到：
 
 - 一份可 code review 的 AI 任务契约。
 - 多个下游工具能读取的目标文件。
-- 可复用的治理规则包 `IntentPack`。
+- 可复用的治理规则包 `GovernPack`。
 - 明确的权限边界和人工确认规则。
 - 可在本地或 CI 中运行的输出验收测试。
 - 从已有 `AGENTS.md`、`CLAUDE.md`、Cursor Rules 或 structured output JSON 迁移回 contract 的路径。
@@ -76,38 +82,44 @@ IntentSpec 不是：
 从 PyPI 安装：
 
 ```bash
-pip install intentspec
+pip install governspec
 ```
 
 从源码安装：
 
 ```bash
-git clone https://github.com/<your-org>/IntentSpec.git
-cd IntentSpec
+git clone https://github.com/<your-org>/GovernSpec.git
+cd GovernSpec
 pip install -e ".[dev]"
 ```
 
 检查安装：
 
 ```bash
-intent doctor
+governspec doctor
 ```
 
-IntentSpec 的核心流程不需要 API key，不需要联网。
+GovernSpec 的核心流程不需要 API key，不需要联网。
 
 ## 5 分钟快速开始
 
 ### 1. 创建 contract
 
 ```bash
-intent init
+governspec init
 ```
 
-这会生成 `intent.yaml`。你可以先用下面这个最小示例理解结构：
+如果希望生成中文占位说明，可以使用：
+
+```bash
+governspec init --locale zh-CN
+```
+
+这会生成 `govern.yaml`。你可以先用下面这个最小示例理解结构：
 
 ```yaml
 version: "0.1"
-kind: "IntentSpec"
+kind: "GovernSpec"
 
 metadata:
   name: "code_review"
@@ -157,7 +169,7 @@ tests:
 ### 2. 验证 contract
 
 ```bash
-intent validate intent.yaml
+governspec validate govern.yaml
 ```
 
 看到 `Validation status: ok` 表示 schema 和字段约束通过。
@@ -165,7 +177,7 @@ intent validate intent.yaml
 ### 3. 查看最终归一化结果
 
 ```bash
-intent inspect intent.yaml
+governspec inspect govern.yaml
 ```
 
 `inspect` 展示 import 解析、权限合并和 normalization 之后的 IIR。调试复杂 contract 时，这一步很有用。
@@ -173,7 +185,7 @@ intent inspect intent.yaml
 如果要给脚本使用：
 
 ```bash
-intent inspect intent.yaml --format json
+governspec inspect govern.yaml --format json
 ```
 
 ### 4. 编译到目标工具
@@ -181,37 +193,37 @@ intent inspect intent.yaml --format json
 编译给 Codex 或其他读取 `AGENTS.md` 的 coding agent：
 
 ```bash
-intent compile intent.yaml --target agents-md --out AGENTS.md
+governspec compile govern.yaml --target agents-md --out AGENTS.md
 ```
 
 编译给 Claude Code：
 
 ```bash
-intent compile intent.yaml --target claude-md --out CLAUDE.md
+governspec compile govern.yaml --target claude-md --out CLAUDE.md
 ```
 
 编译给 Cursor：
 
 ```bash
-intent compile intent.yaml --target cursor-rules --out .
+governspec compile govern.yaml --target cursor-rules --out .
 ```
 
 编译给 OpenAI Structured Outputs：
 
 ```bash
-intent compile intent.yaml --target openai-structured --out task.openai-structured.json
+governspec compile govern.yaml --target openai-structured --out task.openai-structured.json
 ```
 
 ### 5. 让 agent 工作
 
-在 Cursor、Codex、Claude Code 或你的 API workflow 中正常运行 agent。IntentSpec 不接管这一步，它只提供目标工具能读取的 artifact。
+在 Cursor、Codex、Claude Code 或你的 API workflow 中正常运行 agent。GovernSpec 不接管这一步，它只提供目标工具能读取的 artifact。
 
 ### 6. 验收输出
 
 把 agent 输出保存成文件，例如 `output.md`：
 
 ```bash
-intent test intent.yaml --output output.md
+governspec test govern.yaml --output output.md
 ```
 
 输出示例：
@@ -229,8 +241,8 @@ Failed: none
 ### 从自然语言生成草稿
 
 ```bash
-intent draft "Review this repository without modifying code" --out draft.intent.yaml
-intent draft "帮我做客户会议简报，不要泄露隐私，涉及敏感数据先问我" --out draft.intent.yaml
+governspec draft "Review this repository without modifying code" --out draft.govern.yaml
+governspec draft "帮我做客户会议简报，不要泄露隐私，涉及敏感数据先问我" --out draft.govern.yaml
 ```
 
 `draft` 是本地启发式生成，不调用真实模型。它适合冷启动，但生成后仍然应该人工 review。
@@ -238,10 +250,10 @@ intent draft "帮我做客户会议简报，不要泄露隐私，涉及敏感数
 ### 从已有 artifact 导入
 
 ```bash
-intent import AGENTS.md --out imported.intent.yaml
-intent import CLAUDE.md --out imported.intent.yaml
-intent import .cursor/rules/project.mdc --out imported.intent.yaml
-intent import task.openai-structured.json --out imported.intent.yaml
+governspec import AGENTS.md --out imported.govern.yaml
+governspec import CLAUDE.md --out imported.govern.yaml
+governspec import .cursor/rules/project.mdc --out imported.govern.yaml
+governspec import task.openai-structured.json --out imported.govern.yaml
 ```
 
 支持的导入来源：
@@ -254,16 +266,16 @@ intent import task.openai-structured.json --out imported.intent.yaml
 | `openai-structured` | `json_schema` key |
 | `gemini-structured` | `generationConfig` key |
 
-导入结果是 draft，不是等价证明。自然语言 artifact 一定存在信息损失，所以导入后建议运行 `intent validate` 和 `intent inspect`。
+导入结果是 draft，不是等价证明。自然语言 artifact 一定存在信息损失，所以导入后建议运行 `governspec validate` 和 `governspec inspect`。
 
-## IntentPack 复用治理规则
+## GovernPack 复用治理规则
 
-通用规则可以写成 `IntentPack`：
+通用规则可以写成 `GovernPack`：
 
 ```yaml
-# packs/privacy.intent.yaml
+# packs/privacy.govern.yaml
 version: "0.1"
-kind: "IntentPack"
+kind: "GovernPack"
 
 metadata:
   name: "privacy_pack"
@@ -285,7 +297,7 @@ human_gates:
 
 ```yaml
 imports:
-  - "./packs/privacy.intent.yaml"
+  - "./packs/privacy.govern.yaml"
 ```
 
 导入合并规则是保守的：
@@ -302,8 +314,8 @@ imports:
 | `prompt` | 通用 Markdown prompt | 文本 |
 | `agents-md` | Codex 或 repository instruction workflow | `AGENTS.md` |
 | `claude-md` | Claude Code project memory | `CLAUDE.md` |
-| `cursor-rules` | Cursor Project Rules | `.cursor/rules/intentspec.mdc` |
-| `antigravity-rules` | Antigravity-compatible repository rules | `.agents/rules/intentspec.md` |
+| `cursor-rules` | Cursor Project Rules | `.cursor/rules/governspec.mdc` |
+| `antigravity-rules` | Antigravity-compatible repository rules | `.agents/rules/governspec.md` |
 | `skill` | 通用 skill bundle | `SKILL.md`、`references/`、`scripts/` |
 | `openai-structured` | OpenAI Structured Outputs | JSON payload |
 | `gemini-structured` | Gemini structured output | JSON payload |
@@ -311,11 +323,11 @@ imports:
 | `openai-json` | Legacy transition payload | JSON payload |
 
 完整集成说明见 [docs/integrations.md](docs/integrations.md)，其中列出了每类
-IntentSpec 产物的目标工具和落地方式。
+GovernSpec 产物的目标工具和落地方式。
 
 ## 输出验收断言
 
-`intent test` 支持以下 deterministic assertion：
+`governspec test` 支持以下 deterministic assertion：
 
 | Assertion | 检查内容 |
 | --- | --- |
@@ -337,10 +349,10 @@ IntentSpec 产物的目标工具和落地方式。
 ### 代码审查
 
 ```bash
-intent examples --copy code_review.intent.yaml --out code_review.intent.yaml
-intent validate code_review.intent.yaml
-intent compile code_review.intent.yaml --target agents-md --out AGENTS.md
-intent test code_review.intent.yaml --output review.md
+governspec examples --copy code_review.govern.yaml --out code_review.govern.yaml
+governspec validate code_review.govern.yaml
+governspec compile code_review.govern.yaml --target agents-md --out AGENTS.md
+governspec test code_review.govern.yaml --output review.md
 ```
 
 适合限制 agent 只读仓库、输出固定章节、不修改文件。
@@ -348,9 +360,9 @@ intent test code_review.intent.yaml --output review.md
 ### 结构化 JSON 报告
 
 ```bash
-intent examples --copy report_json.intent.yaml --out report_json.intent.yaml
-intent compile report_json.intent.yaml --target openai-structured --out task.openai-structured.json
-intent test report_json.intent.yaml --output report_json.output.json
+governspec examples --copy report_json.govern.yaml --out report_json.govern.yaml
+governspec compile report_json.govern.yaml --target openai-structured --out task.openai-structured.json
+governspec test report_json.govern.yaml --output report_json.output.json
 ```
 
 适合 API workflow、machine-readable report 和 CI 检查。
@@ -358,9 +370,9 @@ intent test report_json.intent.yaml --output report_json.output.json
 ### 多工具规则同步
 
 ```bash
-intent compile intent.yaml --target agents-md --out AGENTS.md
-intent compile intent.yaml --target claude-md --out CLAUDE.md
-intent compile intent.yaml --target cursor-rules --out .
+governspec compile govern.yaml --target agents-md --out AGENTS.md
+governspec compile govern.yaml --target claude-md --out CLAUDE.md
+governspec compile govern.yaml --target cursor-rules --out .
 ```
 
 适合同一仓库中并行使用 Codex、Claude Code 和 Cursor 的团队。
@@ -368,35 +380,35 @@ intent compile intent.yaml --target cursor-rules --out .
 ### CI 检查
 
 ```bash
-intent validate intent.yaml
-intent compile intent.yaml --target agents-md --out /tmp/AGENTS.md
-intent test intent.yaml --output output.md
+governspec validate govern.yaml
+governspec compile govern.yaml --target agents-md --out /tmp/AGENTS.md
+governspec test govern.yaml --output output.md
 ```
 
 建议在 CI 中至少检查重要 contracts 能否 validate 和 compile。
 
 ## MCP Server
 
-IntentSpec 提供薄 MCP server：
+GovernSpec 提供薄 MCP server：
 
 ```bash
-intentspec-mcp
+governspec-mcp
 ```
 
 暴露的 tools：
 
-- `intentspec.validate`
-- `intentspec.inspect`
-- `intentspec.compile`
-- `intentspec.test`
+- `governspec.validate`
+- `governspec.inspect`
+- `governspec.compile`
+- `governspec.test`
 
 暴露的 resources：
 
-- `intent://spec/<path>`
-- `intent://iir/<path>`
-- `intent://compiled/<target>/<path>`
+- `govern://spec/<path>`
+- `govern://iir/<path>`
+- `govern://compiled/<target>/<path>`
 
-`intentspec-mcp` 是集成面，不是 runtime orchestration platform。
+`governspec-mcp` 是集成面，不是 runtime orchestration platform。
 
 ## Python SDK
 
@@ -404,7 +416,7 @@ intentspec-mcp
 
 ```python
 from pathlib import Path
-from intentspec_core import (
+from governspec_core import (
     load_document,
     resolve_document_imports,
     inspect_document,
@@ -416,22 +428,22 @@ from intentspec_core import (
     heuristic_draft_payload,
 )
 
-document = load_document(Path("intent.yaml"))
+document = load_document(Path("govern.yaml"))
 resolved = resolve_document_imports(document, Path("."))
 report = validate_document(resolved)
 payload = inspect_document(resolved)
 ```
 
-如果只处理 `IntentSpec`，也可以使用更窄的 `load_spec`、`resolve_imports` 和 `validate_spec`。
+如果只处理 `GovernSpec`，也可以使用更窄的 `load_spec`、`resolve_imports` 和 `validate_spec`。
 
 ## 仓库结构
 
 ```text
-packages/intentspec-core/   schema、parser、IIR、imports、targets、testing
-packages/intentspec-cli/    Typer CLI, intent command
-packages/intentspec-mcp/    thin MCP server
-packages/intentspec-ts/     TypeScript package MVP
-packages/intentspec-vscode/ VS Code extension MVP
+packages/governspec-core/   schema、parser、IIR、imports、targets、testing
+packages/governspec-cli/    Typer CLI, governspec command
+packages/governspec-mcp/    thin MCP server
+packages/governspec-ts/     TypeScript package MVP
+packages/governspec-vscode/ VS Code extension MVP
 examples/                   runnable example contracts and outputs
 schema/                     generated JSON Schema
 benchmark/                  offline benchmark and paper benchmark artifacts
@@ -444,7 +456,9 @@ tests/                      pytest test suite
 - [docs/technical-guide.md](docs/technical-guide.md), 详细技术指南，推荐新用户阅读。
 - [docs/integrations.md](docs/integrations.md), 各工具集成方式。
 - [docs/iir.md](docs/iir.md), 中间表示 IIR 设计。
+- [docs/engineering/repository_file_map_zh.md](docs/engineering/repository_file_map_zh.md), 仓库关键文件地图。
 - [docs/migration-v0.1.md](docs/migration-v0.1.md), 迁移到 v0.1 schema。
+- [docs/project-roadmap-zh.md](docs/project-roadmap-zh.md), 项目从 0% 到 100% 的总规划和当前进度。
 - [benchmark.md](benchmark.md), benchmark 使用说明。
 - [failure-cases.md](failure-cases.md), 已知失败案例和边界。
 
@@ -479,6 +493,13 @@ mypy
 python -m build
 twine check dist/*
 ```
+
+贡献前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。安全问题请按
+[SECURITY.md](SECURITY.md) 私下报告。行为准则见
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)。
+
+如果你在研究中使用 GovernSpec，请使用 [CITATION.cff](CITATION.cff) 中的
+元数据引用本软件。JOSS 投稿草稿位于 [paper/paper.md](paper/paper.md)。
 
 ## 路线图
 

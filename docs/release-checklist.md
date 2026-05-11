@@ -2,7 +2,7 @@
 
 ## Scope
 
-This checklist is for IntentSpec v0.1 releases.
+This checklist is for GovernSpec v0.1 releases.
 
 v0.1 is the mainline contract compiler release. The release should validate the multi-package repository, the v0.1 schema, the packaged examples, and the target compilers.
 
@@ -10,10 +10,10 @@ v0.1 is the mainline contract compiler release. The release should validate the 
 
 - Confirm the target version is updated in:
   - `pyproject.toml`
-  - `packages/intentspec-core/src/intentspec_core/__init__.py`
-  - `packages/intentspec-cli/src/intentspec/__init__.py`
+  - `packages/governspec-core/src/governspec_core/__init__.py`
+  - `packages/governspec-cli/src/governspec/__init__.py`
 - Confirm `README.md` reflects v0.1 behavior and command examples.
-- Confirm `schema/intentspec.schema.json` is regenerated from the current v0.1 models.
+- Confirm `schema/governspec.schema.json` is regenerated from the current v0.1 models.
 
 ## Validation
 
@@ -23,33 +23,33 @@ v0.1 is the mainline contract compiler release. The release should validate the 
 - Run `mypy`.
 - Run `python -m build`.
 - Run `twine check dist/*`.
-- Run `npm install && npm run build` in `packages/intentspec-ts`.
-- Run `npm install && npm run build` in `packages/intentspec-vscode`.
+- Run `npm install && npm run build` in `packages/governspec-ts`.
+- Run `npm install && npm run build` in `packages/governspec-vscode`.
 
 ## CLI sanity checks
 
-- Run `intent doctor`.
-- Run `intent examples`.
-- Run `intent validate examples/customer_brief.intent.yaml --format json`.
-- Run `intent inspect examples/customer_brief.intent.yaml --format json`.
-- Run `intent compile examples/report_json.intent.yaml --target openai-structured`.
-- Run `intent compile examples/code_review.intent.yaml --target agents-md`.
-- Run `intent compile examples/imported_customer_brief.intent.yaml --target mcp-plan`.
-- Run `intent test examples/report_json.intent.yaml --output examples/report_json.output.json --format json`.
-- Run `intent draft "Review this repository" --out /tmp/draft-test.intent.yaml` and verify output.
-- Run `intent import` round-trip: compile an example to `agents-md`, then import it back.
-  - `intent compile examples/code_review.intent.yaml --target agents-md --out /tmp/test-agents.md`
-  - `intent import /tmp/test-agents.md --out /tmp/test-imported.intent.yaml`
-  - `intent validate /tmp/test-imported.intent.yaml`
-- Run `intent import` with each supported source type: `agents-md`, `claude-md`, `cursor-rules`, `openai-structured`, `gemini-structured`.
+- Run `governspec doctor`.
+- Run `governspec examples`.
+- Run `governspec validate examples/customer_brief.govern.yaml --format json`.
+- Run `governspec inspect examples/customer_brief.govern.yaml --format json`.
+- Run `governspec compile examples/report_json.govern.yaml --target openai-structured`.
+- Run `governspec compile examples/code_review.govern.yaml --target agents-md`.
+- Run `governspec compile examples/imported_customer_brief.govern.yaml --target mcp-plan`.
+- Run `governspec test examples/report_json.govern.yaml --output examples/report_json.output.json --format json`.
+- Run `governspec draft "Review this repository" --out /tmp/draft-test.govern.yaml` and verify output.
+- Run `governspec import` round-trip: compile an example to `agents-md`, then import it back.
+  - `governspec compile examples/code_review.govern.yaml --target agents-md --out /tmp/test-agents.md`
+  - `governspec import /tmp/test-agents.md --out /tmp/test-imported.govern.yaml`
+  - `governspec validate /tmp/test-imported.govern.yaml`
+- Run `governspec import` with each supported source type: `agents-md`, `claude-md`, `cursor-rules`, `openai-structured`, `gemini-structured`.
 
 ## Example checks
 
-- Validate every valid `.intent.yaml` example under `examples/`.
+- Validate every valid `.govern.yaml` example under `examples/`.
 - Confirm expected-failure examples such as `invalid_*` still fail validation with clear errors.
-- Confirm `examples/imported_customer_brief.intent.yaml` still resolves `examples/packs/*`.
-- Confirm `examples/report_json.intent.yaml` covers `output.schema` and JSON assertions.
-- Confirm packaged examples exposed by `intent examples` are still current.
+- Confirm `examples/imported_customer_brief.govern.yaml` still resolves `examples/packs/*`.
+- Confirm `examples/report_json.govern.yaml` covers `output.schema` and JSON assertions.
+- Confirm packaged examples exposed by `governspec examples` are still current.
 
 ## Documentation checks
 
@@ -71,10 +71,10 @@ v0.1 is the mainline contract compiler release. The release should validate the 
 ## Packaging checks
 
 - Confirm package data includes recursive example resources.
-- Confirm `intent` entry point resolves to the CLI package.
-- Confirm `intentspec-mcp` entry point starts the thin MCP server.
-- Confirm `packages/intentspec-ts` still builds successfully.
-- Confirm `packages/intentspec-vscode` still builds successfully.
+- Confirm `governspec` entry point resolves to the CLI package.
+- Confirm `governspec-mcp` entry point starts the thin MCP server.
+- Confirm `packages/governspec-ts` still builds successfully.
+- Confirm `packages/governspec-vscode` still builds successfully.
 
 ## Final release decision
 

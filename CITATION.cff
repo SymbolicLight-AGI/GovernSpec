@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use GovernSpec in research, please cite the software using this metadata."
+title: "GovernSpec: Local-first task contracts for AI agent artifacts"
+version: "0.1.0"
+date-released: "2026-04-24"
+type: software
+license: MIT
+authors:
+  - family-names: Liu
+    given-names: Ting
+    affiliation: "SymbolicLight Research"
+    email: "research@symboliclight.com"
+keywords:
+  - AI agents
+  - software engineering
+  - task contracts
+  - structured outputs
+  - offline validation
+abstract: "GovernSpec is a local-first CLI and schema for describing AI tasks as explicit YAML contracts, compiling them to common agent artifacts, importing existing artifacts, and testing outputs offline. It is not affiliated with intentspec.org or similarly named third-party projects."

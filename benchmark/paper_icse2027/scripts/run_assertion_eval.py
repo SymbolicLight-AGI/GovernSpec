@@ -6,7 +6,7 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-from intentspec_core.testing.tester import test_output
+from governspec_core.testing.tester import test_output
 from paper_helpers import (
     BENCHMARK_ROOT,
     RESULTS_DIR,
@@ -26,7 +26,7 @@ def run(
     records: list[dict[str, Any]] = []
     for item in labels:
         spec = load_resolved_spec(
-            benchmark_root / "contracts" / f"{item['contract']}.intent.yaml"
+            benchmark_root / "contracts" / f"{item['contract']}.govern.yaml"
         )
         output_text = (benchmark_root / item["output_path"]).read_text(encoding="utf-8")
         report = test_output(spec, output_text)

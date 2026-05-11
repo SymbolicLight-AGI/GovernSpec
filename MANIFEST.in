@@ -1,13 +1,18 @@
 include LICENSE
 include README.md
+include CONTRIBUTING.md
+include CODE_OF_CONDUCT.md
+include SECURITY.md
+include CITATION.cff
 graft packages
-prune packages/intentspec-ts/node_modules
-prune packages/intentspec-vscode/node_modules
-prune packages/intentspec-ts/dist
-prune packages/intentspec-vscode/dist
+prune packages/governspec-ts/node_modules
+prune packages/governspec-vscode/node_modules
+prune packages/governspec-ts/dist
+prune packages/governspec-vscode/dist
 recursive-include schema *.json
 recursive-include examples *.yaml *.md
 recursive-include docs *.md
+recursive-include paper *.md *.bib
 recursive-include benchmark *.py *.yaml *.md *.json
 global-exclude __pycache__
 global-exclude *.py[cod]

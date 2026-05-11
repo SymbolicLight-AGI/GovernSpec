@@ -7,9 +7,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-from intentspec_core.imports.resolver import resolve_imports
-from intentspec_core.spec.models import IntentSpec
-from intentspec_core.spec.parser import load_spec
+from governspec_core.imports.resolver import resolve_imports
+from governspec_core.spec.models import GovernSpec
+from governspec_core.spec.parser import load_spec
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK = ROOT / "benchmark" / "paper_icse2027"
@@ -31,12 +31,9 @@ HELPERS = _load_helpers()
 
 
 def test_paper_dataset_is_consistent() -> None:
-    contracts = sorted((BENCHMARK / "contracts").glob("*.intent.yaml"))
+    contracts = sorted((BENCHMARK / "contracts").glob("*.govern.yaml"))
     output_labels = HELPERS.output_sample_labels(BENCHMARK)
     handwritten_labels = HELPERS.handwritten_artifact_labels(BENCHMARK)
-    annotation_rounds = json.loads(
-        (BENCHMARK / "labels" / "annotation_rounds.json").read_text(encoding="utf-8")
-    )
     assertion_types = {
         label["targeted_assertion"]
         for label in output_labels
@@ -46,7 +43,6 @@ def test_paper_dataset_is_consistent() -> None:
     assert len(contracts) == 20
     assert len(output_labels) == 52
     assert len(handwritten_labels) == 20
-    assert len(annotation_rounds["items"]) >= 24
     assert assertion_types == {
         "contains",
         "json_array_min_items",
@@ -60,7 +56,7 @@ def test_paper_dataset_is_consistent() -> None:
         "required_sections",
     }
 
-    contract_names = {path.name.removesuffix(".intent.yaml") for path in contracts}
+    contract_names = {path.name.removesuffix(".govern.yaml") for path in contracts}
     valid_contracts = {
         label["contract"] for label in output_labels if label["expected_ok"] is True
     }
@@ -69,7 +65,6 @@ def test_paper_dataset_is_consistent() -> None:
         assert (BENCHMARK / label["output_path"]).is_file()
     for label in handwritten_labels:
         assert (BENCHMARK / label["artifact"]).is_file()
-    assert (BENCHMARK / "labels" / annotation_rounds["protocol"]).is_file()
 
 
 def test_compile_matrix_runner_smoke(tmp_path: Path) -> None:
@@ -129,26 +124,6 @@ def test_assertion_eval_runner_smoke(tmp_path: Path) -> None:
     assert {"samples", "summary"} <= set(payload)
 
 
-def test_annotation_agreement_runner_smoke(tmp_path: Path) -> None:
-    out_dir = tmp_path / "results"
-    result = subprocess.run(
-        [
-            sys.executable,
-            str(SCRIPTS / "run_annotation_agreement.py"),
-            "--results-dir",
-            str(out_dir),
-        ],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    assert result.returncode == 0, result.stderr or result.stdout
-    payload = json.loads((out_dir / "annotation_agreement.json").read_text(encoding="utf-8"))
-    assert {"annotators", "fields", "item_count", "protocol", "unit"} <= set(payload)
-    assert (out_dir / "annotation_agreement.md").is_file()
-
-
 def test_run_all_generates_paper_outputs(tmp_path: Path) -> None:
     out_dir = tmp_path / "results"
     result = subprocess.run(
@@ -168,8 +143,6 @@ def test_run_all_generates_paper_outputs(tmp_path: Path) -> None:
         "compile_matrix.json",
         "roundtrip_fidelity.json",
         "assertion_eval.json",
-        "annotation_agreement.json",
-        "annotation_agreement.md",
         "summary.json",
         "tables.md",
         "numbers.md",
@@ -178,17 +151,17 @@ def test_run_all_generates_paper_outputs(tmp_path: Path) -> None:
 
 
 def test_fidelity_comparator_exact_match() -> None:
-    spec = resolve_imports(load_spec(BENCHMARK / "contracts" / "report_json.intent.yaml"))
+    spec = resolve_imports(load_spec(BENCHMARK / "contracts" / "report_json.govern.yaml"))
     comparison = HELPERS.compare_core_fields(spec, spec)
     assert all(comparison["field_matches"].values())
     assert comparison["exact_match_ratio"] == 1.0
 
 
 def test_fidelity_comparator_detects_list_order_mismatch() -> None:
-    spec = resolve_imports(load_spec(BENCHMARK / "contracts" / "code_review.intent.yaml"))
+    spec = resolve_imports(load_spec(BENCHMARK / "contracts" / "code_review.govern.yaml"))
     payload = copy.deepcopy(spec.model_dump(by_alias=True))
     payload["constraints"] = list(reversed(payload["constraints"]))
-    actual = IntentSpec.model_validate(payload)
+    actual = GovernSpec.model_validate(payload)
 
     comparison = HELPERS.compare_core_fields(spec, actual)
 
@@ -197,10 +170,10 @@ def test_fidelity_comparator_detects_list_order_mismatch() -> None:
 
 
 def test_fidelity_comparator_detects_schema_only_mismatch() -> None:
-    spec = resolve_imports(load_spec(BENCHMARK / "contracts" / "report_json.intent.yaml"))
+    spec = resolve_imports(load_spec(BENCHMARK / "contracts" / "report_json.govern.yaml"))
     payload = copy.deepcopy(spec.model_dump(by_alias=True))
     payload["output"]["schema"]["required"] = ["verdict"]
-    actual = IntentSpec.model_validate(payload)
+    actual = GovernSpec.model_validate(payload)
 
     comparison = HELPERS.compare_core_fields(spec, actual)
 
@@ -210,9 +183,9 @@ def test_fidelity_comparator_detects_schema_only_mismatch() -> None:
 
 def test_fidelity_comparator_handles_resolved_imports() -> None:
     spec = resolve_imports(
-        load_spec(BENCHMARK / "contracts" / "imported_customer_brief.intent.yaml")
+        load_spec(BENCHMARK / "contracts" / "imported_customer_brief.govern.yaml")
     )
-    actual = IntentSpec.model_validate(spec.model_dump(by_alias=True))
+    actual = GovernSpec.model_validate(spec.model_dump(by_alias=True))
 
     comparison = HELPERS.compare_core_fields(spec, actual)
 

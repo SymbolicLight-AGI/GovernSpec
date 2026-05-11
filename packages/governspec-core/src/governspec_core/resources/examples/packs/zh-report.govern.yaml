@@ -1,0 +1,28 @@
+version: "0.1"
+kind: "GovernPack"
+
+metadata:
+  name: "zh_report_pack"
+  description: "Reusable Chinese reporting quality defaults."
+
+evidence:
+  require_sources: true
+  mark_uncertainty: true
+  distinguish:
+    - "fact"
+    - "inference"
+    - "recommendation"
+
+quality:
+  tone:
+    - "简洁"
+    - "专业"
+  must_include:
+    - "Evidence-backed claims"
+  must_avoid:
+    - "unsupported certainty"
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"

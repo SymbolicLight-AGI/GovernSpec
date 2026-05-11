@@ -5,11 +5,11 @@ from __future__ import annotations
 from pathlib import Path
 
 import yaml
-from intentspec.cli import app
-from intentspec_core.draft import heuristic_draft_payload
-from intentspec_core.imports.resolver import resolve_imports
-from intentspec_core.spec.parser import load_spec
-from intentspec_core.validator import validate_spec
+from governspec.cli import app
+from governspec_core.draft import heuristic_draft_payload
+from governspec_core.imports.resolver import resolve_imports
+from governspec_core.spec.parser import load_spec
+from governspec_core.validator import validate_spec
 from typer.testing import CliRunner
 
 runner = CliRunner()
@@ -94,7 +94,7 @@ def test_profile_summarize_chinese() -> None:
 
 def test_profile_default_is_analysis() -> None:
     result = heuristic_draft_payload("Do something interesting with data")
-    assert result["kind"] == "IntentSpec"
+    assert result["kind"] == "GovernSpec"
     assert result["task"]["goal"]
 
 
@@ -386,7 +386,7 @@ def test_title_truncated_for_long_prompt() -> None:
 
 def _draft_and_validate(prompt: str, tmp_path: Path) -> None:
     payload = heuristic_draft_payload(prompt)
-    draft_path = tmp_path / "draft.intent.yaml"
+    draft_path = tmp_path / "draft.govern.yaml"
     draft_path.write_text(
         yaml.safe_dump(payload, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
@@ -441,12 +441,12 @@ def test_e2e_purchase(tmp_path: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
-# CLI: intent draft (backward compatibility + new features)
+# CLI: governspec draft
 # ---------------------------------------------------------------------------
 
 
 def test_cli_draft_backward_compat(tmp_path: Path) -> None:
-    output_file = tmp_path / "draft.intent.yaml"
+    output_file = tmp_path / "draft.govern.yaml"
     result = runner.invoke(
         app,
         [
@@ -462,7 +462,7 @@ def test_cli_draft_backward_compat(tmp_path: Path) -> None:
 
 
 def test_cli_draft_english_review(tmp_path: Path) -> None:
-    output_file = tmp_path / "draft.intent.yaml"
+    output_file = tmp_path / "draft.govern.yaml"
     result = runner.invoke(
         app,
         ["draft", "Review this repo without modifying code", "--out", str(output_file)],

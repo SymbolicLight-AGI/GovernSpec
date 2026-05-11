@@ -26,12 +26,12 @@ def test_readme_python_sdk_documents_document_level_api() -> None:
 def test_readme_clarifies_offline_scope_and_mcp_surface() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert "离线契约编译器" in readme
-    assert "intentspec-mcp" in readme
+    assert "governspec-mcp" in readme
 
 
 def test_release_checklist_examples_scope_is_precise() -> None:
     checklist = (ROOT / "docs" / "release-checklist.md").read_text(encoding="utf-8")
-    assert "Validate every valid `.intent.yaml` example under `examples/`." in checklist
+    assert "Validate every valid `.govern.yaml` example under `examples/`." in checklist
     expected_failure_line = (
         "Confirm expected-failure examples such as `invalid_*` still fail validation"
     )
@@ -40,8 +40,8 @@ def test_release_checklist_examples_scope_is_precise() -> None:
 
 def test_release_checklist_includes_node_and_vscode_builds() -> None:
     checklist = (ROOT / "docs" / "release-checklist.md").read_text(encoding="utf-8")
-    assert "packages/intentspec-ts" in checklist
-    assert "packages/intentspec-vscode" in checklist
+    assert "packages/governspec-ts" in checklist
+    assert "packages/governspec-vscode" in checklist
     assert "npm install && npm run build" in checklist
 
 
@@ -64,10 +64,10 @@ def test_release_notes_exist_for_v020() -> None:
     release_notes = (ROOT / "docs" / "release-notes-v0.1.0.md").read_text(
         encoding="utf-8"
     )
-    assert "IntentSpec v0.1.0 Release Notes" in release_notes
+    assert "GovernSpec v0.1.0 Release Notes" in release_notes
     assert "Recommended git tag: `v0.1.0`" in release_notes
     assert "`pytest`: `210 passed`" in release_notes
-    assert "packages/intentspec-vscode" in release_notes
+    assert "packages/governspec-vscode" in release_notes
 
 
 def test_github_release_copy_mentions_main_v020_capabilities() -> None:
@@ -76,8 +76,8 @@ def test_github_release_copy_mentions_main_v020_capabilities() -> None:
     )
     for snippet in (
         "output.schema",
-        "IntentPack",
-        "intent inspect",
+        "GovernPack",
+        "governspec inspect",
         "openai-structured",
         "gemini-structured",
         "agents-md",
@@ -93,8 +93,8 @@ def test_ci_workflow_builds_node_packages() -> None:
     for snippet in (
         "node-build:",
         "actions/setup-node@v4",
-        "packages/intentspec-ts",
-        "packages/intentspec-vscode",
+        "packages/governspec-ts",
+        "packages/governspec-vscode",
         "npm run build",
     ):
         assert snippet in workflow
@@ -103,9 +103,9 @@ def test_ci_workflow_builds_node_packages() -> None:
 def test_manifest_excludes_node_modules_and_frontend_dist() -> None:
     manifest = (ROOT / "MANIFEST.in").read_text(encoding="utf-8")
     for snippet in (
-        "prune packages/intentspec-ts/node_modules",
-        "prune packages/intentspec-vscode/node_modules",
-        "prune packages/intentspec-ts/dist",
-        "prune packages/intentspec-vscode/dist",
+        "prune packages/governspec-ts/node_modules",
+        "prune packages/governspec-vscode/node_modules",
+        "prune packages/governspec-ts/dist",
+        "prune packages/governspec-vscode/dist",
     ):
         assert snippet in manifest

@@ -3,7 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from intentspec.cli import app
+import yaml
+from governspec.cli import app
 from typer.testing import CliRunner
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,17 +15,17 @@ runner = CliRunner()
 def test_validate_command_supports_json_format() -> None:
     result = runner.invoke(
         app,
-        ["validate", str(EXAMPLES / "customer_brief.intent.yaml"), "--format", "json"],
+        ["validate", str(EXAMPLES / "customer_brief.govern.yaml"), "--format", "json"],
     )
     assert result.exit_code == 0
     payload = json.loads(result.stdout)
     assert payload["ok"] is True
 
 
-def test_validate_command_supports_intent_pack() -> None:
+def test_validate_command_supports_govern_pack() -> None:
     result = runner.invoke(
         app,
-        ["validate", str(EXAMPLES / "packs" / "privacy.intent.yaml"), "--format", "json"],
+        ["validate", str(EXAMPLES / "packs" / "privacy.govern.yaml"), "--format", "json"],
     )
     assert result.exit_code == 0
     payload = json.loads(result.stdout)
@@ -34,7 +35,7 @@ def test_validate_command_supports_intent_pack() -> None:
 def test_validate_command_reports_json_errors_to_stdout() -> None:
     result = runner.invoke(
         app,
-        ["validate", str(EXAMPLES / "invalid_missing_goal.intent.yaml"), "--format", "json"],
+        ["validate", str(EXAMPLES / "invalid_missing_goal.govern.yaml"), "--format", "json"],
     )
     assert result.exit_code == 1
     payload = json.loads(result.stdout)
@@ -44,7 +45,7 @@ def test_validate_command_reports_json_errors_to_stdout() -> None:
 def test_inspect_command_returns_iir_json() -> None:
     result = runner.invoke(
         app,
-        ["inspect", str(EXAMPLES / "customer_brief.intent.yaml"), "--format", "json"],
+        ["inspect", str(EXAMPLES / "customer_brief.govern.yaml"), "--format", "json"],
     )
     assert result.exit_code == 0
     payload = json.loads(result.stdout)
@@ -52,21 +53,21 @@ def test_inspect_command_returns_iir_json() -> None:
     assert "risk_signals" in payload
 
 
-def test_inspect_command_supports_intent_pack() -> None:
+def test_inspect_command_supports_govern_pack() -> None:
     result = runner.invoke(
         app,
-        ["inspect", str(EXAMPLES / "packs" / "privacy.intent.yaml"), "--format", "json"],
+        ["inspect", str(EXAMPLES / "packs" / "privacy.govern.yaml"), "--format", "json"],
     )
     assert result.exit_code == 0
     payload = json.loads(result.stdout)
-    assert payload["kind"] == "IntentPack"
+    assert payload["kind"] == "GovernPack"
     assert payload["metadata"]["name"] == "privacy_pack"
 
 
 def test_inspect_command_uses_schema_alias_in_json_output() -> None:
     result = runner.invoke(
         app,
-        ["inspect", str(EXAMPLES / "report_json.intent.yaml"), "--format", "json"],
+        ["inspect", str(EXAMPLES / "report_json.govern.yaml"), "--format", "json"],
     )
     assert result.exit_code == 0
     payload = json.loads(result.stdout)
@@ -80,7 +81,7 @@ def test_compile_openai_structured_supports_out_file(tmp_path: Path) -> None:
         app,
         [
             "compile",
-            str(EXAMPLES / "report_json.intent.yaml"),
+            str(EXAMPLES / "report_json.govern.yaml"),
             "--target",
             "openai-structured",
             "--out",
@@ -98,7 +99,7 @@ def test_compile_agents_md_supports_out_file(tmp_path: Path) -> None:
         app,
         [
             "compile",
-            str(EXAMPLES / "code_review.intent.yaml"),
+            str(EXAMPLES / "code_review.govern.yaml"),
             "--target",
             "agents-md",
             "--out",
@@ -115,7 +116,7 @@ def test_compile_claude_md_supports_out_file(tmp_path: Path) -> None:
         app,
         [
             "compile",
-            str(EXAMPLES / "code_review.intent.yaml"),
+            str(EXAMPLES / "code_review.govern.yaml"),
             "--target",
             "claude-md",
             "--out",
@@ -131,7 +132,7 @@ def test_compile_cursor_rules_writes_bundle(tmp_path: Path) -> None:
         app,
         [
             "compile",
-            str(EXAMPLES / "code_review.intent.yaml"),
+            str(EXAMPLES / "code_review.govern.yaml"),
             "--target",
             "cursor-rules",
             "--out",
@@ -139,7 +140,7 @@ def test_compile_cursor_rules_writes_bundle(tmp_path: Path) -> None:
         ],
     )
     assert result.exit_code == 0
-    assert (tmp_path / ".cursor" / "rules" / "intentspec.mdc").exists()
+    assert (tmp_path / ".cursor" / "rules" / "governspec.mdc").exists()
 
 
 def test_compile_skill_writes_bundle(tmp_path: Path) -> None:
@@ -148,7 +149,7 @@ def test_compile_skill_writes_bundle(tmp_path: Path) -> None:
         app,
         [
             "compile",
-            str(EXAMPLES / "code_review.intent.yaml"),
+            str(EXAMPLES / "code_review.govern.yaml"),
             "--target",
             "skill",
             "--out",
@@ -165,7 +166,7 @@ def test_compile_gemini_structured_supports_out_file(tmp_path: Path) -> None:
         app,
         [
             "compile",
-            str(EXAMPLES / "report_json.intent.yaml"),
+            str(EXAMPLES / "report_json.govern.yaml"),
             "--target",
             "gemini-structured",
             "--out",
@@ -182,7 +183,7 @@ def test_test_command_supports_json_format() -> None:
         app,
         [
             "test",
-            str(EXAMPLES / "report_json.intent.yaml"),
+            str(EXAMPLES / "report_json.govern.yaml"),
             "--output",
             str(EXAMPLES / "report_json.output.json"),
             "--format",
@@ -196,15 +197,15 @@ def test_test_command_supports_json_format() -> None:
 
 def test_test_command_reports_directory_output_as_clear_error() -> None:
     with runner.isolated_filesystem():
-        intent_file = Path("report_json.intent.yaml")
-        intent_file.write_text(
-            (EXAMPLES / "report_json.intent.yaml").read_text(encoding="utf-8"),
+        govern_file = Path("report_json.govern.yaml")
+        govern_file.write_text(
+            (EXAMPLES / "report_json.govern.yaml").read_text(encoding="utf-8"),
             encoding="utf-8",
         )
         Path("output-dir").mkdir()
         result = runner.invoke(
             app,
-            ["test", str(intent_file), "--output", "output-dir", "--format", "json"],
+            ["test", str(govern_file), "--output", "output-dir", "--format", "json"],
         )
         assert result.exit_code == 1
         payload = json.loads(result.stdout)
@@ -218,7 +219,7 @@ def test_test_command_rejects_semantically_invalid_spec(tmp_path: Path) -> None:
         app,
         [
             "test",
-            str(EXAMPLES / "invalid_dangerous_permission.intent.yaml"),
+            str(EXAMPLES / "invalid_dangerous_permission.govern.yaml"),
             "--output",
             str(output_file),
             "--format",
@@ -235,28 +236,63 @@ def test_schema_command_returns_json() -> None:
     result = runner.invoke(app, ["schema"])
     assert result.exit_code == 0
     payload = json.loads(result.stdout)
-    assert payload["title"] == "IntentSpecDocument"
+    assert payload["title"] == "GovernSpecDocument"
+
+
+def test_init_command_writes_default_template(tmp_path: Path) -> None:
+    output_file = tmp_path / "govern.yaml"
+    result = runner.invoke(app, ["init", "--file", str(output_file)])
+    assert result.exit_code == 0
+
+    payload = yaml.safe_load(output_file.read_text(encoding="utf-8"))
+    assert payload["metadata"]["title"] == "Describe the task title"
+    assert payload["output"]["language"] == "en"
+
+
+def test_init_command_supports_chinese_template(tmp_path: Path) -> None:
+    output_file = tmp_path / "govern.yaml"
+    result = runner.invoke(
+        app,
+        ["init", "--file", str(output_file), "--locale", "zh-CN"],
+    )
+    assert result.exit_code == 0
+
+    payload = yaml.safe_load(output_file.read_text(encoding="utf-8"))
+    assert payload["metadata"]["title"] == "请填写任务标题"
+    assert payload["task"]["goal"] == "请描述智能体本次要完成的主要目标。"
+    assert payload["output"]["sections"] == ["摘要"]
+    assert payload["tests"][0]["name"] == "必须包含所有指定章节"
+
+
+def test_init_command_rejects_unknown_locale(tmp_path: Path) -> None:
+    output_file = tmp_path / "govern.yaml"
+    result = runner.invoke(
+        app,
+        ["init", "--file", str(output_file), "--locale", "fr"],
+    )
+    assert result.exit_code == 2
+    assert not output_file.exists()
 
 
 def test_examples_command_lists_examples() -> None:
     result = runner.invoke(app, ["examples"])
     assert result.exit_code == 0
-    assert "customer_brief.intent.yaml" in result.stdout
-    assert "packs/privacy.intent.yaml" in result.stdout
+    assert "customer_brief.govern.yaml" in result.stdout
+    assert "packs/privacy.govern.yaml" in result.stdout
 
 
 def test_examples_command_can_copy_example(tmp_path: Path) -> None:
-    output_file = tmp_path / "customer_brief.intent.yaml"
+    output_file = tmp_path / "customer_brief.govern.yaml"
     result = runner.invoke(
         app,
-        ["examples", "--copy", "customer_brief.intent.yaml", "--out", str(output_file)],
+        ["examples", "--copy", "customer_brief.govern.yaml", "--out", str(output_file)],
     )
     assert result.exit_code == 0
     assert output_file.exists()
 
 
 def test_draft_command_writes_valid_yaml(tmp_path: Path) -> None:
-    output_file = tmp_path / "draft.intent.yaml"
+    output_file = tmp_path / "draft.govern.yaml"
     result = runner.invoke(
         app,
         [
@@ -272,10 +308,10 @@ def test_draft_command_writes_valid_yaml(tmp_path: Path) -> None:
 
 
 def test_workflow_uses_json_output_default_for_json_tasks(tmp_path: Path) -> None:
-    intent_file = tmp_path / "intent.yaml"
+    govern_file = tmp_path / "govern.yaml"
     output_file = tmp_path / "ai_output.json"
-    intent_file.write_text(
-        (EXAMPLES / "report_json.intent.yaml").read_text(encoding="utf-8"),
+    govern_file.write_text(
+        (EXAMPLES / "report_json.govern.yaml").read_text(encoding="utf-8"),
         encoding="utf-8",
     )
     output_file.write_text(

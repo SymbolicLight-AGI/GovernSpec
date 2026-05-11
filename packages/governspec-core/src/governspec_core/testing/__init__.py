@@ -1,0 +1,1 @@
+"""GovernSpec output testing."""

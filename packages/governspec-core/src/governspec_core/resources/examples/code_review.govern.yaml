@@ -1,0 +1,84 @@
+version: "0.1"
+kind: "GovernSpec"
+
+metadata:
+  name: "code_review"
+  title: "Repository code review"
+  description: "Review repository changes without directly editing code."
+  owner: "engineering"
+
+task:
+  goal: "Review the codebase and summarize defects, risks, and follow-up tests."
+  audience:
+    - "Software engineer"
+    - "Tech lead"
+  priority: "medium"
+
+context:
+  domain: "Software engineering"
+  facts: []
+  assumptions:
+    - "When repository context is incomplete, state the assumption explicitly."
+  glossary: {}
+
+inputs:
+  - name: "repository"
+    type: "directory"
+    path: "."
+    required: true
+    privacy: "internal"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not directly modify code."
+  - "Do not delete files."
+  - "State assumptions when evidence is incomplete."
+
+evidence:
+  require_sources: false
+  mark_uncertainty: true
+  distinguish:
+    - "issue"
+    - "suggestion"
+
+output:
+  format: "markdown"
+  language: "en"
+  max_words: 900
+  sections:
+    - "Overall Assessment"
+    - "Must Fix"
+    - "Suggestions"
+    - "Test Advice"
+
+quality:
+  tone:
+    - "clear"
+    - "direct"
+  must_include: []
+  must_avoid:
+    - "rewriting the repository"
+
+human_gates: []
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"
+  - name: "Must not claim code was modified"
+    assert:
+      - type: "not_contains"
+        value: "I have changed the code"

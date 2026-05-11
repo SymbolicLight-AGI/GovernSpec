@@ -62,7 +62,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -71,7 +71,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -116,7 +116,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -125,7 +125,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -170,7 +170,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -179,7 +179,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -224,7 +224,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -233,7 +233,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -332,7 +332,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -341,7 +341,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -386,7 +386,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -395,7 +395,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -440,7 +440,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -449,7 +449,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -494,7 +494,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -503,7 +503,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -548,7 +548,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -557,7 +557,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -710,7 +710,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -719,7 +719,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -764,7 +764,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -773,7 +773,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -818,7 +818,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -827,7 +827,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -1034,7 +1034,7 @@
       "target": "openai-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "openai-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },
@@ -1043,7 +1043,7 @@
       "target": "gemini-structured",
       "ok": false,
       "artifact_kind": null,
-      "error_type": "IntentSpecCompileError",
+      "error_type": "GovernSpecCompileError",
       "error_message": "gemini-structured requires output.format=json with output.schema.",
       "capability_notes_count": 0
     },

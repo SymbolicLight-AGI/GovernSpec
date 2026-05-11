@@ -6,7 +6,7 @@
 \usepackage{url}
 \usepackage{cite}
 
-\title{IntentSpec: Zero-Intrusion Contract Compilation and Offline Acceptance Testing for Heterogeneous AI Agents}
+\title{GovernSpec: Zero-Intrusion Contract Compilation and Offline Acceptance Testing for Heterogeneous AI Agents}
 
 \author{\IEEEauthorblockN{Ting Liu}
 \IEEEauthorblockA{SymbolicLight Research\\
@@ -25,10 +25,10 @@ reviewed in incompatible formats. This fragmentation makes it difficult to keep
 permissions, safety constraints, human confirmation rules, and output requirements
 consistent without modifying every downstream agent runtime.
 
-We present IntentSpec, a local-first tool that turns a single task-governance
+We present GovernSpec, a local-first tool that turns a single task-governance
 contract into native artifacts for multiple AI-agent workflows. Developers author an
-\texttt{intent.yaml} contract describing the task goal, permissions, constraints,
-confirmation gates, output contract, and deterministic acceptance tests. IntentSpec
+\texttt{govern.yaml} contract describing the task goal, permissions, constraints,
+confirmation gates, output contract, and deterministic acceptance tests. GovernSpec
 validates the contract, resolves reusable governance packs, normalizes it into an
 intermediate intent representation, compiles target-specific artifacts, supports
 reverse import from existing artifacts, and checks generated outputs with offline
@@ -64,10 +64,10 @@ schema. Some can express a JSON schema but not human confirmation gates. A revie
 must understand every target format before judging whether the policy still matches
 the original intent.
 
-IntentSpec addresses this artifact-level problem. It is not an agent runtime, a
+GovernSpec addresses this artifact-level problem. It is not an agent runtime, a
 monitor, or a fail-closed policy enforcement layer. Instead, it provides a small
 compiler and validator for task-governance contracts. A developer writes one
-\texttt{intent.yaml} file. IntentSpec compiles that contract into the native artifact
+\texttt{govern.yaml} file. GovernSpec compiles that contract into the native artifact
 channels used by downstream tools and then provides deterministic offline checks for
 the final output.
 
@@ -93,7 +93,7 @@ The paper makes four concrete contributions:
 
 \section{Background and Positioning}
 
-IntentSpec is motivated by a growing set of tool-specific artifact channels. Claude
+GovernSpec is motivated by a growing set of tool-specific artifact channels. Claude
 Code documents project memory through \texttt{CLAUDE.md} files~\cite{anthropic_memory}.
 Cursor project rules are stored as \texttt{.mdc} files with metadata and markdown
 content~\cite{cursor_rules}. OpenAI Structured Outputs accept JSON Schema-based
@@ -111,23 +111,31 @@ research further suggests that reusable instructions and tool context are centra
 to reliable human-agent workflows~\cite{white_prompt_patterns,yao_react}.
 
 These systems are not interchangeable. They expose different integration points,
-different artifact formats, and different guarantees. IntentSpec therefore does not
+different artifact formats, and different guarantees. GovernSpec therefore does not
 attempt to define a new universal agent runtime. Its narrower contribution is a
 compilation layer above existing artifact channels. The source contract captures the
 governance intent once; target backends translate what each downstream channel can
 represent; and capability notes make target limitations explicit.
 
 This positioning also shapes the validation claim. Native instruction files and IDE
-rules are advisory artifacts, not runtime monitors. IntentSpec therefore avoids
+rules are advisory artifacts, not runtime monitors. GovernSpec therefore avoids
 claiming that it can prevent unsafe actions at execution time. It demonstrates that a
 team can author, propagate, migrate, and test governance intent locally, with
 deterministic artifacts that are suitable for review and continuous integration.
 
+GovernSpec is also distinct from lightweight CI validators such as
+\texttt{validate-intentspec-action}~\cite{validate_intentspec_action}. That action
+checks Markdown front matter against a small schema in GitHub Actions. GovernSpec
+uses YAML contracts, reusable governance packs, a normalized intermediate
+representation, target-specific compilers, reverse importers, and offline output
+assertions. The comparison is useful because both projects care about explicit AI
+task artifacts, but they occupy different layers of the workflow.
+
 \section{Tool Design}
 
-IntentSpec has five internal stages:
+GovernSpec has five internal stages:
 \begin{verbatim}
-intent.yaml
+govern.yaml
   -> parse and validate
   -> resolve imported governance packs
   -> normalize to IIR
@@ -138,14 +146,14 @@ intent.yaml
 The source contract is a YAML document containing metadata, task context, inputs,
 permissions, constraints, evidence expectations, output requirements, human
 confirmation gates, and tests. Reusable policy fragments are represented as
-\texttt{IntentPack} files. Import resolution applies conservative merge behavior,
+\texttt{GovernPack} files. Import resolution applies conservative merge behavior,
 including deny-wins permissions and preservation of imported acceptance assertions.
 
 The intermediate intent representation (IIR) separates authoring concerns from
 target formatting. It stores the normalized task goal, resolved permissions, merged
 constraints, output contract, human gates, test contracts, risk signals, and target
 capability notes. Backends then lower the IIR into concrete target families. For
-instruction-style targets, IntentSpec emits markdown. For Cursor rules, it emits a
+instruction-style targets, GovernSpec emits markdown. For Cursor rules, it emits a
 rule bundle. For structured-output targets, it emits JSON schema payloads. For MCP
 planning, it emits a machine-readable plan with risk and constraint-loss fields.
 
@@ -165,8 +173,8 @@ The benchmark is designed to run without external model APIs or network-dependen
 agent services.
 
 The live demonstration has four segments. First, the presenter authors or edits a
-small \texttt{intent.yaml} contract with a task goal, permissions, human gates,
-output requirements, and tests. Second, IntentSpec compiles the same contract into
+small \texttt{govern.yaml} contract with a task goal, permissions, human gates,
+output requirements, and tests. Second, GovernSpec compiles the same contract into
 representative targets: \texttt{agents-md}, \texttt{claude-md},
 \texttt{cursor-rules}, \texttt{openai-structured}, \texttt{gemini-structured}, and
 \texttt{mcp-plan}. Third, the presenter reverse-imports generated and handwritten
@@ -180,8 +188,8 @@ All experiments are reproducible with a single command from the repository root:
 \footnotesize\texttt{python} \path{benchmark/paper_icse2027/scripts/run_all.py}
 \end{center}
 The command generates JSON result files and paper-friendly Markdown summaries for
-the compile matrix, round-trip fidelity, assertion evaluation, annotation
-agreement, aggregate numbers, and rendered tables.
+the compile matrix, round-trip fidelity, assertion evaluation, aggregate numbers,
+and rendered tables.
 
 \section{Initial Validation}
 
@@ -294,7 +302,7 @@ risks, and all supported assertion types, but the suite remains a seed benchmark
 The validation isolates artifact behavior from model behavior. This design makes the
 experiments deterministic and reproducible, but it also means the results do not
 measure whether a live agent follows a compiled instruction file in practice.
-IntentSpec should therefore be viewed as an authoring, propagation, migration, and
+GovernSpec should therefore be viewed as an authoring, propagation, migration, and
 post-hoc validation layer rather than as runtime security enforcement.
 
 Reverse import is heuristic for natural-language artifacts. It can recover goals,
@@ -305,7 +313,7 @@ behind a binary success metric.
 
 \section{Availability}
 
-IntentSpec is implemented as a Python 3.11+ local CLI and library. The benchmark and
+GovernSpec is implemented as a Python 3.11+ local CLI and library. The benchmark and
 generated results are included under \texttt{benchmark/paper\_icse2027/}. The
 prototype does not call real LLM APIs, does not require API keys, and does not
 require network access for the reported experiments. The local reproduction command
@@ -331,6 +339,10 @@ OpenAI, ``Structured model outputs,'' OpenAI API Documentation, accessed Apr. 24
 Model Context Protocol, ``Specification,'' Model Context Protocol Documentation,
 accessed Apr. 24, 2026. [Online]. Available:
 \url{https://modelcontextprotocol.io/specification/draft}
+
+\bibitem{validate_intentspec_action}
+JanneL, ``Validate IntentSpec Action,'' GitHub, accessed May 11, 2026. [Online].
+Available: \url{https://github.com/JanneL/validate-intentspec-action}
 
 \bibitem{chen_codex}
 M. Chen \emph{et al.}, ``Evaluating large language models trained on code,''

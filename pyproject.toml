@@ -3,15 +3,27 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "intentspec"
+name = "governspec"
 version = "0.1.0"
-description = "Local-first task contract compiler for AI systems."
+description = "Local-first YAML task contract compiler for AI systems."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
-  { name = "IntentSpec Contributors" }
+  { name = "Ting Liu", email = "research@symboliclight.com" }
+]
+keywords = ["agent", "contracts", "llm", "software-engineering", "structured-output"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Quality Assurance",
 ]
 dependencies = [
   "PyYAML>=6.0,<7.0",
@@ -31,21 +43,21 @@ dev = [
 ]
 
 [project.scripts]
-intent = "intentspec.cli:main"
-"intentspec-mcp" = "intentspec_mcp.server:main"
+governspec = "governspec.cli:main"
+"governspec-mcp" = "governspec_mcp.server:main"
 
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.packages.find]
 where = [
-  "packages/intentspec-cli/src",
-  "packages/intentspec-core/src",
-  "packages/intentspec-mcp/src",
+  "packages/governspec-cli/src",
+  "packages/governspec-core/src",
+  "packages/governspec-mcp/src",
 ]
 
 [tool.setuptools.package-data]
-"intentspec_core.resources.examples" = [
+"governspec_core.resources.examples" = [
   "*.yaml",
   "*.md",
   "*.json",

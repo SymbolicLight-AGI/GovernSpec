@@ -1,0 +1,77 @@
+version: "0.1"
+kind: "GovernSpec"
+
+metadata:
+  name: "api_security_review"
+  title: "API security review"
+  description: "Review an API change for authentication, authorization, and data exposure risks."
+  owner: "security"
+
+task:
+  goal: "Review an API design change and produce a concise security risk report."
+  audience:
+    - "Security engineer"
+    - "Backend engineer"
+  priority: "high"
+
+context:
+  domain: "Application security"
+  assumptions:
+    - "Unknown authentication behavior must be marked as unresolved."
+
+inputs:
+  - name: "api_design"
+    type: "file"
+    path: "data/api_design.md"
+    required: true
+    privacy: "internal"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not expose secrets, tokens, or private identifiers."
+  - "Do not recommend bypassing authentication."
+  - "State unresolved assumptions explicitly."
+
+evidence:
+  mark_uncertainty: true
+  distinguish:
+    - "verified"
+    - "unresolved"
+
+output:
+  format: "markdown"
+  language: "en"
+  max_words: 180
+  sections:
+    - "Risk Rating"
+    - "Authentication"
+    - "Authorization"
+    - "Data Exposure"
+    - "Required Follow-up"
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"
+  - name: "Risk rating must be explicit"
+    assert:
+      - type: "contains"
+        value: "Risk rating:"
+  - name: "No raw secret example"
+    assert:
+      - type: "not_contains"
+        value: "secret key: abc123"
+

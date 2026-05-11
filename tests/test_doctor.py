@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import intentspec_core.doctor as doctor
+import governspec_core.doctor as doctor
 
 
 def test_run_doctor_fails_for_unsupported_python(monkeypatch) -> None:

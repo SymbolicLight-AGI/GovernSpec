@@ -6,10 +6,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-from intentspec_core.imports.resolver import resolve_imports
-from intentspec_core.spec.models import IntentSpec, JsonOutput
-from intentspec_core.spec.parser import load_spec
-from intentspec_core.targets.compiler import CompiledArtifact
+from governspec_core.imports.resolver import resolve_imports
+from governspec_core.spec.models import GovernSpec, JsonOutput
+from governspec_core.spec.parser import load_spec
+from governspec_core.targets.compiler import CompiledArtifact
 
 BENCHMARK_ROOT = Path(__file__).resolve().parents[1]
 CONTRACTS_DIR = BENCHMARK_ROOT / "contracts"
@@ -91,14 +91,14 @@ def percent(numerator: int | float, denominator: int | float) -> float:
 
 
 def contract_paths(benchmark_root: Path = BENCHMARK_ROOT) -> list[Path]:
-    return sorted((benchmark_root / "contracts").glob("*.intent.yaml"))
+    return sorted((benchmark_root / "contracts").glob("*.govern.yaml"))
 
 
 def contract_name(path: Path) -> str:
-    return path.name.removesuffix(".intent.yaml")
+    return path.name.removesuffix(".govern.yaml")
 
 
-def load_resolved_spec(path: Path) -> IntentSpec:
+def load_resolved_spec(path: Path) -> GovernSpec:
     return resolve_imports(load_spec(path))
 
 
@@ -106,12 +106,12 @@ def artifact_text(artifact: CompiledArtifact, target: str) -> str:
     if artifact.content is not None:
         return artifact.content
     if target == "cursor-rules":
-        return artifact.files[".cursor/rules/intentspec.mdc"]
+        return artifact.files[".cursor/rules/governspec.mdc"]
     first_path = sorted(artifact.files)[0]
     return artifact.files[first_path]
 
 
-def core_fields(spec: IntentSpec) -> dict[str, Any]:
+def core_fields(spec: GovernSpec) -> dict[str, Any]:
     output = spec.output
     output_payload = output.model_dump(by_alias=True)
     if isinstance(output, JsonOutput):
@@ -134,11 +134,11 @@ def stable_json(value: Any) -> Any:
     return value
 
 
-def spec_from_payload(payload: dict[str, Any]) -> IntentSpec:
-    return IntentSpec.model_validate(payload)
+def spec_from_payload(payload: dict[str, Any]) -> GovernSpec:
+    return GovernSpec.model_validate(payload)
 
 
-def compare_core_fields(expected: IntentSpec, actual: IntentSpec) -> dict[str, Any]:
+def compare_core_fields(expected: GovernSpec, actual: GovernSpec) -> dict[str, Any]:
     expected_fields = core_fields(expected)
     actual_fields = core_fields(actual)
     field_matches = {

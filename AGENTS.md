@@ -2,24 +2,24 @@
 
 ## Project goal
 
-IntentSpec is a local-first CLI and schema for describing AI tasks as explicit contracts.
+GovernSpec is a local-first CLI and schema for describing AI tasks as explicit contracts.
 
 ## Setup
 
 - Install dependencies: `pip install -e ".[dev]"`
 - Run tests: `pytest`
-- Run CLI locally: `intent --help`
+- Run CLI locally: `governspec --help`
 
 ## Architecture
 
-- `intentspec_core.spec` — YAML parser, Pydantic models, and schema generation
-- `intentspec_core.iir` — Intermediate Intent Representation builder
-- `intentspec_core.targets` — compile-to-target logic (agents-md, openai-structured, etc.)
-- `intentspec_core.importers` — reverse import from existing artifacts (AGENTS.md, Cursor Rules, OpenAI/Gemini JSON)
-- `intentspec_core.draft` — enhanced heuristic draft generator (CJK + English)
-- `intentspec_core.testing` — offline acceptance test runner
-- `intentspec_cli` — Typer CLI (`intent` command)
-- `intentspec_mcp` — thin MCP server
+- `governspec_core.spec` — YAML parser, Pydantic models, and schema generation
+- `governspec_core.iir` — Intermediate Intent Representation builder
+- `governspec_core.targets` — compile-to-target logic (agents-md, openai-structured, etc.)
+- `governspec_core.importers` — reverse import from existing artifacts (AGENTS.md, Cursor Rules, OpenAI/Gemini JSON)
+- `governspec_core.draft` — enhanced heuristic draft generator (CJK + English)
+- `governspec_core.testing` — offline acceptance test runner
+- `governspec_cli` — Typer CLI (`governspec` command)
+- `governspec_mcp` — thin MCP server
 
 ## Code style
 
@@ -43,4 +43,3 @@ IntentSpec is a local-first CLI and schema for describing AI tasks as explicit c
 - Add or update tests for every behavior change.
 - When changing model fields, update examples, JSON schema, README, and tests together.
 - Keep CLI behavior aligned with the documented acceptance criteria.
-

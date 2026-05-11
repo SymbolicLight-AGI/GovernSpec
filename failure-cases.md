@@ -1,6 +1,6 @@
 # Failure Cases
 
-Use this file to record real failures found while validating IntentSpec v0.1 on examples, benchmark tasks, private user tasks, or CI runs.
+Use this file to record real failures found while validating GovernSpec v0.1 on examples, benchmark tasks, private user tasks, or CI runs.
 
 ## Recording rules
 

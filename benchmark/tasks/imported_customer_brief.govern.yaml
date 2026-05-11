@@ -1,0 +1,70 @@
+version: "0.1"
+kind: "GovernSpec"
+
+imports:
+  - "../../examples/packs/privacy.govern.yaml"
+  - "../../examples/packs/no-network.govern.yaml"
+
+metadata:
+  name: "imported_customer_brief"
+  title: "Benchmark imported markdown contract"
+  description: "Benchmark import resolution and markdown testing."
+  owner: "benchmark"
+
+task:
+  goal: "Generate a concise imported customer brief."
+  audience:
+    - "Sales"
+  priority: "medium"
+
+context:
+  domain: "B2B SaaS"
+  facts: []
+  assumptions:
+    - "Unconfirmed details must be marked as uncertain."
+  glossary: {}
+
+inputs:
+  - name: "crm_notes"
+    type: "file"
+    path: "data/crm_notes.md"
+    required: false
+    privacy: "confidential"
+
+permissions:
+  web: true
+  filesystem:
+    read: true
+    write: false
+  network: true
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not promise pricing."
+
+output:
+  format: "markdown"
+  language: "zh-CN"
+  max_words: 600
+  sections:
+    - "一句话结论"
+    - "客户背景"
+    - "风险信号"
+
+quality:
+  tone: []
+  must_include: []
+  must_avoid: []
+
+human_gates: []
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"

@@ -6,5 +6,4 @@
 - Handwritten artifact import succeeded for 20 of 20 artifacts (100.0%).
 - All 20 of 20 valid outputs passed offline acceptance tests (100.0%).
 - The targeted defect suite caught 32 of 32 labeled defects (100.0%).
-- Assisted annotation agreement covered 29 output samples; `expected_ok` agreement was 100.0% (Cohen's kappa 1.0).
-- `targeted_assertion` agreement was 82.76% (Cohen's kappa 0.7917).
+- Assisted annotation agreement covered 29 output samples; `targeted_assertion` agreement was 82.76% (Cohen's kappa 0.7917).

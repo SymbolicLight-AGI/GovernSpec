@@ -1,28 +1,30 @@
-# IntentSpec Integrations
+# GovernSpec Integrations
 
 ## Overview
 
-IntentSpec is the upstream source-of-truth for AI task contracts.
+Within this toolchain, `govern.yaml` is the source of truth for AI task contracts.
+This repository does not claim affiliation with similarly named third-party
+projects or with `intentspec.org`.
 
-Downstream tools do not need to understand `intent.yaml` directly. They consume either:
+Downstream tools do not need to understand `govern.yaml` directly. They consume either:
 
 - compiled files
 - structured output payloads
 - MCP surfaces
 
-This keeps integration cost low and lets IntentSpec plug into existing ecosystems without introducing a new runtime.
+This keeps integration cost low and lets GovernSpec plug into existing ecosystems without introducing a new runtime.
 
 ## Integration Matrix
 
-| Tool / Ecosystem | Integration path | Available IntentSpec artifacts |
+| Tool / Ecosystem | Integration path | Available GovernSpec artifacts |
 | --- | --- | --- |
-| Codex | instruction file + skills + MCP | `agents-md`, `skill`, `intentspec-mcp` |
-| Claude Code | instruction file + MCP | `claude-md`, `skill`, `intentspec-mcp` |
-| Cursor | project rules + MCP | `cursor-rules`, `skill`, `intentspec-mcp` |
-| VS Code Agent | project instructions + MCP + extension | `agents-md`, `skill`, `intentspec-mcp`, VS Code extension MVP |
+| Codex | instruction file + skills + MCP | `agents-md`, `skill`, `governspec-mcp` |
+| Claude Code | instruction file + MCP | `claude-md`, `skill`, `governspec-mcp` |
+| Cursor | project rules + MCP | `cursor-rules`, `skill`, `governspec-mcp` |
+| VS Code Agent | project instructions + MCP + extension | `agents-md`, `skill`, `governspec-mcp`, VS Code extension MVP |
 | OpenAI API | structured output payload | `openai-structured` |
 | Gemini API | structured output payload | `gemini-structured` |
-| Antigravity | filesystem-compatible rules + MCP | `antigravity-rules`, `skill`, `intentspec-mcp` |
+| Antigravity | filesystem-compatible rules + MCP | `antigravity-rules`, `skill`, `governspec-mcp` |
 
 `skill` is a generic bundle target. It is not Codex-specific.
 
@@ -33,7 +35,7 @@ This keeps integration cost low and lets IntentSpec plug into existing ecosystem
 Use for Codex and other tools that read `AGENTS.md`-style repository instructions.
 
 ```bash
-intent compile examples/code_review.intent.yaml --target agents-md --out AGENTS.md
+governspec compile examples/code_review.govern.yaml --target agents-md --out AGENTS.md
 ```
 
 ### `claude-md`
@@ -41,7 +43,7 @@ intent compile examples/code_review.intent.yaml --target agents-md --out AGENTS.
 Use for Claude Code repositories that rely on `CLAUDE.md`.
 
 ```bash
-intent compile examples/code_review.intent.yaml --target claude-md --out CLAUDE.md
+governspec compile examples/code_review.govern.yaml --target claude-md --out CLAUDE.md
 ```
 
 ### `skill`
@@ -49,7 +51,7 @@ intent compile examples/code_review.intent.yaml --target claude-md --out CLAUDE.
 Use for generic skill-style bundles. The target itself is not Codex-specific.
 
 ```bash
-intent compile examples/code_review.intent.yaml --target skill --out ./review-skill
+governspec compile examples/code_review.govern.yaml --target skill --out ./review-skill
 ```
 
 Generated files:
@@ -63,31 +65,31 @@ Generated files:
 Use for Cursor project rules. The target emits a bundle rooted at the output directory.
 
 ```bash
-intent compile examples/code_review.intent.yaml --target cursor-rules --out .
+governspec compile examples/code_review.govern.yaml --target cursor-rules --out .
 ```
 
 Generated file:
 
-- `.cursor/rules/intentspec.mdc`
+- `.cursor/rules/governspec.mdc`
 
 ### `antigravity-rules`
 
 Use for Antigravity-compatible repository rules. This target is filesystem-compatible and does not claim vendor certification.
 
 ```bash
-intent compile examples/code_review.intent.yaml --target antigravity-rules --out .
+governspec compile examples/code_review.govern.yaml --target antigravity-rules --out .
 ```
 
 Generated file:
 
-- `.agents/rules/intentspec.md`
+- `.agents/rules/governspec.md`
 
 ### `openai-structured`
 
 Use for OpenAI Structured Outputs.
 
 ```bash
-intent compile examples/report_json.intent.yaml --target openai-structured --out task.openai-structured.json
+governspec compile examples/report_json.govern.yaml --target openai-structured --out task.openai-structured.json
 ```
 
 ### `gemini-structured`
@@ -95,14 +97,14 @@ intent compile examples/report_json.intent.yaml --target openai-structured --out
 Use for Gemini structured output payloads.
 
 ```bash
-intent compile examples/report_json.intent.yaml --target gemini-structured --out task.gemini-structured.json
+governspec compile examples/report_json.govern.yaml --target gemini-structured --out task.gemini-structured.json
 ```
 
 This target only accepts a Gemini-compatible JSON Schema subset. Unsupported schema keywords fail compilation instead of degrading silently.
 
 ## Reverse Import
 
-IntentSpec supports importing existing artifacts back into `intent.yaml` drafts. This reduces cold-start cost for teams that already have agent instructions, structured output payloads, or Cursor rules.
+GovernSpec supports importing existing artifacts back into `govern.yaml` drafts. This reduces cold-start cost for teams that already have agent instructions, structured output payloads, or Cursor rules.
 
 | Source artifact | Import type | Auto-detected |
 | --- | --- | --- |
@@ -115,43 +117,43 @@ IntentSpec supports importing existing artifacts back into `intent.yaml` drafts.
 CLI usage:
 
 ```bash
-intent import AGENTS.md --out imported.intent.yaml
-intent import task.openai-structured.json --out imported.intent.yaml
+governspec import AGENTS.md --out imported.govern.yaml
+governspec import task.openai-structured.json --out imported.govern.yaml
 ```
 
 SDK usage:
 
 ```python
-from intentspec_core import import_from_artifact, import_from_string
+from governspec_core import import_from_artifact, import_from_string
 
 payload = import_from_artifact(Path("AGENTS.md"))
 payload = import_from_string(json_text, "openai-structured")
 ```
 
-The imported draft can then be validated, inspected, and compiled like any other `intent.yaml`.
+The imported draft can then be validated, inspected, and compiled like any other `govern.yaml`.
 
 ## MCP Integration
 
-`intentspec-mcp` is the thin integration surface for MCP-capable clients.
+`governspec-mcp` is the thin integration surface for MCP-capable clients.
 
 ```bash
-intentspec-mcp
+governspec-mcp
 ```
 
 ### Tools
 
-- `intentspec.validate`
-- `intentspec.inspect`
-- `intentspec.compile`
-- `intentspec.test`
+- `governspec.validate`
+- `governspec.inspect`
+- `governspec.compile`
+- `governspec.test`
 
 ### Resources
 
-- `intent://spec/<path>`
-- `intent://iir/<path>`
-- `intent://compiled/<target>/<path>`
+- `govern://spec/<path>`
+- `govern://iir/<path>`
+- `govern://compiled/<target>/<path>`
 
-`intent://compiled/<target>/<path>` reads artifacts on demand:
+`govern://compiled/<target>/<path>` reads artifacts on demand:
 
 - text targets return text content
 - JSON targets return JSON text
@@ -162,19 +164,19 @@ intentspec-mcp
   "kind": "bundle",
   "target": "cursor-rules",
   "files": {
-    ".cursor/rules/intentspec.mdc": "..."
+    ".cursor/rules/governspec.mdc": "..."
   }
 }
 ```
 
 ## VS Code Agent Strategy
 
-IntentSpec does not introduce a VS Code-specific instruction target in this release.
+GovernSpec does not introduce a VS Code-specific instruction target in this release.
 
 The recommended path is:
 
 1. compile repository instructions such as `AGENTS.md`
-2. expose IntentSpec through `intentspec-mcp`
+2. expose GovernSpec through `governspec-mcp`
 3. use the lightweight VS Code extension MVP
 
 This keeps the integration aligned with existing VS Code Agent and MCP workflows without adding a parallel DSL.

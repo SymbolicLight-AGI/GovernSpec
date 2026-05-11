@@ -1,8 +1,8 @@
-# Migrating to IntentSpec 0.1
+# Migrating to GovernSpec 0.1
 
 ## Summary
 
-IntentSpec v0.1 is the current supported schema line.
+GovernSpec v0.1 is the current supported schema line.
 
 Use this guide if you have pre-release drafts, internal prototypes, or older task files that do not yet follow the v0.1 schema, and you want to align them with the current examples, CLI, and schema artifact.
 
@@ -18,15 +18,15 @@ version: "0.1"
 
 ### Kind
 
-`IntentSpec` remains valid for full task contracts.
+`GovernSpec` remains valid for full task contracts.
 
 v0.1 also supports:
 
 ```yaml
-kind: "IntentPack"
+kind: "GovernPack"
 ```
 
-Use `IntentPack` for reusable governance layers such as privacy packs, no-network packs, and shared output policy packs.
+Use `GovernPack` for reusable governance layers such as privacy packs, no-network packs, and shared output policy packs.
 
 ## Capability: `imports`
 
@@ -34,8 +34,8 @@ v0.1 supports:
 
 ```yaml
 imports:
-  - "./packs/privacy.intent.yaml"
-  - "./packs/no-network.intent.yaml"
+  - "./packs/privacy.govern.yaml"
+  - "./packs/no-network.govern.yaml"
 ```
 
 Imports are resolved depth-first, left-to-right, and merged before local fields are applied.
@@ -98,7 +98,7 @@ tests:
 v0.1 includes:
 
 ```bash
-intent inspect examples/customer_brief.intent.yaml --format json
+governspec inspect examples/customer_brief.govern.yaml --format json
 ```
 
 This exposes the normalized IIR used by target compilers.
@@ -131,7 +131,7 @@ Compiles a contract into a minimal reusable skill bundle with `SKILL.md`, `refer
 v0.1 includes:
 
 ```bash
-intent draft "help me prepare a privacy-safe customer brief"
+governspec draft "help me prepare a privacy-safe customer brief"
 ```
 
 This feature is intentionally:
@@ -149,7 +149,7 @@ It generates a draft contract only. It does not execute tasks.
 
 ```yaml
 version: "0.1"
-kind: "IntentSpec"
+kind: "GovernSpec"
 
 task:
   goal: "Generate a customer brief"
@@ -166,10 +166,10 @@ output:
 
 ```yaml
 version: "0.1"
-kind: "IntentSpec"
+kind: "GovernSpec"
 
 imports:
-  - "./packs/privacy.intent.yaml"
+  - "./packs/privacy.govern.yaml"
 
 task:
   goal: "Generate a customer brief"
@@ -184,39 +184,39 @@ output:
 
 ## Reverse import existing artifacts
 
-If you already have `AGENTS.md`, `CLAUDE.md`, Cursor Rules, or structured output payloads, you can use `intent import` to generate an `intent.yaml` draft automatically:
+If you already have `AGENTS.md`, `CLAUDE.md`, Cursor Rules, or structured output payloads, you can use `governspec import` to generate an `govern.yaml` draft automatically:
 
 ```bash
-intent import AGENTS.md --out imported.intent.yaml
-intent import CLAUDE.md --type claude-md --out imported.intent.yaml
-intent import .cursor/rules/intentspec.mdc --out imported.intent.yaml
-intent import task.openai-structured.json --out imported.intent.yaml
+governspec import AGENTS.md --out imported.govern.yaml
+governspec import CLAUDE.md --type claude-md --out imported.govern.yaml
+governspec import .cursor/rules/governspec.mdc --out imported.govern.yaml
+governspec import task.openai-structured.json --out imported.govern.yaml
 ```
 
 The importer will:
 
 - auto-detect the source type from file name and content (or use `--type` to specify explicitly)
 - extract goal, constraints, permissions, human gates, output spec, and tests
-- produce a ready-to-review `intent.yaml` draft
+- produce a ready-to-review `govern.yaml` draft
 
-This is the recommended starting point for teams migrating from hand-written agent instructions to IntentSpec contracts.
+This is the recommended starting point for teams migrating from hand-written agent instructions to GovernSpec contracts.
 
 ## Recommended migration flow
 
-1. Import existing artifacts with `intent import` (if applicable).
+1. Import existing artifacts with `governspec import` (if applicable).
 2. Update `version` to `0.1`.
-3. Extract shared constraints into `IntentPack` files.
+3. Extract shared constraints into `GovernPack` files.
 4. Replace duplicated policy sections with `imports`.
 5. If the output should be strict JSON, move to `output.schema`.
 6. Add `json_schema` assertions for JSON tasks.
 7. Run:
 
 ```bash
-intent validate <file>
-intent inspect <file> --format json
-intent test <file> --output <artifact>
+governspec validate <file>
+governspec inspect <file> --format json
+governspec test <file> --output <artifact>
 ```
 
 ## Unsupported migration assumptions
 
-IntentSpec v0.1 does not promise long-term parallel support for v0.1 runtime behavior. Keep old files only as historical references or convert them to 0.2.
+GovernSpec v0.1 does not promise long-term parallel support for v0.1 runtime behavior. Keep old files only as historical references or convert them to 0.2.

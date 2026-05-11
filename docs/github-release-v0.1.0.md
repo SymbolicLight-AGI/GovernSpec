@@ -1,12 +1,19 @@
-# IntentSpec v0.1.0
+# GovernSpec v0.1.0
 
-IntentSpec v0.1.0 is the current mainline release of a local-first, deterministic, embeddable task contract compiler.
+GovernSpec v0.1.0 is the current mainline release of a local-first, deterministic, embeddable YAML task contract compiler.
+
+## Naming note
+
+This repository is not affiliated with `intentspec.org`,
+`JanneL/validate-intentspec-action`, or any similarly named third-party project.
+Use "GovernSpec" when referring to this project in public
+release notes, posts, or integration docs.
 
 ## What’s new
 
 - First-class strict JSON contracts with `output.schema`
-- Reusable policy packs with `imports` and `IntentPack`
-- Normalized IIR inspection via `intent inspect`
+- Reusable policy packs with `imports` and `GovernPack`
+- Normalized IIR inspection via `governspec inspect`
 - New compile targets:
   - `openai-structured`
   - `gemini-structured`
@@ -21,13 +28,13 @@ IntentSpec v0.1.0 is the current mainline release of a local-first, deterministi
   - `risk_level`
   - `constraint_loss`
 - Thin MCP server for:
-  - `intentspec.validate`
-  - `intentspec.inspect`
-  - `intentspec.compile`
-  - `intentspec.test`
-- VS Code extension MVP in `packages/intentspec-vscode`
-- Experimental `intent draft` with deterministic heuristic generation (Chinese + English, permission/constraint/gate inference)
-- `intent import` reverse-imports existing artifacts (`agents-md`, `claude-md`, `cursor-rules`, `openai-structured`, `gemini-structured`) into `intent.yaml` drafts
+  - `governspec.validate`
+  - `governspec.inspect`
+  - `governspec.compile`
+  - `governspec.test`
+- VS Code extension MVP in `packages/governspec-vscode`
+- Experimental `governspec draft` with deterministic heuristic generation (Chinese + English, permission/constraint/gate inference)
+- `governspec import` reverse-imports existing artifacts (`agents-md`, `claude-md`, `cursor-rules`, `openai-structured`, `gemini-structured`) into `govern.yaml` drafts
 
 ## Validation
 
@@ -39,22 +46,22 @@ Release validation completed successfully:
 - `mypy`
 - `python -m build`
 - `twine check dist/*`
-- `npm install --no-package-lock && npm run build` in `packages/intentspec-ts`
-- `npm install --no-package-lock && npm run build` in `packages/intentspec-vscode`
+- `npm install --no-package-lock && npm run build` in `packages/governspec-ts`
+- `npm install --no-package-lock && npm run build` in `packages/governspec-vscode`
 - benchmark pass rate → `100.0%`
 
 ## Recommended quick start
 
 ```bash
-intent doctor
-intent examples
-intent validate examples/customer_brief.intent.yaml
-intent inspect examples/customer_brief.intent.yaml --format json
-intent compile examples/report_json.intent.yaml --target openai-structured --out task.openai-structured.json
-intent compile examples/code_review.intent.yaml --target agents-md --out AGENTS.md
-intent test examples/report_json.intent.yaml --output examples/report_json.output.json --format json
-intent draft "Generate a privacy-safe customer brief"
-intent import AGENTS.md --out imported.intent.yaml
+governspec doctor
+governspec examples
+governspec validate examples/customer_brief.govern.yaml
+governspec inspect examples/customer_brief.govern.yaml --format json
+governspec compile examples/report_json.govern.yaml --target openai-structured --out task.openai-structured.json
+governspec compile examples/code_review.govern.yaml --target agents-md --out AGENTS.md
+governspec test examples/report_json.govern.yaml --output examples/report_json.output.json --format json
+governspec draft "Generate a privacy-safe customer brief"
+governspec import AGENTS.md --out imported.govern.yaml
 ```
 
 ## Upgrade notes

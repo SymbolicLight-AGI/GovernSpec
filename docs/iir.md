@@ -2,12 +2,12 @@
 
 ## Overview
 
-Intent Intermediate Representation, abbreviated as IIR, is the normalized internal contract form used by IntentSpec v0.1.
+Intent Intermediate Representation, abbreviated as IIR, is the normalized internal contract form used by GovernSpec v0.1.
 
 In v0.1, the compiler pipeline is:
 
 ```text
-intent.yaml
+govern.yaml
   -> load spec
   -> resolve imports
   -> normalize to IIR
@@ -28,7 +28,7 @@ The author-facing YAML format is optimized for readability and review. Target ar
 
 ### Permission and risk analysis
 
-Risk analysis should operate on normalized semantics, not on scattered raw YAML fields. IIR is where IntentSpec records derived signals such as external network usage, filesystem write access, confidential inputs, and high-risk tool usage.
+Risk analysis should operate on normalized semantics, not on scattered raw YAML fields. IIR is where GovernSpec records derived signals such as external network usage, filesystem write access, confidential inputs, and high-risk tool usage.
 
 ### Constraint-preserving compilation
 
@@ -76,11 +76,11 @@ Target compilers use capability notes to explain what cannot be fully encoded do
 
 ## CLI surface
 
-Use `intent inspect` to view the normalized IIR:
+Use `governspec inspect` to view the normalized IIR:
 
 ```bash
-intent inspect examples/customer_brief.intent.yaml
-intent inspect examples/report_json.intent.yaml --format json
+governspec inspect examples/customer_brief.govern.yaml
+governspec inspect examples/report_json.govern.yaml --format json
 ```
 
 This is the recommended debugging and review surface when validating import resolution, permission tightening, and target capability behavior.

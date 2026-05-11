@@ -1,0 +1,34 @@
+version: "0.1"
+kind: "GovernSpec"
+
+metadata:
+  name: "invalid_missing_goal"
+  title: "Invalid example"
+  description: "Missing task goal."
+  owner: "tests"
+
+task:
+  audience:
+    - "Reviewer"
+  priority: "medium"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+output:
+  format: "markdown"
+  language: "en"
+  max_words: 300
+  sections:
+    - "Summary"

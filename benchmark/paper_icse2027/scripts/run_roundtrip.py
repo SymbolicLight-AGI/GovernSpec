@@ -6,9 +6,9 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-from intentspec_core.common.errors import IntentSpecError
-from intentspec_core.importers.reverse import import_from_artifact, import_from_string
-from intentspec_core.targets.compiler import compile_target
+from governspec_core.common.errors import GovernSpecError
+from governspec_core.importers.reverse import import_from_artifact, import_from_string
+from governspec_core.targets.compiler import compile_target
 from paper_helpers import (
     BENCHMARK_ROOT,
     IMPORTABLE_TARGETS,
@@ -84,7 +84,7 @@ def _run_compiled_roundtrip(benchmark_root: Path) -> list[dict[str, Any]]:
                 recovered = spec_from_payload(imported)
                 comparison = compare_core_fields(spec, recovered)
                 record.update({"ok": True, **comparison})
-            except IntentSpecError as exc:
+            except GovernSpecError as exc:
                 record.update(
                     {
                         "error_type": exc.__class__.__name__,
@@ -130,7 +130,7 @@ def _run_handwritten_roundtrip(benchmark_root: Path) -> list[dict[str, Any]]:
                     "diff_snippet": _handwritten_diff(matches),
                 }
             )
-        except IntentSpecError as exc:
+        except GovernSpecError as exc:
             record.update(
                 {
                     "error_type": exc.__class__.__name__,
