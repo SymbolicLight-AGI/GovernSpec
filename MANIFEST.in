@@ -13,5 +13,7 @@ recursive-include schema *.json
 recursive-include examples *.yaml *.md
 recursive-include docs *.md
 recursive-include benchmark *.py *.yaml *.md *.json
+prune docs/paper
+prune paper
 global-exclude __pycache__
 global-exclude *.py[cod]
