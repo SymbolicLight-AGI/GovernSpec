@@ -18,3 +18,7 @@ GovernSpec_0.1/
 IntentSpec_0.1/
 .private/
 private/
+
+# Local paper drafts
+paper/
+docs/paper/
