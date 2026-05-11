@@ -1,9 +1,0 @@
-{
-  "status": "needs_review",
-  "changes": [
-    "Updated deployment health checks"
-  ],
-  "approvals": [
-    "release-owner"
-  ]
-}

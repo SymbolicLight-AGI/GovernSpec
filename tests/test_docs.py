@@ -25,7 +25,8 @@ def test_readme_python_sdk_documents_document_level_api() -> None:
 
 def test_readme_clarifies_offline_scope_and_mcp_surface() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    assert "离线契约编译器" in readme
+    assert "local-first contract compiler" in readme
+    assert "Read this in Chinese" in readme
     assert "governspec-mcp" in readme
 
 

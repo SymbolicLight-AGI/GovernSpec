@@ -5,7 +5,8 @@
 ## 根目录
 
 - `pyproject.toml`：Python 包元数据、依赖、CLI 入口、pytest、ruff、mypy 配置。修改依赖、版本号、包发现规则或质量门禁时会影响安装、测试和发布。
-- `README.md`：项目主入口文档，说明定位、安装、快速开始、target、benchmark 和开发命令。修改 CLI 行为、target、示例或发布流程时应同步更新。
+- `README.md`：英文项目主入口文档，说明定位、安装、快速开始、target、benchmark 和开发命令。修改 CLI 行为、target、示例或发布流程时应同步更新。
+- `README.zh-CN.md`：中文 README。修改根目录英文 README 的关键信息时，应同步审查中文版本是否需要更新。
 - `AGENTS.md`：项目级 agent 协作规则。修改项目约束、命令或维护规则时应同步审查。
 - `MANIFEST.in`：源码包文件包含规则。修改 examples、schema、文档或包数据时会影响发布包内容。
 - `.gitattributes`：文本文件换行与编码相关规则。修改后会影响 Git 工作区换行处理。
@@ -34,12 +35,11 @@
 - `schema/governspec.schema.json`：导出的 JSON Schema。修改模型字段后应重新生成并检查。
 - `tests/`：pytest 测试套件，覆盖 parser、validator、compiler、CLI、draft、importer、MCP、benchmark 等路径。行为变更应优先补最小相关测试。
 
-## Benchmark 与论文材料
+## Benchmark 与公开文档
 
-- `benchmark/`：离线 benchmark、论文 artifact benchmark、contracts、outputs、results 和脚本。修改 compiler、importer、tester 或研究指标时应同步结果和测试。
+- `benchmark/`：离线 benchmark、contracts、outputs、results 和脚本。修改 compiler、importer、tester 或指标时应同步结果和测试。
 - `benchmark.md`：benchmark 使用说明和记录模板。
 - `failure-cases.md`：真实失败案例记录模板。
-- `docs/paper/`、`paper/`：论文草稿和 JOSS 相关材料。修改学术结论、实验数字或引用时需要重新核查一致性。
 
 ## 文档与发布
 

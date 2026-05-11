@@ -1,7 +1,0 @@
-{
-  "incident_id": "INC-2026-0424",
-  "impact": "dashboard latency increased",
-  "contributing_factors": [],
-  "actions": ["add cache alert", "document rollback trigger"]
-}
-

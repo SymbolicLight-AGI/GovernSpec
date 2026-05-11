@@ -28,7 +28,7 @@ def test_readme_mentions_new_compile_targets_and_integrations_doc() -> None:
         "claude-md",
         "cursor-rules",
         "antigravity-rules",
-        "GovernSpec 产物",
+        "target-specific integration notes",
         "docs/integrations.md",
     ):
         assert snippet in readme

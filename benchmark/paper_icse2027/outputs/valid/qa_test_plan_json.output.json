@@ -1,6 +1,0 @@
-{
-  "scope": "release candidate dashboard flows",
-  "test_count": 3,
-  "cases": ["login smoke test", "export workflow", "notification rendering"]
-}
-

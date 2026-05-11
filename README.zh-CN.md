@@ -448,8 +448,8 @@ packages/governspec-ts/     TypeScript package MVP
 packages/governspec-vscode/ VS Code extension MVP
 examples/                   runnable example contracts and outputs
 schema/                     generated JSON Schema
-benchmark/                  offline benchmark and paper benchmark artifacts
-docs/                       technical docs, migration guide, paper drafts
+benchmark/                  offline benchmark artifacts
+docs/                       technical docs, migration guide, release notes
 tests/                      pytest test suite
 ```
 
@@ -470,12 +470,6 @@ tests/                      pytest test suite
 
 ```bash
 python benchmark/run_benchmark.py
-```
-
-运行论文 artifact-level benchmark：
-
-```bash
-python benchmark/paper_icse2027/scripts/run_all.py
 ```
 
 Benchmark 不调用真实 LLM，只评估本地 artifacts、compile behavior、round-trip import 和 deterministic tests。
@@ -501,7 +495,7 @@ twine check dist/*
 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)。
 
 如果你在研究中使用 GovernSpec，请使用 [CITATION.cff](CITATION.cff) 中的
-元数据引用本软件。JOSS 投稿草稿位于 [paper/paper.md](paper/paper.md)。
+元数据引用本软件。
 
 ## 路线图
 

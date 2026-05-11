@@ -542,12 +542,12 @@ GovernSpec 不要求下游 agent runtime 改造。它通过现有 artifact chann
 | `packages/governspec-vscode` | VS Code extension MVP |
 | `examples/` | 可运行示例 |
 | `schema/` | JSON schema |
-| `benchmark/` | benchmark 和 ICSE paper 实验包 |
-| `docs/` | 文档、论文草稿和 release notes |
+| `benchmark/` | benchmark 和本地验证材料 |
+| `docs/` | 文档、迁移说明和 release notes |
 | `tests/` | 测试 |
 
 如果你只想快速试用，从 `examples/` 开始。如果你想理解架构，从 `docs/iir.md` 和
-`docs/integrations.md` 开始。如果你想复现实验，从 `benchmark/paper_icse2027/README.md` 开始。
+`docs/integrations.md` 开始。如果你想运行本地 benchmark，从 `benchmark.md` 开始。
 
 ## 15. 期望结果
 

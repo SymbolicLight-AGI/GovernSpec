@@ -443,8 +443,8 @@ packages/governspec-ts/     TypeScript package MVP
 packages/governspec-vscode/ VS Code extension MVP
 examples/                   runnable example contracts and outputs
 schema/                     generated JSON Schema
-benchmark/                  offline benchmark and paper benchmark artifacts
-docs/                       technical docs, migration guide, paper drafts
+benchmark/                  offline benchmark artifacts
+docs/                       technical docs, migration guide, release notes
 tests/                      pytest test suite
 ```
 
@@ -468,12 +468,6 @@ Run the base benchmark:
 python benchmark/run_benchmark.py
 ```
 
-Run the paper artifact benchmark:
-
-```bash
-python benchmark/paper_icse2027/scripts/run_all.py
-```
-
 Benchmarks do not call live LLM APIs. They evaluate local artifacts, compile behavior, round-trip import behavior, and deterministic tests.
 
 ## Development
@@ -494,7 +488,7 @@ twine check dist/*
 
 Before contributing, read [CONTRIBUTING.md](CONTRIBUTING.md). Report security issues privately using [SECURITY.md](SECURITY.md). The project code of conduct is in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
-If you use GovernSpec in research, cite the software using the metadata in [CITATION.cff](CITATION.cff). The JOSS draft is in [paper/paper.md](paper/paper.md).
+If you use GovernSpec in research, cite the software using the metadata in [CITATION.cff](CITATION.cff).
 
 ## Roadmap
 

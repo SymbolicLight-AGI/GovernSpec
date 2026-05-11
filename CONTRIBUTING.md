@@ -24,12 +24,6 @@ mypy
 python -m build
 ```
 
-The benchmark used by the paper drafts can be regenerated with:
-
-```bash
-python benchmark/paper_icse2027/scripts/run_all.py
-```
-
 ## Issue Reports
 
 Please include:

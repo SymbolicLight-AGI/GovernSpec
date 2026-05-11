@@ -12,7 +12,6 @@ prune packages/governspec-vscode/dist
 recursive-include schema *.json
 recursive-include examples *.yaml *.md
 recursive-include docs *.md
-recursive-include paper *.md *.bib
 recursive-include benchmark *.py *.yaml *.md *.json
 global-exclude __pycache__
 global-exclude *.py[cod]

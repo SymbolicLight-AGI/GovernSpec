@@ -1,6 +1,0 @@
-{
-  "status": "needs_review",
-  "controls": ["access review attached", "retention owner identified"],
-  "blockers": ["missing latest deletion evidence"]
-}
-

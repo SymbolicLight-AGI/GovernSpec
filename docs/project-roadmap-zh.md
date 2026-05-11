@@ -49,7 +49,7 @@ D:\GovernSpec\GovernSpec_0.1
 
 - 已有 ICSE demo 方向草稿。
 - 已有 preprint 单栏版本方向材料。
-- 已有 JOSS 未来投稿用 `paper/paper.md` 和 `paper/paper.bib`。
+- JOSS 未来投稿材料保留在本地私有工作区，不进入公开仓库。
 - 已有本地 artifact-level benchmark 和实验结果。
 - 已隔离人工标注相关私有材料，不应进入公开发布包。
 - JOSS 当前不建议马上投稿，建议先开源运行一段时间，积累公开开发历史、release、用户反馈和 issue 记录。
@@ -72,7 +72,7 @@ D:\GovernSpec\GovernSpec_0.1
 | 开源包整理 | 86% | `GovernSpec_0.1` 已基本可上传，但需要最后一次清洁验证。 |
 | PyPI/TestPyPI 发布 | 40% | 尚未上传，需要 build、twine check、TestPyPI 验证。 |
 | GitHub 公开发布 | 65% | 包已准备好，但还需要创建仓库、上传、CI、tag 和 release。 |
-| JOSS 投稿准备 | 45% | paper skeleton 已有，但缺公开开发历史、用户反馈和稳定 release 周期。 |
+| JOSS 投稿准备 | 45% | 私有草稿已有基础，但缺公开开发历史、用户反馈和稳定 release 周期。 |
 
 综合判断：**当前总进度约 82%**。如果目标只是“把项目公开到 GitHub”，当前接近 85% 到 90%。如果目标是“达到 JOSS 稳妥投稿”，当前约 45% 到 55%。
 
@@ -360,7 +360,7 @@ D:\GovernSpec\GovernSpec_0.1
 
 应交付内容：
 
-- `benchmark/paper_icse2027/`。
+- 本地研究 benchmark artifact。
 - contracts。
 - valid outputs。
 - defect outputs。
@@ -558,7 +558,7 @@ twine upload dist/*
 
 应交付内容：
 
-- JOSS paper。
+- JOSS 投稿草稿。
 - 参考文献核查。
 - 软件 archive 或 release DOI。
 - 完整 installation instructions。
@@ -579,7 +579,7 @@ twine upload dist/*
 
 - 论文准备已有基础。
 - 不建议马上投稿。
-- 建议开源后维护约 6 个月，再根据公开反馈更新 JOSS paper。
+- 建议开源后维护约 6 个月，再根据公开反馈更新 JOSS 投稿材料。
 
 ## 5. 当前阶段定位
 
@@ -626,7 +626,7 @@ D:\GovernSpec\GovernSpec_0.1
 pytest -q
 ruff check .
 mypy
-python benchmark/paper_icse2027/scripts/run_all.py
+python benchmark/run_benchmark.py
 ```
 
 完成标准：
@@ -733,7 +733,7 @@ python benchmark/paper_icse2027/scripts/run_all.py
 - 形成公开开发历史。
 - 有真实用户反馈或至少外部 reviewer 反馈。
 
-### 10. 六个月后更新 JOSS paper
+### 10. 六个月后更新 JOSS 投稿材料
 
 要做：
 
@@ -746,7 +746,7 @@ python benchmark/paper_icse2027/scripts/run_all.py
 
 完成标准：
 
-- JOSS paper 与公开仓库完全一致。
+- JOSS 投稿材料与公开仓库完全一致。
 - repo 有足够公开历史。
 
 ## 7. 风险清单
@@ -871,7 +871,7 @@ python benchmark/paper_icse2027/scripts/run_all.py
 - 更完整用户教程。
 - 更多 benchmark cases。
 - 可选 external-agent experiment harness，但不默认调用真实 API。
-- JOSS paper 更新。
+- JOSS 投稿材料更新。
 
 ## 9. 100% 完成的定义
 
@@ -887,7 +887,7 @@ python benchmark/paper_icse2027/scripts/run_all.py
 - benchmark 可复现。
 - 私有材料已隔离。
 - 有至少一个 patch release 或公开 issue 处理记录。
-- JOSS paper 与仓库一致。
+- JOSS 投稿材料与仓库一致。
 - 引用文献核查完成。
 - 可以有信心邀请外部用户和 reviewer 使用。
 
