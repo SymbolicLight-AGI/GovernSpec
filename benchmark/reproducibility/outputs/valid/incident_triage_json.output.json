@@ -1,0 +1,13 @@
+{
+  "severity": "SEV2",
+  "owners": [
+    "on-call-sre"
+  ],
+  "actions": [
+    "Confirm the customer impact window.",
+    "Assign the rollback decision owner."
+  ]
+}
+
+
+

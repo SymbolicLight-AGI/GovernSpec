@@ -472,6 +472,12 @@ tests/                      pytest test suite
 python benchmark/run_benchmark.py
 ```
 
+运行研究草稿使用的 reproducibility benchmark：
+
+```bash
+python benchmark/reproducibility/scripts/run_all.py
+```
+
 Benchmark 不调用真实 LLM，只评估本地 artifacts、compile behavior、round-trip import 和 deterministic tests。
 
 ## 开发

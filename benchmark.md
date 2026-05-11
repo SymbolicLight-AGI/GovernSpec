@@ -64,6 +64,7 @@ Describe each benchmark group.
 
 ```bash
 python benchmark/run_benchmark.py
+python benchmark/reproducibility/scripts/run_all.py
 governspec inspect benchmark/tasks/imported_customer_brief.govern.yaml --format json
 governspec compile benchmark/tasks/report_json.govern.yaml --target openai-structured
 governspec compile benchmark/tasks/report_json.govern.yaml --target mcp-plan

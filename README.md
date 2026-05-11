@@ -468,6 +468,12 @@ Run the base benchmark:
 python benchmark/run_benchmark.py
 ```
 
+Run the reproducibility benchmark used by the research drafts:
+
+```bash
+python benchmark/reproducibility/scripts/run_all.py
+```
+
 Benchmarks do not call live LLM APIs. They evaluate local artifacts, compile behavior, round-trip import behavior, and deterministic tests.
 
 ## Development

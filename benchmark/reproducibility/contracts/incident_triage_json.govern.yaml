@@ -1,0 +1,85 @@
+version: "0.1"
+kind: "GovernSpec"
+
+metadata:
+  name: "incident_triage_json"
+  title: "Incident triage JSON"
+  description: "Produce an incident triage payload with severity and next actions."
+  owner: "sre"
+
+task:
+  goal: "Generate a structured incident triage summary with severity, owners, and next actions."
+  audience:
+    - "Incident commander"
+  priority: "high"
+
+context:
+  domain: "Site reliability"
+  assumptions:
+    - "Unknown ownership must be marked explicitly."
+
+inputs:
+  - name: "incident_channel"
+    type: "file"
+    path: "data/incident_channel.md"
+    required: true
+    privacy: "confidential"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not expose private customer identifiers."
+  - "Do not assign owners without evidence."
+
+human_gates:
+  - when: "Triage contains confidential incident details"
+    action: "ask_confirmation"
+
+output:
+  format: "json"
+  schema:
+    type: object
+    additionalProperties: false
+    required:
+      - severity
+      - owners
+      - actions
+    properties:
+      severity:
+        type: string
+      owners:
+        type: array
+        minItems: 1
+        items:
+          type: string
+      actions:
+        type: array
+        minItems: 2
+        items:
+          type: string
+
+tests:
+  - name: "Severity must exist"
+    assert:
+      - type: "json_path_exists"
+        path: "$.severity"
+  - name: "At least two actions are required"
+    assert:
+      - type: "json_array_min_items"
+        path: "$.actions"
+        value: 2
+
+
+

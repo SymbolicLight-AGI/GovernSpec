@@ -1,0 +1,149 @@
+[
+  {
+    "contract": "code_review",
+    "sample": "code_review.output.md",
+    "output_path": "outputs/valid/code_review.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "customer_brief",
+    "sample": "customer_brief.output.md",
+    "output_path": "outputs/valid/customer_brief.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "imported_customer_brief",
+    "sample": "imported_customer_brief.output.md",
+    "output_path": "outputs/valid/imported_customer_brief.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "market_analysis",
+    "sample": "market_analysis.output.md",
+    "output_path": "outputs/valid/market_analysis.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "report_json",
+    "sample": "report_json.output.json",
+    "output_path": "outputs/valid/report_json.output.json",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "deployment_guard",
+    "sample": "deployment_guard.output.md",
+    "output_path": "outputs/valid/deployment_guard.output.md",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "release_summary_json",
+    "sample": "release_summary_json.output.json",
+    "output_path": "outputs/valid/release_summary_json.output.json",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "incident_triage_json",
+    "sample": "incident_triage_json.output.json",
+    "output_path": "outputs/valid/incident_triage_json.output.json",
+    "expected_ok": true,
+    "targeted_assertion": null,
+    "included_in_isolated_summary": false
+  },
+  {
+    "contract": "code_review",
+    "sample": "code_review__required_sections.output.md",
+    "output_path": "outputs/defects/code_review__required_sections.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "required_sections",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "code_review",
+    "sample": "code_review__not_contains.output.md",
+    "output_path": "outputs/defects/code_review__not_contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "not_contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "customer_brief",
+    "sample": "customer_brief__no_regex.output.md",
+    "output_path": "outputs/defects/customer_brief__no_regex.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "no_regex",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "deployment_guard",
+    "sample": "deployment_guard__contains.output.md",
+    "output_path": "outputs/defects/deployment_guard__contains.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "contains",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "deployment_guard",
+    "sample": "deployment_guard__regex.output.md",
+    "output_path": "outputs/defects/deployment_guard__regex.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "regex",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "deployment_guard",
+    "sample": "deployment_guard__max_words.output.md",
+    "output_path": "outputs/defects/deployment_guard__max_words.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "max_words",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "deployment_guard",
+    "sample": "deployment_guard__max_chars.output.md",
+    "output_path": "outputs/defects/deployment_guard__max_chars.output.md",
+    "expected_ok": false,
+    "targeted_assertion": "max_chars",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "report_json",
+    "sample": "report_json__json_schema.output.json",
+    "output_path": "outputs/defects/report_json__json_schema.output.json",
+    "expected_ok": false,
+    "targeted_assertion": "json_schema",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "incident_triage_json",
+    "sample": "incident_triage_json__json_path_exists.output.json",
+    "output_path": "outputs/defects/incident_triage_json__json_path_exists.output.json",
+    "expected_ok": false,
+    "targeted_assertion": "json_path_exists",
+    "included_in_isolated_summary": true
+  },
+  {
+    "contract": "incident_triage_json",
+    "sample": "incident_triage_json__json_array_min_items.output.json",
+    "output_path": "outputs/defects/incident_triage_json__json_array_min_items.output.json",
+    "expected_ok": false,
+    "targeted_assertion": "json_array_min_items",
+    "included_in_isolated_summary": true
+  }
+]
+
+
+

@@ -1,0 +1,110 @@
+{
+  "protocol": "annotation_protocol.md",
+  "unit": "output_sample",
+  "annotators": [
+    "ai_pass_a",
+    "ai_pass_b"
+  ],
+  "item_count": 29,
+  "fields": {
+    "expected_ok": {
+      "total": 29,
+      "agreements": 29,
+      "disagreements": 0,
+      "percent_agreement": 100.0,
+      "cohen_kappa": 1.0,
+      "krippendorff_alpha_nominal": 1.0,
+      "labels": [
+        "false",
+        "true"
+      ],
+      "disagreement_items": []
+    },
+    "targeted_assertion": {
+      "total": 29,
+      "agreements": 24,
+      "disagreements": 5,
+      "percent_agreement": 82.76,
+      "cohen_kappa": 0.7917,
+      "krippendorff_alpha_nominal": 0.7906,
+      "labels": [
+        "contains",
+        "json_array_min_items",
+        "json_path_exists",
+        "json_schema",
+        "max_chars",
+        "max_words",
+        "no_regex",
+        "none",
+        "not_contains",
+        "regex",
+        "required_sections"
+      ],
+      "disagreement_items": [
+        {
+          "sample": "data_retention_audit__contains.output.md",
+          "ai_pass_a": "contains",
+          "ai_pass_b": "required_sections"
+        },
+        {
+          "sample": "privacy_impact_assessment__no_regex.output.md",
+          "ai_pass_a": "no_regex",
+          "ai_pass_b": "not_contains"
+        },
+        {
+          "sample": "support_ticket_triage__max_chars.output.md",
+          "ai_pass_a": "max_chars",
+          "ai_pass_b": "max_words"
+        },
+        {
+          "sample": "qa_test_plan_json__json_path_exists.output.json",
+          "ai_pass_a": "json_path_exists",
+          "ai_pass_b": "json_schema"
+        },
+        {
+          "sample": "vendor_summary_json__contains.output.json",
+          "ai_pass_a": "contains",
+          "ai_pass_b": "json_schema"
+        }
+      ]
+    },
+    "failure_scope": {
+      "total": 29,
+      "agreements": 27,
+      "disagreements": 2,
+      "percent_agreement": 93.1,
+      "cohen_kappa": 0.8612,
+      "krippendorff_alpha_nominal": 0.8606,
+      "labels": [
+        "coupled",
+        "isolated",
+        "none"
+      ],
+      "disagreement_items": [
+        {
+          "sample": "qa_test_plan_json__json_path_exists.output.json",
+          "ai_pass_a": "isolated",
+          "ai_pass_b": "coupled"
+        },
+        {
+          "sample": "vendor_summary_json__contains.output.json",
+          "ai_pass_a": "isolated",
+          "ai_pass_b": "coupled"
+        }
+      ]
+    },
+    "output_format": {
+      "total": 29,
+      "agreements": 29,
+      "disagreements": 0,
+      "percent_agreement": 100.0,
+      "cohen_kappa": 1.0,
+      "krippendorff_alpha_nominal": 1.0,
+      "labels": [
+        "json",
+        "markdown"
+      ],
+      "disagreement_items": []
+    }
+  }
+}

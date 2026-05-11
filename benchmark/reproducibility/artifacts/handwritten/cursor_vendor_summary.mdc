@@ -1,0 +1,23 @@
+---
+description: Handwritten vendor summary rule
+alwaysApply: true
+---
+
+# Cursor Vendor Summary Rules
+
+## Project Goal
+Generate a structured vendor summary with vendor, risk level, and required reviews.
+
+## Working Constraints
+- Do not approve purchase.
+- Do not contact vendors.
+
+## Output Expectations
+- Format: json
+- Section: vendor
+- Section: risk_level
+- Section: reviews
+
+
+
+

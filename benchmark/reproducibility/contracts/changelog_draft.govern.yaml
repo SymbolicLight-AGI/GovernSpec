@@ -1,0 +1,57 @@
+version: "0.1"
+kind: "GovernSpec"
+
+metadata:
+  name: "changelog_draft"
+  title: "Changelog draft"
+  description: "Draft release notes from provided changes without inventing breaking changes."
+  owner: "release-engineering"
+
+task:
+  goal: "Create a concise changelog draft from verified release notes."
+  audience:
+    - "Release manager"
+    - "Developer relations"
+  priority: "medium"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not invent breaking changes."
+  - "Do not claim migration is required without evidence."
+
+output:
+  format: "markdown"
+  language: "en"
+  max_words: 55
+  sections:
+    - "Highlights"
+    - "Fixes"
+    - "Upgrade Notes"
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"
+  - name: "No unverified breaking-change claim"
+    assert:
+      - type: "not_contains"
+        value: "breaking change confirmed"
+  - name: "Output must stay short"
+    assert:
+      - type: "max_words"
+
+
+

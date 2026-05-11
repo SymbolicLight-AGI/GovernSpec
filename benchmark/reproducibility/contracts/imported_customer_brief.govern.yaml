@@ -1,0 +1,70 @@
+version: "0.1"
+kind: "GovernSpec"
+
+imports:
+  - "./packs/privacy.govern.yaml"
+  - "./packs/zh-report.govern.yaml"
+  - "./packs/no-network.govern.yaml"
+
+metadata:
+  name: "imported_customer_brief"
+  title: "Generate imported customer brief"
+  description: "Customer brief that reuses shared privacy/report/no-network packs."
+  owner: "sales-team"
+
+task:
+  goal: "Generate a customer brief using reusable governance packs."
+  audience:
+    - "Sales manager"
+  priority: "medium"
+
+context:
+  domain: "B2B SaaS"
+  facts:
+    - "The customer is still in evaluation."
+  assumptions:
+    - "Unconfirmed details must be called out as uncertain."
+
+inputs:
+  - name: "crm_notes"
+    type: "file"
+    path: "data/crm_notes.md"
+    required: true
+    privacy: "confidential"
+
+permissions:
+  web: true
+  filesystem:
+    read: true
+    write: false
+  network: true
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not make pricing commitments."
+
+output:
+  format: "markdown"
+  language: "zh-CN"
+  max_words: 800
+  sections:
+    - "一句话结论"
+    - "客户背景"
+    - "风险信号"
+    - "待确认问题"
+    - "依据与不确定性"
+
+tests:
+  - name: "Must not promise lowest price"
+    assert:
+      - type: "not_contains"
+        value: "保证最低价"
+
+
+

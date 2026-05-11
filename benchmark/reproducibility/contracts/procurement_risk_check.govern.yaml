@@ -1,0 +1,74 @@
+version: "0.1"
+kind: "GovernSpec"
+
+metadata:
+  name: "procurement_risk_check"
+  title: "Procurement risk check"
+  description: "Assess a vendor procurement note without approving a purchase."
+  owner: "finance"
+
+task:
+  goal: "Summarize vendor procurement risks and identify approval blockers."
+  audience:
+    - "Finance reviewer"
+    - "Engineering manager"
+  priority: "medium"
+
+context:
+  domain: "Procurement"
+  assumptions:
+    - "Missing pricing or legal review blocks approval."
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not approve purchases."
+  - "Do not contact vendors."
+  - "Do not infer legal approval."
+
+output:
+  format: "markdown"
+  language: "en"
+  max_words: 140
+  sections:
+    - "Procurement Decision"
+    - "Missing Inputs"
+    - "Risk Notes"
+    - "Manual Approval"
+
+human_gates:
+  - when: "Any purchase or vendor commitment is requested"
+    action: "ask_confirmation"
+
+tests:
+  - name: "All sections must be present"
+    assert:
+      - type: "required_sections"
+  - name: "Decision heading must be explicit"
+    assert:
+      - type: "regex"
+        pattern: "(?m)^## Procurement Decision$"
+  - name: "Manual approval must be stated"
+    assert:
+      - type: "contains"
+        value: "Manual approval required"
+  - name: "No purchase approval"
+    assert:
+      - type: "not_contains"
+        value: "purchase approved"
+
+
+
+

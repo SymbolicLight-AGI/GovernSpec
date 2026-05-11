@@ -1,0 +1,67 @@
+version: "0.1"
+kind: "GovernSpec"
+
+metadata:
+  name: "vendor_summary_json"
+  title: "Vendor summary JSON"
+  description: "Produce a vendor summary payload without approving purchase."
+  owner: "finance"
+
+task:
+  goal: "Generate a structured vendor summary with vendor, risk level, and required reviews."
+  audience:
+    - "Finance automation"
+  priority: "medium"
+
+permissions:
+  web: false
+  filesystem:
+    read: true
+    write: false
+  network: false
+  tools:
+    send_email: false
+    read_calendar: false
+    read_gmail: false
+    create_file: false
+    delete_file: false
+    purchase: false
+
+constraints:
+  - "Do not approve purchase."
+
+output:
+  format: "json"
+  schema:
+    type: object
+    additionalProperties: false
+    required:
+      - vendor
+      - risk_level
+      - reviews
+    properties:
+      vendor:
+        type: string
+      risk_level:
+        type: string
+        enum:
+          - low
+          - medium
+          - high
+      reviews:
+        type: array
+        minItems: 1
+        items:
+          type: string
+
+tests:
+  - name: "JSON must match schema"
+    assert:
+      - type: "json_schema"
+  - name: "Vendor key must be visible"
+    assert:
+      - type: "contains"
+        value: "\"vendor\""
+
+
+

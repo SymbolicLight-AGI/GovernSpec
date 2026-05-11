@@ -37,7 +37,7 @@
 
 ## Benchmark 与公开文档
 
-- `benchmark/`：离线 benchmark、contracts、outputs、results 和脚本。修改 compiler、importer、tester 或指标时应同步结果和测试。
+- `benchmark/`：离线 benchmark、reproducibility benchmark、contracts、outputs、results 和脚本。修改 compiler、importer、tester 或指标时应同步结果和测试。
 - `benchmark.md`：benchmark 使用说明和记录模板。
 - `failure-cases.md`：真实失败案例记录模板。
 

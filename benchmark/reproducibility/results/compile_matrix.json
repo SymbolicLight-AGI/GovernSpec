@@ -1,0 +1,1122 @@
+{
+  "contracts": [
+    "api_security_review",
+    "architecture_decision_review",
+    "changelog_draft",
+    "code_review",
+    "compliance_checklist_json",
+    "customer_brief",
+    "data_retention_audit",
+    "dependency_update_review",
+    "deployment_guard",
+    "imported_customer_brief",
+    "incident_postmortem_json",
+    "incident_triage_json",
+    "market_analysis",
+    "privacy_impact_assessment",
+    "procurement_risk_check",
+    "qa_test_plan_json",
+    "release_summary_json",
+    "report_json",
+    "support_ticket_triage",
+    "vendor_summary_json"
+  ],
+  "targets": [
+    "agents-md",
+    "claude-md",
+    "cursor-rules",
+    "openai-structured",
+    "gemini-structured",
+    "mcp-plan"
+  ],
+  "results": [
+    {
+      "contract": "api_security_review",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "api_security_review",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "api_security_review",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "api_security_review",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "api_security_review",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "api_security_review",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "architecture_decision_review",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "architecture_decision_review",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "architecture_decision_review",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "architecture_decision_review",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "architecture_decision_review",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "architecture_decision_review",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "changelog_draft",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "changelog_draft",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "changelog_draft",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "changelog_draft",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "changelog_draft",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "changelog_draft",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "code_review",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "code_review",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "code_review",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "code_review",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "code_review",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "code_review",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 3
+    },
+    {
+      "contract": "compliance_checklist_json",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "compliance_checklist_json",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "compliance_checklist_json",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "compliance_checklist_json",
+      "target": "openai-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "compliance_checklist_json",
+      "target": "gemini-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "compliance_checklist_json",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "customer_brief",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "customer_brief",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "customer_brief",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "customer_brief",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "customer_brief",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "customer_brief",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 4
+    },
+    {
+      "contract": "data_retention_audit",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "data_retention_audit",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "data_retention_audit",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "data_retention_audit",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "data_retention_audit",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "data_retention_audit",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "dependency_update_review",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "dependency_update_review",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "dependency_update_review",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "dependency_update_review",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "dependency_update_review",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "dependency_update_review",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "deployment_guard",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "deployment_guard",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "deployment_guard",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "deployment_guard",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "deployment_guard",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "deployment_guard",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "imported_customer_brief",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "imported_customer_brief",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "imported_customer_brief",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "imported_customer_brief",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "imported_customer_brief",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "imported_customer_brief",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 3
+    },
+    {
+      "contract": "incident_postmortem_json",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_postmortem_json",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_postmortem_json",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_postmortem_json",
+      "target": "openai-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_postmortem_json",
+      "target": "gemini-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_postmortem_json",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "incident_triage_json",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_triage_json",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_triage_json",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_triage_json",
+      "target": "openai-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_triage_json",
+      "target": "gemini-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "incident_triage_json",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "market_analysis",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "market_analysis",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "market_analysis",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "market_analysis",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "market_analysis",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "market_analysis",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 4
+    },
+    {
+      "contract": "privacy_impact_assessment",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "privacy_impact_assessment",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "privacy_impact_assessment",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "privacy_impact_assessment",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "privacy_impact_assessment",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "privacy_impact_assessment",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "procurement_risk_check",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "procurement_risk_check",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "procurement_risk_check",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "procurement_risk_check",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "procurement_risk_check",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "procurement_risk_check",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "qa_test_plan_json",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "qa_test_plan_json",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "qa_test_plan_json",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "qa_test_plan_json",
+      "target": "openai-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "qa_test_plan_json",
+      "target": "gemini-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "qa_test_plan_json",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "release_summary_json",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "release_summary_json",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "release_summary_json",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "release_summary_json",
+      "target": "openai-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "release_summary_json",
+      "target": "gemini-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "release_summary_json",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "report_json",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "report_json",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "report_json",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "report_json",
+      "target": "openai-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "report_json",
+      "target": "gemini-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "report_json",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    },
+    {
+      "contract": "support_ticket_triage",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "support_ticket_triage",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "support_ticket_triage",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "support_ticket_triage",
+      "target": "openai-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "openai-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "support_ticket_triage",
+      "target": "gemini-structured",
+      "ok": false,
+      "artifact_kind": null,
+      "error_type": "GovernSpecCompileError",
+      "error_message": "gemini-structured requires output.format=json with output.schema.",
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "support_ticket_triage",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 2
+    },
+    {
+      "contract": "vendor_summary_json",
+      "target": "agents-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "vendor_summary_json",
+      "target": "claude-md",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "vendor_summary_json",
+      "target": "cursor-rules",
+      "ok": true,
+      "artifact_kind": "bundle",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "vendor_summary_json",
+      "target": "openai-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "vendor_summary_json",
+      "target": "gemini-structured",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 0
+    },
+    {
+      "contract": "vendor_summary_json",
+      "target": "mcp-plan",
+      "ok": true,
+      "artifact_kind": "text",
+      "error_type": null,
+      "error_message": null,
+      "capability_notes_count": 1
+    }
+  ],
+  "summary": {
+    "contract_count": 20,
+    "target_count": 6,
+    "total": 120,
+    "ok": 94,
+    "failed": 26,
+    "compile_success_rate": 78.33
+  }
+}
