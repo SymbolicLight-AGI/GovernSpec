@@ -1,10 +1,10 @@
 # GovernSpec
 
-GovernSpec 是本仓库实现的一个**离线契约编译器**，用来统一管理 AI agent 的任务规则。
+[Read this in Chinese](README.zh-CN.md)
 
-它让你维护一份 `govern.yaml`，然后编译成不同工具能直接读取的 artifact，例如
-`AGENTS.md`、`CLAUDE.md`、Cursor Rules、OpenAI Structured Outputs、Gemini
-structured output payload 和 MCP plan。
+GovernSpec is a local-first contract compiler for AI agent workflows.
+
+It lets you maintain one `govern.yaml` file and compile it into artifacts that existing tools can read, including `AGENTS.md`, `CLAUDE.md`, Cursor Rules, OpenAI Structured Outputs, Gemini structured output payloads, and MCP plans.
 
 ```text
 govern.yaml
@@ -18,104 +18,104 @@ govern.yaml
 
 > Define once, validate and compile everywhere.
 
-GovernSpec 不调用真实 LLM，不需要 API key，不接管 agent runtime。它只做三件事：
+GovernSpec does not call live LLM APIs, require API keys, or take over your agent runtime. It does three things:
 
-- 把任务目标、权限、约束、人工确认门、输出格式和验收测试写成结构化 contract。
-- 把 contract 编译成各个 AI 工具需要的格式。
-- 对 agent 最终输出做 deterministic offline acceptance tests。
+- Defines task goals, permissions, constraints, human approval gates, output formats, and acceptance tests as a structured contract.
+- Compiles that contract into formats used by different AI tools.
+- Runs deterministic offline acceptance tests against the final agent output.
 
-如果你第一次接触这个项目，建议先读本文，再读 [docs/technical-guide.md](docs/technical-guide.md)。
+If this is your first time here, read this README first, then see [docs/technical-guide.md](docs/technical-guide.md).
 
-## 命名与第三方项目说明
+## Naming Note
 
-本项目不隶属于、也不代表 `intentspec.org`、`JanneL/validate-intentspec-action` 或任何同名第三方项目。公开引用时，建议使用 **GovernSpec** 或 **GovernSpec v0.1 YAML contract toolchain** 来指代本仓库，避免和只校验 Markdown front matter 的 GitHub Action 混淆。
+This project is not affiliated with `intentspec.org`, `JanneL/validate-intentspec-action`, or any third-party project with a similar name. When citing or discussing this repository, use **GovernSpec** or **GovernSpec v0.1 YAML contract toolchain**.
 
-当前实现使用 `govern.yaml`、`GovernSpec` / `GovernPack`、Pydantic v2 schema、IIR、target compiler、reverse importer 和 offline assertion runner。它不是某个外部 GovernSpec 标准的官方实现，也不会声明自己是生态中的唯一或官方标准。
+The current implementation uses `govern.yaml`, `GovernSpec` / `GovernPack`, Pydantic v2 schema models, IIR, target compilers, reverse importers, and an offline assertion runner. It is not an official implementation of an external GovernSpec standard.
 
-## 适合谁
+## Who It Is For
 
-### 使用多个 AI coding 工具的工程团队
+### Engineering teams using several AI coding tools
 
-如果你同时使用 Cursor、Codex、Claude Code 或 API structured outputs，就会遇到同一套规则重复维护的问题。GovernSpec 可以把这些规则收敛到一份 `govern.yaml`，再编译到不同工具。
+If your team uses Cursor, Codex, Claude Code, API structured outputs, or similar tools, the same repository rules often get duplicated in several formats. GovernSpec keeps the source contract in one place and compiles it to the downstream files each tool expects.
 
-### AI 应用开发者
+### AI application developers
 
-如果你的应用需要稳定输出 JSON、限制模型行为、要求人工确认或在 CI 中检查输出格式，GovernSpec 可以提供本地 schema、编译和测试流程。
+If your application needs stable JSON output, explicit model behavior limits, human approval points, or CI checks for output shape, GovernSpec provides a local schema, compiler, and test workflow.
 
-### 安全、治理和合规负责人
+### Security, governance, and compliance reviewers
 
-如果你关心 agent 能不能联网、能不能写文件、是否暴露隐私、是否需要人工确认，GovernSpec 把这些内容变成显式字段，而不是散落在 prompt 里。
+If you care whether an agent may browse the web, write files, expose private data, or proceed without human confirmation, GovernSpec makes those boundaries explicit instead of burying them in prose prompts.
 
-### 研究者和工具作者
+### Researchers and tool builders
 
-GovernSpec 提供 schema、IIR、importer、compiler、benchmark 和 offline assertion runner，适合研究 agent artifact-level governance、round-trip fidelity 和 task contract portability。
+GovernSpec includes a schema, IIR, importers, compilers, benchmark artifacts, and an offline assertion runner for studying artifact-level governance, round-trip fidelity, and task contract portability.
 
-## 不适合谁
+## What It Is Not
 
-GovernSpec 不是：
+GovernSpec is not:
 
-- LLM runtime
-- agent orchestration framework
-- 权限沙箱
-- runtime enforcement system
-- MCP 替代品
-- Cursor、Codex、Claude Code 的替代品
+- an LLM runtime
+- an agent orchestration framework
+- a permission sandbox
+- a runtime enforcement system
+- an MCP replacement
+- a replacement for Cursor, Codex, or Claude Code
 
-它能帮助你更清晰地表达、传播和检查规则，但不能保证模型在运行时一定不会违规。
+It helps you express, distribute, and check rules. It does not guarantee that a model will obey those rules at runtime.
 
-## 你能得到什么
+## What You Get
 
-使用 GovernSpec 后，团队可以得到：
+With GovernSpec, a team can maintain:
 
-- 一份可 code review 的 AI 任务契约。
-- 多个下游工具能读取的目标文件。
-- 可复用的治理规则包 `GovernPack`。
-- 明确的权限边界和人工确认规则。
-- 可在本地或 CI 中运行的输出验收测试。
-- 从已有 `AGENTS.md`、`CLAUDE.md`、Cursor Rules 或 structured output JSON 迁移回 contract 的路径。
-- 对目标工具能力边界的可见性，例如哪些约束无法完整编译到某个 target。
+- one reviewable AI task contract
+- downstream artifacts for multiple tools
+- reusable governance packs with `GovernPack`
+- explicit permission and human approval boundaries
+- local or CI-friendly output acceptance tests
+- a migration path from existing `AGENTS.md`, `CLAUDE.md`, Cursor Rules, or structured output JSON back to a contract draft
+- visible target capability diagnostics, including constraints that cannot be fully represented in a given target
 
-## 安装
+## Installation
 
-要求 Python 3.11+。
+GovernSpec requires Python 3.11 or newer.
 
-从 PyPI 安装：
+Install from PyPI:
 
 ```bash
 pip install governspec
 ```
 
-从源码安装：
+Install from source:
 
 ```bash
-git clone https://github.com/<your-org>/GovernSpec.git
+git clone https://github.com/SymbolicLight-AGI/GovernSpec.git
 cd GovernSpec
 pip install -e ".[dev]"
 ```
 
-检查安装：
+Check the installation:
 
 ```bash
 governspec doctor
 ```
 
-GovernSpec 的核心流程不需要 API key，不需要联网。
+The core GovernSpec workflow does not require an API key or network access.
 
-## 5 分钟快速开始
+## Five-Minute Quickstart
 
-### 1. 创建 contract
+### 1. Create a contract
 
 ```bash
 governspec init
 ```
 
-如果希望生成中文占位说明，可以使用：
+To generate Chinese placeholder text:
 
 ```bash
 governspec init --locale zh-CN
 ```
 
-这会生成 `govern.yaml`。你可以先用下面这个最小示例理解结构：
+This creates `govern.yaml`. A minimal contract looks like this:
 
 ```yaml
 version: "0.1"
@@ -166,67 +166,65 @@ tests:
       - type: "max_words"
 ```
 
-### 2. 验证 contract
+### 2. Validate the contract
 
 ```bash
 governspec validate govern.yaml
 ```
 
-看到 `Validation status: ok` 表示 schema 和字段约束通过。
+`Validation status: ok` means the file passed schema and field validation.
 
-### 3. 查看最终归一化结果
+### 3. Inspect the normalized representation
 
 ```bash
 governspec inspect govern.yaml
 ```
 
-`inspect` 展示 import 解析、权限合并和 normalization 之后的 IIR。调试复杂 contract 时，这一步很有用。
-
-如果要给脚本使用：
+`inspect` shows the IIR after imports, permission merging, and normalization. For scripts, use JSON output:
 
 ```bash
 governspec inspect govern.yaml --format json
 ```
 
-### 4. 编译到目标工具
+### 4. Compile to a target tool
 
-编译给 Codex 或其他读取 `AGENTS.md` 的 coding agent：
+Compile for Codex or other agents that read `AGENTS.md`:
 
 ```bash
 governspec compile govern.yaml --target agents-md --out AGENTS.md
 ```
 
-编译给 Claude Code：
+Compile for Claude Code:
 
 ```bash
 governspec compile govern.yaml --target claude-md --out CLAUDE.md
 ```
 
-编译给 Cursor：
+Compile for Cursor:
 
 ```bash
 governspec compile govern.yaml --target cursor-rules --out .
 ```
 
-编译给 OpenAI Structured Outputs：
+Compile for OpenAI Structured Outputs:
 
 ```bash
 governspec compile govern.yaml --target openai-structured --out task.openai-structured.json
 ```
 
-### 5. 让 agent 工作
+### 5. Run your agent
 
-在 Cursor、Codex、Claude Code 或你的 API workflow 中正常运行 agent。GovernSpec 不接管这一步，它只提供目标工具能读取的 artifact。
+Run the agent in Cursor, Codex, Claude Code, or your API workflow as usual. GovernSpec does not replace that step.
 
-### 6. 验收输出
+### 6. Test the output offline
 
-把 agent 输出保存成文件，例如 `output.md`：
+Save the agent output to a file such as `output.md`, then run:
 
 ```bash
 governspec test govern.yaml --output output.md
 ```
 
-输出示例：
+Example result:
 
 ```text
 Test status: ok
@@ -236,18 +234,18 @@ Passed:
 Failed: none
 ```
 
-## 不想手写 YAML
+## Draft and Import
 
-### 从自然语言生成草稿
+### Generate a draft from natural language
 
 ```bash
 governspec draft "Review this repository without modifying code" --out draft.govern.yaml
-governspec draft "帮我做客户会议简报，不要泄露隐私，涉及敏感数据先问我" --out draft.govern.yaml
+governspec draft "Prepare a customer briefing, protect private data, and ask before using sensitive information" --out draft.govern.yaml
 ```
 
-`draft` 是本地启发式生成，不调用真实模型。它适合冷启动，但生成后仍然应该人工 review。
+`draft` is a local heuristic generator. It does not call a live model. It is useful for bootstrapping, but the generated file should still be reviewed.
 
-### 从已有 artifact 导入
+### Import from an existing artifact
 
 ```bash
 governspec import AGENTS.md --out imported.govern.yaml
@@ -256,21 +254,21 @@ governspec import .cursor/rules/project.mdc --out imported.govern.yaml
 governspec import task.openai-structured.json --out imported.govern.yaml
 ```
 
-支持的导入来源：
+Supported sources:
 
-| Source | Auto-detect 依据 |
+| Source | Auto-detection signal |
 | --- | --- |
-| `agents-md` | `AGENTS.md` 文件名 |
-| `claude-md` | `CLAUDE.md` 文件名 |
-| `cursor-rules` | `.mdc` 扩展名 |
+| `agents-md` | `AGENTS.md` filename |
+| `claude-md` | `CLAUDE.md` filename |
+| `cursor-rules` | `.mdc` extension |
 | `openai-structured` | `json_schema` key |
 | `gemini-structured` | `generationConfig` key |
 
-导入结果是 draft，不是等价证明。自然语言 artifact 一定存在信息损失，所以导入后建议运行 `governspec validate` 和 `governspec inspect`。
+Imports produce drafts, not equivalence proofs. Natural-language artifacts lose information, so run `governspec validate` and `governspec inspect` after importing.
 
-## GovernPack 复用治理规则
+## GovernPack
 
-通用规则可以写成 `GovernPack`：
+Reusable governance rules can be stored as `GovernPack` files:
 
 ```yaml
 # packs/privacy.govern.yaml
@@ -293,60 +291,59 @@ human_gates:
     action: "ask_confirmation"
 ```
 
-任务 contract 中引用：
+Reference a pack from a task contract:
 
 ```yaml
 imports:
   - "./packs/privacy.govern.yaml"
 ```
 
-导入合并规则是保守的：
+Import merging is conservative:
 
-- 标量字段本地优先。
-- 列表合并去重。
-- 权限取更严格结果，deny wins。
-- 导入的 acceptance assertions 不会被本地同名测试静默覆盖。
+- local scalar fields win
+- lists are merged and deduplicated
+- permissions choose the stricter value, with deny winning
+- imported acceptance assertions are not silently overwritten by local tests with the same name
 
-## 编译目标
+## Compile Targets
 
-| Target | 用途 | 输出 |
+| Target | Use case | Output |
 | --- | --- | --- |
-| `prompt` | 通用 Markdown prompt | 文本 |
-| `agents-md` | Codex 或 repository instruction workflow | `AGENTS.md` |
+| `prompt` | Generic Markdown prompt | text |
+| `agents-md` | Codex or repository instruction workflow | `AGENTS.md` |
 | `claude-md` | Claude Code project memory | `CLAUDE.md` |
 | `cursor-rules` | Cursor Project Rules | `.cursor/rules/governspec.mdc` |
 | `antigravity-rules` | Antigravity-compatible repository rules | `.agents/rules/governspec.md` |
-| `skill` | 通用 skill bundle | `SKILL.md`、`references/`、`scripts/` |
+| `skill` | Generic skill bundle | `SKILL.md`, `references/`, `scripts/` |
 | `openai-structured` | OpenAI Structured Outputs | JSON payload |
 | `gemini-structured` | Gemini structured output | JSON payload |
-| `mcp-plan` | MCP planning / inspection | JSON with risk and constraint loss |
+| `mcp-plan` | MCP planning and inspection | JSON with risk and constraint-loss diagnostics |
 | `openai-json` | Legacy transition payload | JSON payload |
 
-完整集成说明见 [docs/integrations.md](docs/integrations.md)，其中列出了每类
-GovernSpec 产物的目标工具和落地方式。
+See [docs/integrations.md](docs/integrations.md) for target-specific integration notes.
 
-## 输出验收断言
+## Output Assertions
 
-`governspec test` 支持以下 deterministic assertion：
+`governspec test` supports deterministic assertions:
 
-| Assertion | 检查内容 |
+| Assertion | Checks |
 | --- | --- |
-| `required_sections` | Markdown 输出是否包含 `output.sections` 定义的所有章节 |
-| `contains` | 输出是否包含指定文本 |
-| `not_contains` | 输出是否不包含禁止文本 |
-| `regex` | 输出是否匹配指定正则 |
-| `no_regex` | 输出是否不匹配禁止正则 |
-| `max_words` | 字数是否在 `output.max_words` 限制内 |
-| `max_chars` | 字符数是否在限制内 |
-| `json_schema` | JSON 输出是否符合 `output.schema` |
-| `json_path_exists` | JSON 中指定路径是否存在 |
-| `json_array_min_items` | JSON array 是否满足最少元素数 |
+| `required_sections` | Markdown output contains all sections from `output.sections` |
+| `contains` | output contains required text |
+| `not_contains` | output does not contain forbidden text |
+| `regex` | output matches a regular expression |
+| `no_regex` | output does not match a forbidden regular expression |
+| `max_words` | word count stays within `output.max_words` |
+| `max_chars` | character count stays within the limit |
+| `json_schema` | JSON output matches `output.schema` |
+| `json_path_exists` | a JSON path exists |
+| `json_array_min_items` | a JSON array has the required minimum size |
 
-这些断言适合验证格式、结构、长度和显式文本规则。它们不验证复杂事实真伪，也不能替代人工审查。
+These assertions are meant for structure, format, length, and explicit text checks. They do not verify complex factual claims and do not replace human review.
 
-## 常见工作流
+## Common Workflows
 
-### 代码审查
+### Code review
 
 ```bash
 governspec examples --copy code_review.govern.yaml --out code_review.govern.yaml
@@ -355,9 +352,9 @@ governspec compile code_review.govern.yaml --target agents-md --out AGENTS.md
 governspec test code_review.govern.yaml --output review.md
 ```
 
-适合限制 agent 只读仓库、输出固定章节、不修改文件。
+Use this to make an agent read-only, require fixed report sections, and prevent file modification.
 
-### 结构化 JSON 报告
+### Structured JSON reports
 
 ```bash
 governspec examples --copy report_json.govern.yaml --out report_json.govern.yaml
@@ -365,9 +362,9 @@ governspec compile report_json.govern.yaml --target openai-structured --out task
 governspec test report_json.govern.yaml --output report_json.output.json
 ```
 
-适合 API workflow、machine-readable report 和 CI 检查。
+Use this for API workflows, machine-readable reports, and CI checks.
 
-### 多工具规则同步
+### Multi-tool rule synchronization
 
 ```bash
 governspec compile govern.yaml --target agents-md --out AGENTS.md
@@ -375,9 +372,9 @@ governspec compile govern.yaml --target claude-md --out CLAUDE.md
 governspec compile govern.yaml --target cursor-rules --out .
 ```
 
-适合同一仓库中并行使用 Codex、Claude Code 和 Cursor 的团队。
+Use this when a repository is shared across Codex, Claude Code, and Cursor.
 
-### CI 检查
+### CI checks
 
 ```bash
 governspec validate govern.yaml
@@ -385,34 +382,34 @@ governspec compile govern.yaml --target agents-md --out /tmp/AGENTS.md
 governspec test govern.yaml --output output.md
 ```
 
-建议在 CI 中至少检查重要 contracts 能否 validate 和 compile。
+At minimum, CI should validate and compile important contracts.
 
 ## MCP Server
 
-GovernSpec 提供薄 MCP server：
+GovernSpec includes a thin MCP server:
 
 ```bash
 governspec-mcp
 ```
 
-暴露的 tools：
+Exposed tools:
 
 - `governspec.validate`
 - `governspec.inspect`
 - `governspec.compile`
 - `governspec.test`
 
-暴露的 resources：
+Exposed resources:
 
 - `govern://spec/<path>`
 - `govern://iir/<path>`
 - `govern://compiled/<target>/<path>`
 
-`governspec-mcp` 是集成面，不是 runtime orchestration platform。
+`governspec-mcp` is an integration surface, not a runtime orchestration platform.
 
 ## Python SDK
 
-常用 document-level API：
+Common document-level API:
 
 ```python
 from pathlib import Path
@@ -434,12 +431,12 @@ report = validate_document(resolved)
 payload = inspect_document(resolved)
 ```
 
-如果只处理 `GovernSpec`，也可以使用更窄的 `load_spec`、`resolve_imports` 和 `validate_spec`。
+For `GovernSpec`-only flows, use the narrower `load_spec`, `resolve_imports`, and `validate_spec` helpers.
 
-## 仓库结构
+## Repository Layout
 
 ```text
-packages/governspec-core/   schema、parser、IIR、imports、targets、testing
+packages/governspec-core/   schema, parser, IIR, imports, targets, testing
 packages/governspec-cli/    Typer CLI, governspec command
 packages/governspec-mcp/    thin MCP server
 packages/governspec-ts/     TypeScript package MVP
@@ -451,34 +448,35 @@ docs/                       technical docs, migration guide, paper drafts
 tests/                      pytest test suite
 ```
 
-## 文档索引
+## Documentation
 
-- [docs/technical-guide.md](docs/technical-guide.md), 详细技术指南，推荐新用户阅读。
-- [docs/integrations.md](docs/integrations.md), 各工具集成方式。
-- [docs/iir.md](docs/iir.md), 中间表示 IIR 设计。
-- [docs/engineering/repository_file_map_zh.md](docs/engineering/repository_file_map_zh.md), 仓库关键文件地图。
-- [docs/migration-v0.1.md](docs/migration-v0.1.md), 迁移到 v0.1 schema。
-- [docs/project-roadmap-zh.md](docs/project-roadmap-zh.md), 项目从 0% 到 100% 的总规划和当前进度。
-- [benchmark.md](benchmark.md), benchmark 使用说明。
-- [failure-cases.md](failure-cases.md), 已知失败案例和边界。
+- [README.zh-CN.md](README.zh-CN.md): Simplified Chinese README.
+- [docs/technical-guide.md](docs/technical-guide.md): detailed technical guide.
+- [docs/integrations.md](docs/integrations.md): integration notes for supported tools.
+- [docs/iir.md](docs/iir.md): Intermediate Intent Representation design.
+- [docs/engineering/repository_file_map_zh.md](docs/engineering/repository_file_map_zh.md): repository file map in Chinese.
+- [docs/migration-v0.1.md](docs/migration-v0.1.md): migration notes for the v0.1 schema.
+- [docs/project-roadmap-zh.md](docs/project-roadmap-zh.md): project roadmap and progress notes in Chinese.
+- [benchmark.md](benchmark.md): benchmark guide.
+- [failure-cases.md](failure-cases.md): known failure cases and boundaries.
 
 ## Benchmark
 
-运行基础 benchmark：
+Run the base benchmark:
 
 ```bash
 python benchmark/run_benchmark.py
 ```
 
-运行论文 artifact-level benchmark：
+Run the paper artifact benchmark:
 
 ```bash
 python benchmark/paper_icse2027/scripts/run_all.py
 ```
 
-Benchmark 不调用真实 LLM，只评估本地 artifacts、compile behavior、round-trip import 和 deterministic tests。
+Benchmarks do not call live LLM APIs. They evaluate local artifacts, compile behavior, round-trip import behavior, and deterministic tests.
 
-## 开发
+## Development
 
 ```bash
 pip install -e ".[dev]"
@@ -487,36 +485,33 @@ ruff check .
 mypy
 ```
 
-构建发布包：
+Build release artifacts:
 
 ```bash
 python -m build
 twine check dist/*
 ```
 
-贡献前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。安全问题请按
-[SECURITY.md](SECURITY.md) 私下报告。行为准则见
-[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)。
+Before contributing, read [CONTRIBUTING.md](CONTRIBUTING.md). Report security issues privately using [SECURITY.md](SECURITY.md). The project code of conduct is in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
-如果你在研究中使用 GovernSpec，请使用 [CITATION.cff](CITATION.cff) 中的
-元数据引用本软件。JOSS 投稿草稿位于 [paper/paper.md](paper/paper.md)。
+If you use GovernSpec in research, cite the software using the metadata in [CITATION.cff](CITATION.cff). The JOSS draft is in [paper/paper.md](paper/paper.md).
 
-## 路线图
+## Roadmap
 
 ### v0.2
 
-- 更高质量的 draft generation。
-- 更细的 assertion auto-selection。
-- 更完整的 round-trip fidelity tests。
-- 更清晰的 target capability diagnostics。
+- Better draft generation.
+- More precise assertion auto-selection.
+- Broader round-trip fidelity tests.
+- Clearer target capability diagnostics.
 
 ### v0.3+
 
-- Pack registry。
-- Import trace。
-- Workflow-level contract composition。
-- IDE diagnostics。
-- 可选 model-based semantic evaluation。
+- Pack registry.
+- Import traces.
+- Workflow-level contract composition.
+- IDE diagnostics.
+- Optional model-based semantic evaluation.
 
 ## License
 
