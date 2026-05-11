@@ -2,13 +2,6 @@
 
 GovernSpec v0.1.0 is the current mainline release of a local-first, deterministic, embeddable YAML task contract compiler.
 
-## Naming note
-
-This repository is not affiliated with `intentspec.org`,
-`JanneL/validate-intentspec-action`, or any similarly named third-party project.
-Use "GovernSpec" when referring to this project in public
-release notes, posts, or integration docs.
-
 ## What’s new
 
 - First-class strict JSON contracts with `output.schema`

@@ -16,4 +16,4 @@ keywords:
   - task contracts
   - structured outputs
   - offline validation
-abstract: "GovernSpec is a local-first CLI and schema for describing AI tasks as explicit YAML contracts, compiling them to common agent artifacts, importing existing artifacts, and testing outputs offline. It is not affiliated with intentspec.org or similarly named third-party projects."
+abstract: "GovernSpec is a local-first CLI and schema for describing AI tasks as explicit YAML contracts, compiling them to common agent artifacts, importing existing artifacts, and testing outputs offline."

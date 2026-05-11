@@ -28,11 +28,9 @@ GovernSpec 不调用真实 LLM，不需要 API key，不接管 agent runtime。�
 
 如果你第一次接触这个项目，建议先读本文，再读 [docs/technical-guide.md](docs/technical-guide.md)。
 
-## 命名与第三方项目说明
+## 命名说明
 
-本项目不隶属于、也不代表 `intentspec.org`、`JanneL/validate-intentspec-action` 或任何同名第三方项目。公开引用时，建议使用 **GovernSpec** 或 **GovernSpec v0.1 YAML contract toolchain** 来指代本仓库，避免和只校验 Markdown front matter 的 GitHub Action 混淆。
-
-当前实现使用 `govern.yaml`、`GovernSpec` / `GovernPack`、Pydantic v2 schema、IIR、target compiler、reverse importer 和 offline assertion runner。它不是某个外部 GovernSpec 标准的官方实现，也不会声明自己是生态中的唯一或官方标准。
+当前实现使用 `govern.yaml`、`GovernSpec` / `GovernPack`、Pydantic v2 schema、IIR、target compiler、reverse importer 和 offline assertion runner。
 
 ## 适合谁
 
@@ -460,7 +458,6 @@ tests/                      pytest test suite
 - [docs/iir.md](docs/iir.md), 中间表示 IIR 设计。
 - [docs/engineering/repository_file_map_zh.md](docs/engineering/repository_file_map_zh.md), 仓库关键文件地图。
 - [docs/migration-v0.1.md](docs/migration-v0.1.md), 迁移到 v0.1 schema。
-- [docs/project-roadmap-zh.md](docs/project-roadmap-zh.md), 项目从 0% 到 100% 的总规划和当前进度。
 - [benchmark.md](benchmark.md), benchmark 使用说明。
 - [failure-cases.md](failure-cases.md), 已知失败案例和边界。
 

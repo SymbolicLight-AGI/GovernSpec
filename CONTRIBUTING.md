@@ -3,9 +3,7 @@
 Thank you for helping improve GovernSpec. The project is intentionally local-first,
 deterministic, and small enough to inspect.
 
-When writing public-facing material, prefer "GovernSpec" for
-this repository. Do not describe the project as an official implementation of
-`intentspec.org` or of any similarly named third-party tool.
+When writing public-facing material, use "GovernSpec" for this repository.
 
 ## Development Setup
 

@@ -3,9 +3,6 @@
 ## Overview
 
 Within this toolchain, `govern.yaml` is the source of truth for AI task contracts.
-This repository does not claim affiliation with similarly named third-party
-projects or with `intentspec.org`.
-
 Downstream tools do not need to understand `govern.yaml` directly. They consume either:
 
 - compiled files

@@ -29,7 +29,7 @@ from governspec_core.importers._parsing import (
     strip_frontmatter,
 )
 
-_INTENTSPEC_GENERATED_SECTIONS = {
+_GOVERNSPEC_GENERATED_SECTIONS = {
     "Project Goal",
     "Working Constraints",
     "Allowed and Forbidden Operations",
@@ -95,7 +95,7 @@ def import_instruction_markdown(text: str) -> dict[str, Any]:
 
 
 def _is_governspec_generated(sections: dict[str, str]) -> bool:
-    return len(_INTENTSPEC_GENERATED_SECTIONS & set(sections.keys())) >= 4
+    return len(_GOVERNSPEC_GENERATED_SECTIONS & set(sections.keys())) >= 4
 
 
 def _parse_governspec_generated(sections: dict[str, str]) -> dict[str, Any]:

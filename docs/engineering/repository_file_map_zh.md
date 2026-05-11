@@ -48,7 +48,6 @@
 - `docs/iir.md`：IIR 设计说明。
 - `docs/migration-v0.1.md`：v0.1 schema 迁移说明。
 - `docs/release-checklist.md`：发布前验证清单。
-- `docs/project-roadmap-zh.md`：中文项目路线图和进度口径。
 - `CONTRIBUTING.md`、`SECURITY.md`、`CODE_OF_CONDUCT.md`、`CITATION.cff`：开源治理、披露、安全和引用材料。
 
 ## 不记录的运行产物

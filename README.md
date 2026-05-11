@@ -26,11 +26,9 @@ GovernSpec does not call live LLM APIs, require API keys, or take over your agen
 
 If this is your first time here, read this README first, then see [docs/technical-guide.md](docs/technical-guide.md).
 
-## Naming Note
+## Implementation Note
 
-This project is not affiliated with `intentspec.org`, `JanneL/validate-intentspec-action`, or any third-party project with a similar name. When citing or discussing this repository, use **GovernSpec** or **GovernSpec v0.1 YAML contract toolchain**.
-
-The current implementation uses `govern.yaml`, `GovernSpec` / `GovernPack`, Pydantic v2 schema models, IIR, target compilers, reverse importers, and an offline assertion runner. It is not an official implementation of an external GovernSpec standard.
+The current implementation uses `govern.yaml`, `GovernSpec` / `GovernPack`, Pydantic v2 schema models, IIR, target compilers, reverse importers, and an offline assertion runner.
 
 ## Who It Is For
 
@@ -456,7 +454,6 @@ tests/                      pytest test suite
 - [docs/iir.md](docs/iir.md): Intermediate Intent Representation design.
 - [docs/engineering/repository_file_map_zh.md](docs/engineering/repository_file_map_zh.md): repository file map in Chinese.
 - [docs/migration-v0.1.md](docs/migration-v0.1.md): migration notes for the v0.1 schema.
-- [docs/project-roadmap-zh.md](docs/project-roadmap-zh.md): project roadmap and progress notes in Chinese.
 - [benchmark.md](benchmark.md): benchmark guide.
 - [failure-cases.md](failure-cases.md): known failure cases and boundaries.
 
