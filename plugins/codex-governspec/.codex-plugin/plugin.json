@@ -1,0 +1,40 @@
+{
+  "name": "codex-governspec",
+  "version": "0.1.0",
+  "description": "Use GovernSpec task contracts from Codex through a local skill and MCP server.",
+  "author": {
+    "name": "Ting Liu",
+    "email": "research@symboliclight.com",
+    "url": "https://github.com/SymbolicLight-AGI"
+  },
+  "homepage": "https://github.com/SymbolicLight-AGI/GovernSpec#readme",
+  "repository": "https://github.com/SymbolicLight-AGI/GovernSpec",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "governspec",
+    "agent-contracts",
+    "mcp",
+    "structured-output"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "GovernSpec for Codex",
+    "shortDescription": "Validate, compile, and test GovernSpec task contracts from Codex.",
+    "longDescription": "GovernSpec for Codex connects local-first AI task contracts to Codex through a skill and the governspec-mcp server. Use it to recognize govern.yaml contracts, validate constraints, compile downstream artifacts such as AGENTS.md or structured output payloads, and run deterministic offline acceptance tests.",
+    "developerName": "SymbolicLight Research",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Local MCP",
+      "Developer Tools"
+    ],
+    "websiteURL": "https://github.com/SymbolicLight-AGI/GovernSpec",
+    "defaultPrompt": [
+      "Validate this GovernSpec contract.",
+      "Compile govern.yaml for Codex.",
+      "Test this output against govern.yaml."
+    ]
+  }
+}

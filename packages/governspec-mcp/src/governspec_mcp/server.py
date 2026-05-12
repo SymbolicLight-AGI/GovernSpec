@@ -29,7 +29,7 @@ from governspec_core.validator import ValidationReport
 
 WORKSPACE_ROOT = Path.cwd().resolve()
 
-TOOLS = [
+_CANONICAL_TOOLS = [
     {
         "name": "governspec.validate",
         "description": "Validate a GovernSpec file.",
@@ -72,6 +72,25 @@ TOOLS = [
             },
         },
     },
+]
+_TOOL_ALIASES = {
+    "governspec_validate": "governspec.validate",
+    "governspec_inspect": "governspec.inspect",
+    "governspec_compile": "governspec.compile",
+    "governspec_test": "governspec.test",
+}
+TOOLS = [
+    *_CANONICAL_TOOLS,
+    *[
+        {
+            **tool,
+            "name": alias,
+            "description": f"{tool['description']} Alias for {canonical}.",
+        }
+        for alias, canonical in _TOOL_ALIASES.items()
+        for tool in _CANONICAL_TOOLS
+        if tool["name"] == canonical
+    ],
 ]
 
 
@@ -122,7 +141,7 @@ def handle_message(message: dict[str, Any]) -> dict[str, Any] | None:
 
 
 def _tool_result(params: dict[str, Any]) -> dict[str, Any]:
-    name = params.get("name", "")
+    name = _TOOL_ALIASES.get(params.get("name", ""), params.get("name", ""))
     arguments = params.get("arguments", {})
     path = (
         _resolve_workspace_path(arguments.get("path", ""), label="GovernSpec path")

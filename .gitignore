@@ -14,6 +14,8 @@ dist/
 .coverage
 htmlcov/
 output/
+internal/
+tmp/
 GovernSpec_0.1/
 .private/
 private/

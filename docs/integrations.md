@@ -137,12 +137,54 @@ The imported draft can then be validated, inspected, and compiled like any other
 governspec-mcp
 ```
 
+### Codex Plugin Manifest
+
+The repository includes a Codex plugin preview at `plugins/codex-governspec/`. Its manifest lives at `plugins/codex-governspec/.codex-plugin/plugin.json` and points Codex to:
+
+- `./skills/` for the GovernSpec skill
+- `./.mcp.json` for the local `python -m governspec_mcp.server` server
+
+Before using the plugin, install GovernSpec and verify that the CLI and MCP module are available:
+
+```bash
+pip install governspec
+governspec doctor
+python -c "import governspec_mcp.server"
+```
+
+### Codex Plugin MCP Config
+
+The Codex plugin preview in `plugins/codex-governspec/` includes a `.mcp.json` file that starts the local stdio server through the installed Python module:
+
+```json
+{
+  "mcpServers": {
+    "governspec": {
+      "command": "python",
+      "args": [
+        "-m",
+        "governspec_mcp.server"
+      ]
+    }
+  }
+}
+```
+
+The server resolves relative contract paths from the workspace directory used to start the MCP process.
+
 ### Tools
 
 - `governspec.validate`
 - `governspec.inspect`
 - `governspec.compile`
 - `governspec.test`
+
+For Codex tool exposure, the server also provides underscore aliases:
+
+- `governspec_validate`
+- `governspec_inspect`
+- `governspec_compile`
+- `governspec_test`
 
 ### Resources
 

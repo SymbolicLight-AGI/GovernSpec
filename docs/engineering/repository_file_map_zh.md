@@ -29,6 +29,10 @@
 - `packages/governspec-ts/`：TypeScript CLI wrapper。修改 CLI 参数或 JSON 输出约定时需要检查该 wrapper。
 - `packages/governspec-vscode/`：VS Code extension MVP。修改 CLI 命令、target 列表或 MCP setup 建议时需要同步检查。
 
+## Codex 插件集成
+
+- `plugins/codex-governspec/`：Codex 插件预览目录。目前包含 `.codex-plugin/plugin.json`、`governspec` skill 和 `.mcp.json`，用于指导 Codex 识别 `govern.yaml` / `*.govern.yaml` contract，并通过 `python -m governspec_mcp.server` 或 CLI 运行 `validate`、`inspect`、`compile`、`test` 等本地 GovernSpec 工作流。后续加入 marketplace metadata 时应同步更新本文件和集成文档。
+
 ## 示例、schema 与测试
 
 - `examples/`：用户可复制的 contract、pack 和输出样例。修改 schema 字段、默认模板、target 行为或测试断言时应同步样例。
@@ -44,6 +48,8 @@
 ## 文档与发布
 
 - `docs/technical-guide.md`：技术指南，解释核心概念、流程和边界。
+- `docs/governspec-yaml-tutorial.md`：英文 `*.govern.yaml` 新手教程，说明 contract 生成、字段含义、编译、测试和提交前检查。
+- `docs/governspec-yaml-tutorial.zh-CN.md`：中文 `*.govern.yaml` 新手教程，面向初学者说明从自然语言草稿到 validate、inspect、compile、test 的完整流程。
 - `docs/integrations.md`：集成说明，记录 target、reverse import、MCP 和 VS Code 策略。
 - `docs/iir.md`：IIR 设计说明。
 - `docs/migration-v0.1.md`：v0.1 schema 迁移说明。

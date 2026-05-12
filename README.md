@@ -405,6 +405,27 @@ Exposed resources:
 
 `governspec-mcp` is an integration surface, not a runtime orchestration platform.
 
+## Use With Codex
+
+This repository includes a Codex plugin preview at `plugins/codex-governspec/`.
+It contains:
+
+- `.codex-plugin/plugin.json`: plugin manifest
+- `.mcp.json`: local MCP server config for `python -m governspec_mcp.server`
+- `skills/governspec/SKILL.md`: Codex guidance for GovernSpec workflows
+
+Install GovernSpec first, then verify the CLI and MCP module:
+
+```bash
+pip install governspec
+governspec doctor
+python -c "import governspec_mcp.server"
+```
+
+The plugin starts GovernSpec MCP through the installed Python module. Once loaded by Codex, it helps Codex recognize `govern.yaml` / `*.govern.yaml`, validate contracts, compile downstream artifacts, and test outputs offline.
+
+This preview does not include marketplace metadata yet.
+
 ## Python SDK
 
 Common document-level API:

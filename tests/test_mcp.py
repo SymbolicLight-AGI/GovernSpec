@@ -15,10 +15,20 @@ def test_initialize_returns_server_info() -> None:
     assert response["result"]["serverInfo"]["name"] == "governspec-mcp"
 
 
-def test_tools_list_returns_four_tools() -> None:
+def test_tools_list_returns_canonical_tools_and_codex_aliases() -> None:
     response = handle_message({"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}})
     assert response is not None
-    assert len(response["result"]["tools"]) == 4
+    tool_names = {tool["name"] for tool in response["result"]["tools"]}
+    assert {
+        "governspec.validate",
+        "governspec.inspect",
+        "governspec.compile",
+        "governspec.test",
+        "governspec_validate",
+        "governspec_inspect",
+        "governspec_compile",
+        "governspec_test",
+    } <= tool_names
 
 
 def test_validate_tool_returns_report() -> None:
@@ -29,6 +39,23 @@ def test_validate_tool_returns_report() -> None:
             "method": "tools/call",
             "params": {
                 "name": "governspec.validate",
+                "arguments": {"path": str(EXAMPLES / "customer_brief.govern.yaml")},
+            },
+        }
+    )
+    assert response is not None
+    payload = json.loads(response["result"]["content"][0]["text"])
+    assert payload["ok"] is True
+
+
+def test_validate_tool_alias_returns_report() -> None:
+    response = handle_message(
+        {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+                "name": "governspec_validate",
                 "arguments": {"path": str(EXAMPLES / "customer_brief.govern.yaml")},
             },
         }

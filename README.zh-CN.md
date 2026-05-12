@@ -410,6 +410,27 @@ governspec-mcp
 
 `governspec-mcp` 是集成面，不是 runtime orchestration platform。
 
+## 在 Codex 中使用
+
+本仓库包含一个 Codex 插件预览目录：`plugins/codex-governspec/`。
+它包含：
+
+- `.codex-plugin/plugin.json`：插件 manifest
+- `.mcp.json`：指向 `python -m governspec_mcp.server` 的本地 MCP server 配置
+- `skills/governspec/SKILL.md`：给 Codex 使用 GovernSpec 工作流的 skill
+
+先安装 GovernSpec，再检查 CLI 和 MCP 模块是否可用：
+
+```bash
+pip install governspec
+governspec doctor
+python -c "import governspec_mcp.server"
+```
+
+这个插件通过已安装的 Python 模块启动 GovernSpec MCP。Codex 加载插件后，可以识别 `govern.yaml` / `*.govern.yaml`，验证 contract，编译下游 artifact，并离线验收输出。
+
+这个预览版暂不包含 marketplace metadata。
+
 ## Python SDK
 
 常用 document-level API：
